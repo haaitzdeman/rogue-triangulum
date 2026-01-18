@@ -24,22 +24,68 @@ export function sma(bars: Bar[], period: number): number | null {
 }
 
 /**
- * Exponential Moving Average
+ * Calculates the entire EMA series for a given period.
  */
-export function ema(bars: Bar[], period: number): number | null {
-    if (bars.length < period) return null;
-
-    const multiplier = 2 / (period + 1);
-
-    // Start with SMA for first value
-    let emaValue = bars.slice(0, period).reduce((sum, b) => sum + b.close, 0) / period;
-
-    // Calculate EMA for remaining bars
-    for (let i = period; i < bars.length; i++) {
-        emaValue = (bars[i].close - emaValue) * multiplier + emaValue;
+function calculateEmaSeries(data: number[], period: number): (number | null)[] {
+    if (data.length < period) {
+        return new Array(data.length).fill(null);
     }
 
-    return emaValue;
+    const multiplier = 2 / (period + 1);
+    const emaSeries: (number | null)[] = new Array(data.length).fill(null);
+
+    // Calculate the initial SMA
+    let sum = 0;
+    for (let i = 0; i < period; i++) {
+        sum += data[i];
+    }
+    let emaValue = sum / period;
+    emaSeries[period - 1] = emaValue;
+
+    // Calculate the rest of the EMA series
+    for (let i = period; i < data.length; i++) {
+        emaValue = (data[i] - emaValue) * multiplier + emaValue;
+        emaSeries[i] = emaValue;
+    }
+
+    return emaSeries;
+}
+
+/**
+ * Calculates the entire EMA series for a given period.
+ */
+function calculateEmaSeries(data: number[], period: number): (number | null)[] {
+    if (data.length < period) {
+        return new Array(data.length).fill(null);
+    }
+
+    const multiplier = 2 / (period + 1);
+    const emaSeries: (number | null)[] = new Array(data.length).fill(null);
+
+    // Calculate the initial SMA
+    let sum = 0;
+    for (let i = 0; i < period; i++) {
+        sum += data[i];
+    }
+    let emaValue = sum / period;
+    emaSeries[period - 1] = emaValue;
+
+    // Calculate the rest of the EMA series
+    for (let i = period; i < data.length; i++) {
+        emaValue = (data[i] - emaValue) * multiplier + emaValue;
+        emaSeries[i] = emaValue;
+    }
+
+    return emaSeries;
+}
+
+/**
+ * Exponential Moving Average
+ */
+export function ema(bars: Bar[], period:number): number | null {
+    const closes = bars.map(b => b.close);
+    const emaSeries = calculateEmaSeries(closes, period);
+    return emaSeries.length > 0 ? emaSeries[emaSeries.length - 1] : null;
 }
 
 /**
@@ -145,40 +191,33 @@ export function rsi(bars: Bar[], period: number = 14): number | null {
 export function macd(bars: Bar[]): { macd: number; signal: number; histogram: number } | null {
     if (bars.length < 26) return null;
 
-    const ema12 = ema(bars, 12);
-    const ema26 = ema(bars, 26);
+    const closes = bars.map(b => b.close);
 
-    if (!ema12 || !ema26) return null;
+    const ema12Series = calculateEmaSeries(closes, 12);
+    const ema26Series = calculateEmaSeries(closes, 26);
 
-    const macdLine = ema12 - ema26;
-
-    // Calculate signal line (9-period EMA of MACD values)
-    // For simplicity, approximate with recent MACD
-    const macdValues: number[] = [];
-    for (let i = 26; i <= bars.length; i++) {
-        const slice = bars.slice(0, i);
-        const e12 = ema(slice, 12);
-        const e26 = ema(slice, 26);
-        if (e12 && e26) {
-            macdValues.push(e12 - e26);
+    const macdLineSeries = ema12Series.map((ema12, i) => {
+        const ema26 = ema26Series[i];
+        if (ema12 !== null && ema26 !== null) {
+            return ema12 - ema26;
         }
-    }
+        return null;
+    });
 
-    if (macdValues.length < 9) {
-        return { macd: macdLine, signal: macdLine, histogram: 0 };
-    }
+    const macdValues = macdLineSeries.filter(v => v !== null) as number[];
+    if (macdValues.length < 9) return null;
 
-    // EMA of MACD values
-    const multiplier = 2 / 10; // 9-period
-    let signalLine = macdValues.slice(0, 9).reduce((a, b) => a + b, 0) / 9;
-    for (let i = 9; i < macdValues.length; i++) {
-        signalLine = (macdValues[i] - signalLine) * multiplier + signalLine;
-    }
+    const signalLineSeries = calculateEmaSeries(macdValues, 9);
+
+    const macd = macdValues[macdValues.length - 1];
+    const signal = signalLineSeries[signalLineSeries.length - 1];
+
+    if (macd === null || signal === null) return null;
 
     return {
-        macd: macdLine,
-        signal: signalLine,
-        histogram: macdLine - signalLine,
+        macd: macd,
+        signal: signal,
+        histogram: macd - signal,
     };
 }
 
