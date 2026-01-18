@@ -18,9 +18,10 @@
 - Strict anti-lookahead enforcement
 - Entry at D+1 open, exit at stop/target/time
 
-### ✅ Paper Trading (WIP)
-- Simulated order execution
-- Uses real market prices from Polygon API
+### ⚠️ Paper Trading (NOT IMPLEMENTED)
+- Order execution is **placeholder only**
+- Fill prices are **NOT** from real market quotes
+- This feature requires real-time quote fetching which is not built
 
 ---
 
