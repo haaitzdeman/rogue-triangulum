@@ -76,7 +76,7 @@ interface LiveStats {
 }
 
 export default function JournalPage() {
-    const [entries, setEntries] = useState<JournalEntry[]>(JOURNAL_ENTRIES);
+    const [entries] = useState<JournalEntry[]>(JOURNAL_ENTRIES);
     const [prices, setPrices] = useState<Map<string, number>>(new Map());
     const [loading, setLoading] = useState(true);
     const [stats, setStats] = useState<LiveStats>({ totalPnL: 0, winRate: 0, totalTrades: 0 });
@@ -96,7 +96,8 @@ export default function JournalPage() {
                     weekAgo.setDate(weekAgo.getDate() - 7);
 
                     const response = await provider.getCandles(symbol, '1d', weekAgo, now);
-                    const candles = (response as any)?.data?.candles || [];
+                    const responseData = response as { data?: { candles?: Array<{ close: number }> } };
+                    const candles = responseData?.data?.candles || [];
 
                     if (candles.length > 0) {
                         newPrices.set(symbol, candles[candles.length - 1].close);

@@ -8,7 +8,6 @@
 import { BaseBrain } from '../interface';
 import type { BrainConfig, ExpertOutput } from '../interface';
 import type {
-    DeskType,
     MarketContext,
     Candidate,
     FeatureVector,

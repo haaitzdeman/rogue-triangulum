@@ -92,7 +92,7 @@ const utilityItems: NavItem[] = [
 export function Sidebar() {
     const pathname = usePathname();
     const { beginnerMode, toggleBeginnerMode } = useBeginnerMode();
-    const { mode, setMode, isLive } = useAppMode();
+    const { setMode, isLive } = useAppMode();
     const [showModeWarning, setShowModeWarning] = useState(false);
 
     const handleModeSwitch = () => {
@@ -119,7 +119,7 @@ export function Sidebar() {
                         <h3 className="text-lg font-bold text-green-400 mb-2">⚠️ Switch to Live Mode?</h3>
                         <p className="text-foreground-muted text-sm mb-4">
                             Live mode uses real market data and generates real trading signals.
-                            Only use this when you're ready to make actual trading decisions.
+                            Only use this when you are ready to make actual trading decisions.
                         </p>
                         <div className="flex gap-3">
                             <button

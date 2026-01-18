@@ -7,7 +7,6 @@ import { BeginnerPanel } from "@/components/desk/BeginnerPanel";
 import { TradingChart } from "@/components/charts/TradingChart";
 import { useCandles } from "@/hooks/useMarketData";
 import { useLiveOptionsData } from "@/hooks/useLiveOptionsData";
-import { useAppMode } from "@/contexts/AppModeContext";
 import type { Timeframe } from "@/lib/data/types";
 
 const beginnerContent = {
@@ -40,7 +39,6 @@ const strategies = [
 export default function OptionsPage() {
     const [selectedSymbol, setSelectedSymbol] = useState("AAPL");
     const [timeframe, setTimeframe] = useState<Timeframe>("1d");
-    const { isLive } = useAppMode();
     const { candles, loading: chartLoading } = useCandles(selectedSymbol, timeframe, 60);
     const { data: optionsData, loading: dataLoading, refresh, lastUpdate, isLiveData } = useLiveOptionsData();
 
@@ -139,7 +137,7 @@ export default function OptionsPage() {
                                                         <div className="w-16 h-2 bg-background-tertiary rounded-full overflow-hidden">
                                                             <div
                                                                 className={`h-full rounded-full ${opt.hvRank > 70 ? 'bg-green-500' :
-                                                                        opt.hvRank > 40 ? 'bg-yellow-500' : 'bg-red-500'
+                                                                    opt.hvRank > 40 ? 'bg-yellow-500' : 'bg-red-500'
                                                                     }`}
                                                                 style={{ width: `${opt.hvRank}%` }}
                                                             />
@@ -156,8 +154,8 @@ export default function OptionsPage() {
                                                 </td>
                                                 <td className="py-3">
                                                     <span className={`px-2 py-0.5 rounded text-xs ${opt.trend === 'bullish' ? 'bg-green-600/20 text-green-400' :
-                                                            opt.trend === 'bearish' ? 'bg-red-600/20 text-red-400' :
-                                                                'bg-background-tertiary text-foreground-muted'
+                                                        opt.trend === 'bearish' ? 'bg-red-600/20 text-red-400' :
+                                                            'bg-background-tertiary text-foreground-muted'
                                                         }`}>
                                                         {opt.trend === 'bullish' ? '↑ Bull' :
                                                             opt.trend === 'bearish' ? '↓ Bear' : '→ Neutral'}

@@ -6,7 +6,6 @@ import { DeskHeader } from "@/components/desk/DeskHeader";
 import { BeginnerPanel } from "@/components/desk/BeginnerPanel";
 import { TradingChart } from "@/components/charts/TradingChart";
 import { useCandles } from "@/hooks/useMarketData";
-import { useAppMode } from "@/contexts/AppModeContext";
 import { PolygonProvider } from "@/lib/data";
 import type { Timeframe, Candle } from "@/lib/data/types";
 
@@ -62,7 +61,8 @@ async function fetchSectorData(provider: PolygonProvider): Promise<SectorData[]>
     for (const etf of SECTOR_ETFS) {
         try {
             const response = await provider.getCandles(etf.symbol, '1d', yearAgo, now);
-            const candles: Candle[] = (response as any)?.data?.candles || [];
+            const responseData = response as { data?: { candles?: Candle[] } };
+            const candles: Candle[] = responseData?.data?.candles || [];
 
             if (candles.length < 50) continue;
 
@@ -112,7 +112,6 @@ async function fetchSectorData(provider: PolygonProvider): Promise<SectorData[]>
 export default function InvestingPage() {
     const [selectedSymbol, setSelectedSymbol] = useState("SPY");
     const [timeframe, setTimeframe] = useState<Timeframe>("1d");
-    const { isLive } = useAppMode();
     const { candles, loading: chartLoading } = useCandles(selectedSymbol, timeframe, 120);
     const [sectorData, setSectorData] = useState<SectorData[]>([]);
     const [loading, setLoading] = useState(true);

@@ -70,7 +70,7 @@ export class InvestingBrain extends BaseBrain {
         };
     }
 
-    async predict(candidate: Candidate, features: FeatureVector, context: MarketContext): Promise<BrainPrediction> {
+    async predict(candidate: Candidate, features: FeatureVector, _context: MarketContext): Promise<BrainPrediction> {
         this.expertOutputs = await this.runExperts(candidate, features);
         this.mixerWeights = this.normalizeWeights(this.expertOutputs.map(e => e.confidenceComponent));
 

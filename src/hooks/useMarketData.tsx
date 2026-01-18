@@ -224,6 +224,7 @@ export function useQuotes(symbols: string[]) {
             });
 
         return () => { cancelled = true; };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [symbols.join(','), provider, isConnected]);
 
     return { quotes, loading };

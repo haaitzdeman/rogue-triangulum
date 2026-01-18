@@ -6,7 +6,7 @@ import { DeskHeader } from "@/components/desk/DeskHeader";
 import { CandidateList } from "@/components/desk/CandidateList";
 import { BeginnerPanel } from "@/components/desk/BeginnerPanel";
 import { TradingChart } from "@/components/charts/TradingChart";
-import { useCandles, useDataProvider } from "@/hooks/useMarketData";
+import { useCandles } from "@/hooks/useMarketData";
 import { useLiveScanner } from "@/hooks/useLiveScanner";
 import { useAppMode } from "@/contexts/AppModeContext";
 import type { Timeframe } from "@/lib/data/types";
@@ -34,10 +34,9 @@ const beginnerContent = {
 export default function DayTradingPage() {
     const [selectedSymbol, setSelectedSymbol] = useState("AAPL");
     const [timeframe, setTimeframe] = useState<Timeframe>("5m");
-    const { isMockMode } = useDataProvider();
-    const { isLive, isTest } = useAppMode();
+    const { isLive } = useAppMode();
     const { candles, loading: chartLoading } = useCandles(selectedSymbol, timeframe, 5);
-    const { candidates, loading: scanLoading, rescan, lastScan, isLiveData } = useLiveScanner('day-trading');
+    const { candidates, loading: scanLoading, rescan, lastScan } = useLiveScanner('day-trading');
 
     // Convert scanner candidates to CandidateList format
     const candidateListData = candidates.map(c => ({
@@ -72,8 +71,8 @@ export default function DayTradingPage() {
 
             {/* Mode Banner */}
             <div className={`mt-4 px-4 py-2 rounded-lg text-sm flex items-center justify-between ${isLive
-                    ? 'bg-green-600/20 border border-green-600/30 text-green-400'
-                    : 'bg-orange-600/20 border border-orange-600/30 text-orange-400'
+                ? 'bg-green-600/20 border border-green-600/30 text-green-400'
+                : 'bg-orange-600/20 border border-orange-600/30 text-orange-400'
                 }`}>
                 <span>
                     {isLive

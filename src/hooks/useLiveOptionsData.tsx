@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useAppMode } from '@/contexts/AppModeContext';
 import { useDataProvider } from '@/hooks/useMarketData';
 import { PolygonProvider } from '@/lib/data';
 import type { Candle } from '@/lib/data/types';
@@ -90,7 +89,8 @@ async function analyzeSymbol(
         startDate.setFullYear(startDate.getFullYear() - 1); // 1 year of data
 
         const response = await provider.getCandles(symbol, '1d', startDate, endDate);
-        const candles: Candle[] = (response as any)?.data?.candles || [];
+        const responseData = response as { data?: { candles?: Candle[] } };
+        const candles: Candle[] = responseData?.data?.candles || [];
 
         if (!candles || candles.length < 50) return null;
 
@@ -155,7 +155,6 @@ async function analyzeSymbol(
 }
 
 export function useLiveOptionsData(symbols: string[] = DEFAULT_SYMBOLS) {
-    const { isLive, isTest } = useAppMode();
     const { isMockMode } = useDataProvider();
     const [data, setData] = useState<OptionsAnalysis[]>([]);
     const [loading, setLoading] = useState(true);

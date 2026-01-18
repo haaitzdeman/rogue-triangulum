@@ -73,7 +73,8 @@ export default function WatchlistPage() {
                     weekAgo.setDate(weekAgo.getDate() - 7);
 
                     const response = await provider.getCandles(symbol, '1d', weekAgo, now);
-                    const candles = (response as any)?.data?.candles || [];
+                    const responseData = response as { data?: { candles?: Array<{ close: number }> } };
+                    const candles = responseData?.data?.candles || [];
 
                     if (candles.length >= 2) {
                         const current = candles[candles.length - 1];
@@ -99,7 +100,7 @@ export default function WatchlistPage() {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [allSymbols]);
 
     useEffect(() => {
         fetchPrices();
