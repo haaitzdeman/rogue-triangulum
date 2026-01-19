@@ -5,7 +5,7 @@
  * Entry is on D+1 open, NOT the signal day close.
  */
 
-import { runDailyBacktest, type BacktestConfig, type BacktestResult } from '../strategy-backtester';
+import { runDailyBacktest, type BacktestConfig } from '../strategy-backtester';
 import type { Bar } from '../../indicators';
 import { MomentumStrategy } from '../../strategies/momentum';
 
@@ -67,14 +67,17 @@ describe('Anti-Lookahead Backtester', () => {
         const config: BacktestConfig = {
             symbol: 'TEST',
             strategies: [MomentumStrategy],
+            positionSize: 1000,
             minScore: 0,         // Accept any signal
             minConfidence: 0,
             defaultHoldingDays: 7,
             targetRMultiple: 2,
+            useStopLoss: true,
+            useTarget: true,
             slippagePercent: 0,
         };
 
-        const result: BacktestResult = runDailyBacktest(bars, config);
+        const result = runDailyBacktest(bars, config);
 
         // If we have trades, check entry prices
         if (result.trades.length > 0) {
@@ -111,10 +114,13 @@ describe('Anti-Lookahead Backtester', () => {
         const config: BacktestConfig = {
             symbol: 'TEST',
             strategies: [MomentumStrategy],
+            positionSize: 1000,
             minScore: 0,
             minConfidence: 0,
             defaultHoldingDays: 7,
             targetRMultiple: 2,
+            useStopLoss: true,
+            useTarget: true,
             slippagePercent: 0,
         };
 
@@ -137,10 +143,13 @@ describe('Anti-Lookahead Backtester', () => {
         const config: BacktestConfig = {
             symbol: 'TEST',
             strategies: [MomentumStrategy],
+            positionSize: 1000,
             minScore: 0,
             minConfidence: 0,
             defaultHoldingDays: 3,
             targetRMultiple: 2,
+            useStopLoss: true,
+            useTarget: true,
             slippagePercent: 0,
         };
 

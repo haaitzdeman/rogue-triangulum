@@ -20,11 +20,11 @@ export interface ForecastItem {
     brainType: DeskType;
     symbol: string;
 
-    // Frozen prediction (never changes after creation)
-    predictedReturnMean: number;
-    predictedIntervalLow: number;
-    predictedIntervalHigh: number;
-    predictedProbProfit: number;
+    // Frozen prediction (V1: deprecated fields may be null)
+    predictedReturnMean?: number | null;    // DEPRECATED in V1
+    predictedIntervalLow?: number | null;   // DEPRECATED in V1
+    predictedIntervalHigh?: number | null;  // DEPRECATED in V1
+    predictedProbProfit?: number | null;    // DEPRECATED in V1
     confidence: number;
     direction: 'long' | 'short' | 'neutral';
 

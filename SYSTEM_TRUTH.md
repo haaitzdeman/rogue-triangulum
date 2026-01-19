@@ -1,40 +1,65 @@
 # SYSTEM_TRUTH.md
 # Trading System Architecture & Capabilities
 
-**Last Updated:** 2026-01-18
-**Version:** V1 (Phase A - Daily Only)
+**Last Updated:** 2026-01-19
+**Version:** V1 (Phase A - Daily Swing Only)
+
+---
+
+## ⚠️ V1 SCOPE LOCK
+
+**This version implements SWING TRADING ONLY.**
+
+| Feature | V1 Status |
+|---------|-----------|
+| Swing Trading (3-10 days) | ✅ Active |
+| Day Trading | ❌ Not wired (Phase B) |
+| Options | ❌ Future |
+| Investing | ❌ Future |
+| Paper Trading | ❌ NOT IMPLEMENTED |
+| Live Trading | ❌ NOT SAFE |
 
 ---
 
 ## What This System ACTUALLY Does
 
-### ✅ Strategy Scanner
+### ✅ Strategy Scanner (Swing Only)
 - Runs 4 rule-based strategies against historical daily data
 - Produces ranked candidates with clear reasons
-- NO AI, NO ML, NO "learning" - just indicator-based rules
+- **NO AI, NO ML, NO "learning"** - just indicator-based rules
+- DayTradingBrain is NOT wired in V1
 
 ### ✅ Backtester V1
 - Backtests strategies against historical daily bars
-- Strict anti-lookahead enforcement
+- Strict anti-lookahead enforcement (unit tested)
 - Entry at D+1 open, exit at stop/target/time
+- Real regime tagging per trade (ADX/ATR-based)
 
-### ⚠️ Paper Trading (NOT IMPLEMENTED)
+### ❌ Paper Trading (NOT IMPLEMENTED)
 - Order execution is **placeholder only**
 - Fill prices are **NOT** from real market quotes
 - This feature requires real-time quote fetching which is not built
 
 ---
 
-## Prediction Targets (Per Desk)
+## Prediction Outputs (V1 - EXPLAINABLE ONLY)
 
-| Desk | Target | Horizon | Status |
-|------|--------|---------|--------|
-| Day Trading | Direction (long/short) | Not in V1 | ❌ Phase B |
-| Swing | Direction + Target Price | 3-10 days | ✅ V1 |
-| Options | Not implemented | - | ❌ Future |
-| Investing | Not implemented | - | ❌ Future |
+### ❌ REMOVED (Fake Predictions)
+- `predictedReturnMean` → **null** (was fake)
+- `predictedIntervalLow/High` → **null** (was fake)
+- `predictedProbProfit` → **null** (was fake)
 
-**V1 implements SWING only (daily bars, 3-10 day holds)**
+### ✅ EXPLAINABLE OUTPUTS (V1)
+| Output | Description | Source |
+|--------|-------------|--------|
+| `riskStop` | Stop loss price | ATR × 1.5 below/above entry |
+| `targetPrice` | Target price | R-multiple × risk distance |
+| `targetR` | R-multiple target | Default 2R |
+| `atrDollars` | ATR in dollars | 14-day ATR |
+| `atrPercent` | ATR as % | ATR / price × 100 |
+| `expectedMoveATR` | Expected move in ATR units | 1.5 ATR |
+
+**UI should display: Stop, Target, ATR - NOT probability predictions.**
 
 ---
 
@@ -42,8 +67,7 @@
 
 | Source | Data Type | Usage |
 |--------|-----------|-------|
-| Polygon.io | Daily OHLCV | Historical backtest |
-| Polygon.io | Real-time quotes | Paper trading fills |
+| Polygon.io | Daily OHLCV | Historical backtest + scanner |
 
 **Rate Limit:** 5 calls/minute (Starter tier)
 **History:** 2 years
@@ -60,33 +84,35 @@
 Each strategy outputs:
 - `direction`: long | short | none
 - `score`: 0-100
-- `confidence`: 0-1
+- `confidence`: 0-1 (used for filtering, not display)
 - `reasons[]`: Human-readable explanations
-- `invalidation`: Price level that kills the trade
+- `invalidation`: Stop price
 
 ---
 
-## Anti-Lookahead Rules (ENFORCED)
+## Anti-Lookahead Rules (ENFORCED + TESTED)
 
 1. At bar[i], only bars[0..i] are visible
 2. Signal computed on day D uses close[D]
 3. Entry is at open[D+1] (cannot use D close for entry)
 4. Stops/targets evaluated on days D+1 onward only
 
+**Unit test:** `src/lib/backtest/__tests__/anti-lookahead.test.ts`
+
 ---
 
-## What Updates Over Time (HONEST ANSWER)
+## Regime Breakdown (V1 - REAL)
 
-### ❌ NOTHING LEARNS AUTOMATICALLY
-- No expert weight adjustments
-- No pattern recognition
-- No model training
+Regime is tagged **per trade at signal time**:
 
-### ✅ User Can Adjust
-- Strategy parameters (via code)
-- Backtest date ranges
-- Position sizing
-- Slippage assumptions
+| Regime | Condition | 
+|--------|-----------|
+| Trending | ADX > 25 at signal |
+| Choppy | ADX ≤ 25 at signal |
+| High Vol | ATR% > 2% at signal |
+| Low Vol | ATR% ≤ 2% at signal |
+
+Stats are computed from these real tags, not fake array slicing.
 
 ---
 
@@ -95,34 +121,32 @@ Each strategy outputs:
 | Feature | Status | Notes |
 |---------|--------|-------|
 | Machine Learning | ❌ | No models, no training |
-| Reinforcement Learning | ❌ | Removed (fake) |
-| Expert Weighting | ❌ | Removed (fake) |
-| Live Trading | ❌ | Not safe yet |
+| Prediction Probabilities | ❌ | Removed (fake) |
+| Day Trading | ❌ | Not wired (Phase B) |
+| Paper Trading Fills | ❌ | Not implemented |
+| Live Trading | ❌ | Not safe |
 | Intraday Backtesting | ❌ | Phase B |
 | Options Analysis | ❌ | Future |
-| Multi-Symbol Universe | ⚠️ | Single symbol only |
-| Real Brokerage Integration | ❌ | Paper only |
 
 ---
 
-## Metrics Computed
+## File Map (V1)
 
-### Core
-- Win Rate
-- Total Return (%)
-- Profit Factor
-- Max Drawdown
-
-### R-Multiple
-- Average R per trade
-- Average Win R
-- Average Loss R
-- Expectancy in R
-
-### Breakdowns
-- By Strategy
-- By Year
-- By Regime (simplified: trending vs choppy)
+```
+src/lib/
+├── strategies/           # Strategy definitions
+├── backtest/             # Backtesting engine
+│   ├── strategy-backtester.ts
+│   └── __tests__/anti-lookahead.test.ts
+├── indicators/           # Technical indicators
+├── data/                 # Data providers
+│   └── market-data-provider.ts  # Unified interface
+├── brains/specialists/
+│   └── swing-brain.ts    # V1 - Active
+│   └── day-trading-brain.ts  # V1 - NOT WIRED
+└── core/
+    └── orchestrator.ts   # Routes to SwingBrain only in V1
+```
 
 ---
 
@@ -138,46 +162,8 @@ open http://localhost:3000/learning
 # 3. Select symbol (AAPL) and year (2024)
 # 4. Click "Run Backtest"
 # 5. View results: metrics, equity curve, trade list
-# 6. Click a trade to see entry/exit/reasons
+# 6. Click a trade to see entry/exit/reasons (ATR-based)
 ```
-
----
-
-## File Map
-
-```
-src/lib/
-├── strategies/          # Strategy definitions
-│   ├── types.ts         # StrategySignal, IndicatorSnapshot
-│   ├── momentum.ts      # Momentum strategy
-│   ├── breakout.ts      # Breakout strategy
-│   ├── meanReversion.ts # Mean reversion strategy
-│   └── trendFollow.ts   # Trend following strategy
-├── backtest/            # Backtesting engine
-│   └── strategy-backtester.ts  # V1 daily backtester
-├── indicators/          # Technical indicators (real math)
-│   ├── technical.ts     # RSI, MACD, BB, etc.
-│   └── extended.ts      # ADX, Stochastic, etc.
-└── training/            # Data providers only
-    └── polygon-provider.ts  # Polygon API integration
-```
-
----
-
-## Removed (Fake Learning)
-
-The following files were deleted as they did not produce real learning:
-- `meticulous-engine.ts` (2041 lines)
-- `reinforcement-engine.ts`
-- `smart-simulator.ts`
-- `daily-simulator.ts`
-- `options-consensus.ts`
-- `regime-detector.ts`
-- `defensive-strategies.ts`
-- `replay-runner.ts`
-- `setup-scorer.ts`
-
-**Total: ~5000 lines of fake complexity removed**
 
 ---
 
@@ -189,3 +175,5 @@ This is a **backtesting and scanning tool**, not a money-making system.
 - Backtests are always optimistic
 - Real trading has costs, slippage, and emotional factors
 - Use for education and strategy development only
+- **NO prediction probabilities are real - they are removed**
+

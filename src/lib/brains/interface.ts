@@ -160,6 +160,7 @@ export abstract class BaseBrain implements SpecialistBrain {
 
     /**
      * Default explanation generator
+     * V1: Uses explainable ATR/stop/target outputs instead of fake predictions
      */
     explain(prediction: BrainPrediction): Explanation {
         const direction = prediction.direction === 'long' ? 'bullish' :
@@ -168,14 +169,24 @@ export abstract class BaseBrain implements SpecialistBrain {
         const riskLevel = prediction.confidence >= 0.7 ? 'low' :
             prediction.confidence >= 0.4 ? 'medium' : 'high';
 
-        const summary = `${prediction.symbol} shows ${direction} setup with ` +
-            `${Math.round(prediction.predictedProbProfit * 100)}% probability of profit. ` +
-            `Expected return: ${(prediction.predictedReturnMean * 100).toFixed(1)}%`;
+        // V1: Use ATR-based outputs instead of fake probability predictions
+        const targetInfo = prediction.targetPrice
+            ? `Target: $${prediction.targetPrice.toFixed(2)}`
+            : '';
+        const stopInfo = prediction.riskStop
+            ? `Stop: $${prediction.riskStop.toFixed(2)}`
+            : '';
+        const atrInfo = prediction.atrPercent
+            ? `ATR: ${prediction.atrPercent.toFixed(1)}%`
+            : '';
+
+        const summary = `${prediction.symbol} shows ${direction} setup. ` +
+            `${targetInfo} ${stopInfo} ${atrInfo}`.trim();
 
         const beginnerSummary = prediction.direction === 'long'
-            ? `${prediction.symbol} looks like it could go up. Our analysis rates it ${Math.round(prediction.confidence * 100)}% confident.`
+            ? `${prediction.symbol} looks like it could go up. Confidence: ${Math.round(prediction.confidence * 100)}%.`
             : prediction.direction === 'short'
-                ? `${prediction.symbol} looks like it could go down. Our analysis rates it ${Math.round(prediction.confidence * 100)}% confident.`
+                ? `${prediction.symbol} looks like it could go down. Confidence: ${Math.round(prediction.confidence * 100)}%.`
                 : `${prediction.symbol} doesn't have a clear direction right now.`;
 
         return {

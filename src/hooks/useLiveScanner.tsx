@@ -16,7 +16,7 @@ import { useAppMode } from '@/contexts/AppModeContext';
 import { useDataProvider } from '@/hooks/useMarketData';
 import { getOrchestrator } from '@/lib/core/orchestrator';
 import { SwingBrain } from '@/lib/brains/specialists/swing-brain';
-import { DayTradingBrain } from '@/lib/brains/specialists/day-trading-brain';
+// V1: DayTradingBrain removed - swing only
 import type { MarketContext, Candidate } from '@/lib/core/types';
 
 // Re-export TradingCandidate for backwards compatibility
@@ -79,21 +79,15 @@ function initOrchestrator(): void {
 
     const orchestrator = getOrchestrator();
 
-    // Register brains
+    // V1: Register only SwingBrain - day trading not ready
     try {
         orchestrator.registerBrain(new SwingBrain());
     } catch (e) {
         console.error('[useLiveScanner] Failed to register SwingBrain:', e);
     }
 
-    try {
-        orchestrator.registerBrain(new DayTradingBrain());
-    } catch (e) {
-        console.error('[useLiveScanner] Failed to register DayTradingBrain:', e);
-    }
-
     orchestratorInitialized = true;
-    console.log('[useLiveScanner] Orchestrator initialized with brains');
+    console.log('[useLiveScanner] V1: Orchestrator initialized with SwingBrain only');
 }
 
 /**
@@ -103,8 +97,10 @@ function toTradingCandidate(candidate: Candidate & { name?: string; setupType?: 
     // Filter out neutral candidates - we only want long/short
     if (candidate.direction === 'neutral') return null;
 
+    // B) Deterministic ID using timestamp + setupType
+    const setupKey = (candidate.setupType ?? 'setup').replace(/\s+/g, '-').toLowerCase();
     return {
-        id: `${candidate.symbol}-${Date.now()}`,
+        id: `${candidate.symbol}-${candidate.timestamp}-${setupKey}`,
         symbol: candidate.symbol,
         name: candidate.name || candidate.symbol,
         setupType: candidate.setupType || 'Strategy Signal',
@@ -120,9 +116,11 @@ function toTradingCandidate(candidate: Candidate & { name?: string; setupType?: 
 }
 
 export function useLiveScanner(
-    desk: 'day-trading' | 'swing' | 'options' | 'investing' = 'day-trading',
+    _desk: 'day-trading' | 'swing' | 'options' | 'investing' = 'swing',
     _symbols: string[] = []
 ) {
+    // V1: Enforce swing desk only - ignore desk param
+    const desk = 'swing' as const;
     const { isTest } = useAppMode();
     const { isMockMode } = useDataProvider();
     const [candidates, setCandidates] = useState<TradingCandidate[]>([]);

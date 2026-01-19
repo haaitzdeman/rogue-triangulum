@@ -9,7 +9,8 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { getOrchestrator, type DeskType, type ExecutionMode, type MarketContext, type RankedCandidate } from '@/lib/core';
 import { getTradeGate } from '@/lib/execution';
-import { DayTradingBrain, OptionsBrain, SwingBrain, InvestingBrain } from '@/lib/brains';
+import { OptionsBrain, SwingBrain, InvestingBrain } from '@/lib/brains';
+// V1: DayTradingBrain removed - swing only
 
 // Context type
 interface TradingContextType {
@@ -53,7 +54,8 @@ function getDefaultMarketContext(): MarketContext {
 
 export function TradingProvider({ children }: { children: React.ReactNode }) {
     const [mode, setModeState] = useState<ExecutionMode>('PAPER');
-    const [activeDesk, setActiveDeskState] = useState<DeskType>('day-trading');
+    // V1: Default to swing desk, not day-trading
+    const [activeDesk, setActiveDeskState] = useState<DeskType>('swing');
     const [candidates, setCandidates] = useState<RankedCandidate[]>([]);
     const [loading, setLoading] = useState(false);
     const [killSwitchActive, setKillSwitchActive] = useState(false);
@@ -66,7 +68,7 @@ export function TradingProvider({ children }: { children: React.ReactNode }) {
         if (initialized) return;
 
         const orchestrator = getOrchestrator();
-        orchestrator.registerBrain(new DayTradingBrain());
+        // V1: DayTradingBrain not wired - swing only
         orchestrator.registerBrain(new OptionsBrain());
         orchestrator.registerBrain(new SwingBrain());
         orchestrator.registerBrain(new InvestingBrain());

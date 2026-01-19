@@ -184,14 +184,18 @@ export class ForecastTracker {
             return null;
         }
 
-        // Calculate errors
-        const error = forecast.predictedReturnMean - actualReturn;
+        // Calculate errors (V1: handle nullable deprecated fields)
+        const predictedMean = forecast.predictedReturnMean ?? 0;
+        const predictedLow = forecast.predictedIntervalLow ?? -Infinity;
+        const predictedHigh = forecast.predictedIntervalHigh ?? Infinity;
+
+        const error = predictedMean - actualReturn;
         const absoluteError = Math.abs(error);
         const squaredError = error * error;
 
         // Calibration checks
-        const withinInterval = actualReturn >= forecast.predictedIntervalLow &&
-            actualReturn <= forecast.predictedIntervalHigh;
+        const withinInterval = actualReturn >= predictedLow &&
+            actualReturn <= predictedHigh;
 
         const directionCorrect =
             (forecast.direction === 'long' && actualReturn > 0) ||

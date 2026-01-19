@@ -228,7 +228,7 @@ export class SmartDayTradingBrain extends BaseBrain {
         );
 
         // Combine expert outputs
-        let totalReturn = 0;
+        let _totalReturn = 0;
         let totalConfidence = 0;
         let longVotes = 0;
         let shortVotes = 0;
@@ -239,7 +239,7 @@ export class SmartDayTradingBrain extends BaseBrain {
             const output = this.expertOutputs[i];
             const weight = this.mixerWeights[i];
 
-            totalReturn += output.predictedReturnComponent * weight;
+            _totalReturn += output.predictedReturnComponent * weight;
             totalConfidence += output.confidenceComponent * weight;
 
             if (output.direction === 'long' && output.confidenceComponent > 0.5) longVotes++;
@@ -268,14 +268,14 @@ export class SmartDayTradingBrain extends BaseBrain {
         totalConfidence *= (0.5 + 0.5 * agreement); // Reduce confidence if experts disagree
 
         // Calculate prediction interval based on ATR
-        const atrPercent = features.features.atr_percent || 0.02;
-        const intervalWidth = atrPercent * 1.5;
+        const _atrPercent = features.features.atr_percent || 0.02;
+        const _intervalWidth = _atrPercent * 1.5;
 
-        // Estimate return based on momentum and trend
-        const expectedReturn = direction === 'neutral' ? 0 :
+        // Estimate return based on momentum and trend (not used in V1)
+        const _expectedReturn = direction === 'neutral' ? 0 :
             direction === 'long' ?
-                Math.abs(totalReturn) + features.features.momentum_10 / 200 :
-                -Math.abs(totalReturn) - features.features.momentum_10 / 200;
+                Math.abs(_totalReturn) + features.features.momentum_10 / 200 :
+                -Math.abs(_totalReturn) - features.features.momentum_10 / 200;
 
         const now = new Date();
         const horizonMs = this.config.defaultHorizonHours * 60 * 60 * 1000;
@@ -296,15 +296,16 @@ export class SmartDayTradingBrain extends BaseBrain {
             brainType: this.desk,
             symbol: candidate.symbol,
 
-            predictedReturnMean: expectedReturn,
-            predictedIntervalLow: expectedReturn - intervalWidth,
-            predictedIntervalHigh: expectedReturn + intervalWidth,
-            predictedProbProfit: direction === 'long' ?
-                0.5 + totalConfidence * 0.3 :
-                direction === 'short' ?
-                    0.5 + totalConfidence * 0.3 :
-                    0.5,
+            // V1: DEPRECATED - set to null (smart day trading not wired in V1)
+            predictedReturnMean: null,
+            predictedIntervalLow: null,
+            predictedIntervalHigh: null,
+            predictedProbProfit: null,
             confidence: totalConfidence,
+
+            // V1: Explainable outputs (placeholder for day trading - not wired)
+            riskStop: 0,
+            targetPrice: 0,
 
             evaluationWindowHours: this.config.defaultHorizonHours,
             evaluationWindowEnd: new Date(now.getTime() + horizonMs),

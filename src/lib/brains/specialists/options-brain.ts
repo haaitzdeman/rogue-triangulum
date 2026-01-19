@@ -123,7 +123,7 @@ export class OptionsBrain extends BaseBrain {
             this.expertOutputs.map(e => e.confidenceComponent)
         );
 
-        let totalReturn = 0;
+        let _totalReturn = 0;
         let totalConfidence = 0;
         const reasons: string[] = [];
 
@@ -131,7 +131,7 @@ export class OptionsBrain extends BaseBrain {
             const output = this.expertOutputs[i];
             const weight = this.mixerWeights[i];
 
-            totalReturn += output.predictedReturnComponent * weight;
+            _totalReturn += output.predictedReturnComponent * weight;
             totalConfidence += output.confidenceComponent * weight;
 
             if (output.explanationTokens.length > 0) {
@@ -144,7 +144,7 @@ export class OptionsBrain extends BaseBrain {
         const direction = longVotes > shortVotes ? 'long' :
             shortVotes > longVotes ? 'short' : 'neutral';
 
-        const intervalWidth = 0.03 * (1.5 - totalConfidence);
+        const _intervalWidth = 0.03 * (1.5 - totalConfidence);
 
         const now = new Date();
         const horizonMs = this.config.defaultHorizonHours * 60 * 60 * 1000;
@@ -155,11 +155,16 @@ export class OptionsBrain extends BaseBrain {
             brainType: this.desk,
             symbol: candidate.symbol,
 
-            predictedReturnMean: totalReturn,
-            predictedIntervalLow: totalReturn - intervalWidth,
-            predictedIntervalHigh: totalReturn + intervalWidth,
-            predictedProbProfit: 0.5 + totalReturn * 5,
+            // V1: DEPRECATED - set to null
+            predictedReturnMean: null,
+            predictedIntervalLow: null,
+            predictedIntervalHigh: null,
+            predictedProbProfit: null,
             confidence: totalConfidence,
+
+            // V1: Explainable outputs (placeholder for options - not wired)
+            riskStop: 0,
+            targetPrice: 0,
 
             evaluationWindowHours: this.config.defaultHorizonHours,
             evaluationWindowEnd: new Date(now.getTime() + horizonMs),

@@ -59,6 +59,12 @@ export interface BacktestTrade {
     reasons: string[];
     score: number;
     confidence: number;
+
+    // V1: Real regime tagging at signal time
+    regime: {
+        trending: boolean;   // ADX > 25 at signal
+        highVol: boolean;    // ATR% > 2% at signal
+    };
 }
 
 /**
@@ -416,7 +422,8 @@ export function runDailyBacktest(
                 ? entryPrice + targetDistance
                 : entryPrice - targetDistance;
 
-            const _regime = classifyRegime(bars, i);
+            // V1: Store regime at signal time for real regime stats
+            const regime = classifyRegime(bars, i);
 
             currentTrade = {
                 id: ++tradeId,
@@ -435,6 +442,7 @@ export function runDailyBacktest(
                 reasons: signal.reasons,
                 score: signal.score,
                 confidence: signal.confidence,
+                regime,  // Store regime for metrics
             };
 
             inPosition = true;
@@ -536,15 +544,17 @@ function computeMetrics(
         };
     });
 
-    // By regime (simplified)
-    const trendingTrades = trades.slice(0, Math.floor(trades.length / 2));
-    const choppyTrades = trades.slice(Math.floor(trades.length / 2));
+    // V1: Real regime stats from per-trade tags (not fake slicing)
+    const trendingTrades = trades.filter(t => t.regime?.trending);
+    const choppyTrades = trades.filter(t => !t.regime?.trending);
+    const highVolTrades = trades.filter(t => t.regime?.highVol);
+    const lowVolTrades = trades.filter(t => !t.regime?.highVol);
 
     const byRegime = {
-        trending: computeRegimeStats('Trending', trendingTrades),
-        choppy: computeRegimeStats('Choppy', choppyTrades),
-        highVol: computeRegimeStats('High Volatility', trades.filter((_: BacktestTrade, i: number) => i % 3 === 0)),
-        lowVol: computeRegimeStats('Low Volatility', trades.filter((_: BacktestTrade, i: number) => i % 3 !== 0)),
+        trending: computeRegimeStats('Trending (ADX>25)', trendingTrades),
+        choppy: computeRegimeStats('Choppy (ADX≤25)', choppyTrades),
+        highVol: computeRegimeStats('High Vol (ATR>2%)', highVolTrades),
+        lowVol: computeRegimeStats('Low Vol (ATR≤2%)', lowVolTrades),
     };
 
     const avgR = trades.reduce((s, t) => s + t.rMultiple, 0) / trades.length;

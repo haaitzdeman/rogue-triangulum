@@ -74,11 +74,11 @@ export class InvestingBrain extends BaseBrain {
         this.expertOutputs = await this.runExperts(candidate, features);
         this.mixerWeights = this.normalizeWeights(this.expertOutputs.map(e => e.confidenceComponent));
 
-        let totalReturn = 0, totalConfidence = 0;
+        let _totalReturn = 0, totalConfidence = 0;
         const reasons: string[] = [];
 
         for (let i = 0; i < this.expertOutputs.length; i++) {
-            totalReturn += this.expertOutputs[i].predictedReturnComponent * this.mixerWeights[i];
+            _totalReturn += this.expertOutputs[i].predictedReturnComponent * this.mixerWeights[i];
             totalConfidence += this.expertOutputs[i].confidenceComponent * this.mixerWeights[i];
             if (this.expertOutputs[i].explanationTokens[0]) {
                 reasons.push(`${this.expertOutputs[i].expertName}: ${this.expertOutputs[i].explanationTokens[0]}`);
@@ -88,11 +88,15 @@ export class InvestingBrain extends BaseBrain {
         const now = new Date();
         return {
             id: uuidv4(), createdAt: now, brainType: this.desk, symbol: candidate.symbol,
-            predictedReturnMean: totalReturn,
-            predictedIntervalLow: totalReturn - 0.10,
-            predictedIntervalHigh: totalReturn + 0.15,
-            predictedProbProfit: 0.5 + totalReturn * 2,
+            // V1: DEPRECATED - set to null
+            predictedReturnMean: null,
+            predictedIntervalLow: null,
+            predictedIntervalHigh: null,
+            predictedProbProfit: null,
             confidence: totalConfidence,
+            // V1: Explainable outputs (placeholder for investing - not wired)
+            riskStop: 0,
+            targetPrice: 0,
             evaluationWindowHours: this.config.defaultHorizonHours,
             evaluationWindowEnd: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000),
             direction: 'long', strength: candidate.score / 100,

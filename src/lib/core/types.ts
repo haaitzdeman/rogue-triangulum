@@ -68,12 +68,21 @@ export interface BrainPrediction {
     brainType: DeskType;
     symbol: string;
 
-    // Prediction
-    predictedReturnMean: number;      // Expected return %
-    predictedIntervalLow: number;     // Lower bound %
-    predictedIntervalHigh: number;    // Upper bound %
-    predictedProbProfit: number;      // Probability of profit (0-1)
-    confidence: number;               // Model confidence (0-1)
+    // V1: Fake prediction fields removed - these are optional and should NOT be displayed
+    // Keeping for type backwards compatibility but should be null
+    predictedReturnMean?: number | null;      // DEPRECATED - don't display
+    predictedIntervalLow?: number | null;     // DEPRECATED - don't display
+    predictedIntervalHigh?: number | null;    // DEPRECATED - don't display
+    predictedProbProfit?: number | null;      // DEPRECATED - don't display
+    confidence: number;                        // Still used for filtering
+
+    // V1: EXPLAINABLE OUTPUTS - these are the real values
+    expectedMoveATR?: number;                  // Expected move in ATR units
+    atrDollars?: number;                       // ATR value in dollars
+    atrPercent?: number;                       // ATR as % of price
+    riskStop: number;                          // Stop loss price
+    targetPrice: number;                       // Target price (derived from R-multiple)
+    targetR?: number;                          // R-multiple target (e.g., 2R)
 
     // Horizon
     evaluationWindowHours: number;

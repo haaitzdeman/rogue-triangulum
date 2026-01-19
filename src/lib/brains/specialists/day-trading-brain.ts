@@ -139,7 +139,7 @@ export class DayTradingBrain extends BaseBrain {
         );
 
         // Combine expert outputs
-        let totalReturn = 0;
+        let _totalReturn = 0;
         let totalConfidence = 0;
         const reasons: string[] = [];
 
@@ -147,7 +147,7 @@ export class DayTradingBrain extends BaseBrain {
             const output = this.expertOutputs[i];
             const weight = this.mixerWeights[i];
 
-            totalReturn += output.predictedReturnComponent * weight;
+            _totalReturn += output.predictedReturnComponent * weight;
             totalConfidence += output.confidenceComponent * weight;
 
             if (output.explanationTokens.length > 0) {
@@ -161,8 +161,8 @@ export class DayTradingBrain extends BaseBrain {
         const direction = longVotes > shortVotes ? 'long' :
             shortVotes > longVotes ? 'short' : 'neutral';
 
-        // Calculate prediction interval (mock)
-        const intervalWidth = 0.02 * (1.5 - totalConfidence); // Wider when less confident
+        // Calculate prediction interval (mock - not used in V1)
+        const _intervalWidth = 0.02 * (1.5 - totalConfidence); // Wider when less confident
 
         const now = new Date();
         const horizonMs = this.config.defaultHorizonHours * 60 * 60 * 1000;
@@ -173,15 +173,16 @@ export class DayTradingBrain extends BaseBrain {
             brainType: this.desk,
             symbol: candidate.symbol,
 
-            predictedReturnMean: totalReturn,
-            predictedIntervalLow: totalReturn - intervalWidth,
-            predictedIntervalHigh: totalReturn + intervalWidth,
-            predictedProbProfit: direction === 'long' ?
-                0.5 + totalReturn * 10 : // Higher return = higher prob
-                direction === 'short' ?
-                    0.5 - totalReturn * 10 :
-                    0.5,
+            // V1: DEPRECATED - set to null
+            predictedReturnMean: null,
+            predictedIntervalLow: null,
+            predictedIntervalHigh: null,
+            predictedProbProfit: null,
             confidence: totalConfidence,
+
+            // V1: Explainable outputs (placeholder for day trading - not wired)
+            riskStop: 0,
+            targetPrice: 0,
 
             evaluationWindowHours: this.config.defaultHorizonHours,
             evaluationWindowEnd: new Date(now.getTime() + horizonMs),

@@ -243,20 +243,50 @@ export class SwingBrain extends BaseBrain {
 
     async predict(candidate: Candidate, features: FeatureVector, _context: MarketContext): Promise<BrainPrediction> {
         const now = new Date();
-        const extendedCandidate = candidate as Candidate & { confidence?: number };
+        const extendedCandidate = candidate as Candidate & {
+            confidence?: number;
+            invalidation?: number;
+            currentPrice?: number;
+        };
         const confidence = extendedCandidate.confidence ?? candidate.score / 100;
         const strength = candidate.score / 100;
+
+        // V1: Explainable outputs - derived from ATR and R-multiple
+        const currentPrice = extendedCandidate.currentPrice ?? 100;
+        const DEFAULT_ATR_PERCENT = 0.02; // 2% default
+        const atrPercent = DEFAULT_ATR_PERCENT;
+        const atrDollars = currentPrice * atrPercent;
+        const stopDistance = atrDollars * 1.5;
+        const riskStop = candidate.direction === 'long'
+            ? currentPrice - stopDistance
+            : currentPrice + stopDistance;
+        const targetR = 2; // Default 2R target
+        const targetDistance = stopDistance * targetR;
+        const targetPrice = candidate.direction === 'long'
+            ? currentPrice + targetDistance
+            : currentPrice - targetDistance;
 
         return {
             id: uuidv4(),
             createdAt: now,
             brainType: this.desk,
             symbol: candidate.symbol,
-            predictedReturnMean: candidate.direction === 'long' ? 0.02 : -0.02,
-            predictedIntervalLow: -0.05,
-            predictedIntervalHigh: 0.05,
-            predictedProbProfit: 0.5 + (candidate.score - 50) / 100,
+
+            // V1: FAKE PREDICTIONS REMOVED - set to null
+            predictedReturnMean: null,
+            predictedIntervalLow: null,
+            predictedIntervalHigh: null,
+            predictedProbProfit: null,
             confidence,
+
+            // V1: EXPLAINABLE OUTPUTS - derived from ATR
+            expectedMoveATR: 1.5,
+            atrDollars,
+            atrPercent: atrPercent * 100,
+            riskStop,
+            targetPrice,
+            targetR,
+
             evaluationWindowHours: this.config.defaultHorizonHours,
             evaluationWindowEnd: new Date(now.getTime() + this.config.defaultHorizonHours * 60 * 60 * 1000),
             direction: candidate.direction,
@@ -265,7 +295,7 @@ export class SwingBrain extends BaseBrain {
             mixerWeights: [1],
             featureSnapshot: features.features,
             reasons: candidate.reasons,
-            invalidation: (extendedCandidate as Candidate & { invalidation?: number }).invalidation?.toString() || 'Price closes below stop level',
+            invalidation: extendedCandidate.invalidation?.toString() || `Stop at $${riskStop.toFixed(2)}`,
         };
     }
 }
