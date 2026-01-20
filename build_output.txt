@@ -1,0 +1,202 @@
+﻿
+> rogue-triangulum@0.1.0 build
+> next build
+
+  Γû▓ Next.js 14.2.35
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully
+   Linting and checking validity of types ...
+
+./src/lib/data/polygon-provider.ts
+22:5  Warning: 'OptionContract' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+23:5  Warning: 'IVData' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+26:5  Warning: 'CalendarEvent' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/data/provider.ts
+11:5  Warning: 'Candle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/indicators/extended.ts
+8:10  Warning: 'sma' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/journal/signal-evaluator.ts
+11:52  Warning: 'writeStore' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+159:15  Warning: 'barClose' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/journal/signal-recorder.ts
+99:5  Warning: 'context' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/strategies/meanReversion.ts
+25:30  Warning: 'adxTrend' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/strategies/trendFollow.ts
+25:13  Warning: 'trendDirection' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/strategies/types.ts
+8:15  Warning: 'Bar' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/training/polygon-provider.ts
+127:26  Warning: 'symbol' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/training/provider-adapter.ts
+8:15  Warning: 'DeskType' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+190:21  Warning: 'start' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+190:34  Warning: 'end' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+190:45  Warning: 'symbols' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+   Collecting page data ...
+   Generating static pages (0/25) ...
+node.exe : [API] 
+Error getting 
+journal: B [Error]: 
+Dynamic server usage: 
+Route /api/journal 
+couldn't be rendered 
+statically because it 
+used `request.url`. 
+See more info here: ht
+tps://nextjs.org/docs/
+messages/dynamic-serve
+r-error
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: ([API] Erro   
+ r get...ic-server    
+-error:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+    at V (C:\Users\haa
+it\OneDrive\Desktop\PR
+OJECTS\trading-app\nod
+e_modules\next\dist\co
+mpiled\next-server\app
+-route.runtime.prod.js
+:6:21778)
+    at Object.get (C:\
+Users\haait\OneDrive\D
+esktop\PROJECTS\tradin
+g-app\node_modules\nex
+t\dist\compiled\next-s
+erver\app-route.runtim
+e.prod.js:6:29465)
+    at u (C:\Users\haa
+it\OneDrive\Desktop\PR
+OJECTS\trading-app\.ne
+xt\server\app\api\jour
+nal\route.js:1:614)
+    at C:\Users\haait\
+OneDrive\Desktop\PROJE
+CTS\trading-app\node_m
+odules\next\dist\compi
+led\next-server\app-ro
+ute.runtime.prod.js:6:
+38417
+    at C:\Users\haait\
+OneDrive\Desktop\PROJE
+CTS\trading-app\node_m
+odules\next\dist\serve
+r\lib\trace\tracer.js:
+140:36
+    at NoopContextMana
+ger.with (C:\Users\haa
+it\OneDrive\Desktop\PR
+OJECTS\trading-app\nod
+e_modules\next\dist\co
+mpiled\@opentelemetry\
+api\index.js:1:7062)
+    at 
+ContextAPI.with (C:\Us
+ers\haait\OneDrive\Des
+ktop\PROJECTS\trading-
+app\node_modules\next\
+dist\compiled\@opentel
+emetry\api\index.js:1:
+518)
+    at NoopTracer.star
+tActiveSpan (C:\Users\
+haait\OneDrive\Desktop
+\PROJECTS\trading-app\
+node_modules\next\dist
+\compiled\@opentelemet
+ry\api\index.js:1:1809
+3)
+    at ProxyTracer.sta
+rtActiveSpan (C:\Users
+\haait\OneDrive\Deskto
+p\PROJECTS\trading-app
+\node_modules\next\dis
+t\compiled\@openteleme
+try\api\index.js:1:188
+54)
+    at C:\Users\haait\
+OneDrive\Desktop\PROJE
+CTS\trading-app\node_m
+odules\next\dist\serve
+r\lib\trace\tracer.js:
+122:103 {
+  description: "Route 
+/api/journal couldn't 
+be rendered 
+statically because it 
+used `request.url`. 
+See more info here: ht
+tps://nextjs.org/docs/
+messages/dynamic-serve
+r-error",
+  digest: 
+'DYNAMIC_SERVER_USAGE'
+}
+   Generating static pages (6/25) 
+   Generating static pages (12/25) 
+   Generating static pages (18/25) 
+ Γ£ô Generating static pages (25/25)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+Γöî Γùï /                                    175 B          96.2 kB
+Γö£ Γùï /_not-found                          873 B          88.2 kB
+Γö£ ╞Æ /api/executions                      0 B                0 B
+Γö£ ╞Æ /api/journal                         0 B                0 B
+Γö£ ╞Æ /api/journal/debug/seed              0 B                0 B
+Γö£ ╞Æ /api/journal/evaluate                0 B                0 B
+Γö£ ╞Æ /api/journal/record                  0 B                0 B
+Γö£ Γùï /brain                               2.07 kB        89.4 kB
+Γö£ Γùï /day-trading                         2.56 kB         159 kB
+Γö£ Γùï /investing                           4.95 kB         149 kB
+Γö£ Γùï /journal                             4 kB           95.4 kB
+Γö£ Γùï /learning                            6.36 kB        97.6 kB
+Γö£ Γùï /options                             5.84 kB         150 kB
+Γö£ Γùï /performance                         3.41 kB        90.7 kB
+Γö£ Γùï /readiness                           8.19 kB        95.5 kB
+Γö£ Γùï /reinforcement                       600 B          87.9 kB
+Γö£ Γùï /settings                            2.36 kB        89.7 kB
+Γö£ Γùï /signal-journal                      2.39 kB        89.7 kB
+Γö£ Γùï /simulation                          437 B          87.8 kB
+Γö£ Γùï /swing                               2.3 kB          159 kB
+Γö£ Γùï /training                            570 B          87.9 kB
+Γöö Γùï /watchlist                           3.62 kB        95.1 kB
++ First Load JS shared by all            87.3 kB
+  Γö£ chunks/117-13247f0b4bb231d9.js       31.7 kB
+  Γö£ chunks/fd9d1056-1eecee4be4cc9813.js  53.6 kB
+  Γöö other shared chunks (total)          1.95 kB
+
+
+Γùï  (Static)   prerendered as static content
+╞Æ  (Dynamic)  server-rendered on demand
+

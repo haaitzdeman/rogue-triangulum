@@ -16,8 +16,8 @@
 | Day Trading | ❌ Not wired (Phase B) |
 | Options | ❌ Future |
 | Investing | ❌ Future |
-| Paper Trading | ❌ NOT IMPLEMENTED |
-| Live Trading | ❌ NOT SAFE |
+| Paper Trading | ✅ V1.1 IMPLEMENTED |
+| Live Trading | 🔒 V1.1 LOCKED (requires unlock) |
 
 ---
 
@@ -35,10 +35,11 @@
 - Entry at D+1 open, exit at stop/target/time
 - Real regime tagging per trade (ADX/ATR-based)
 
-### ❌ Paper Trading (NOT IMPLEMENTED)
-- Order execution is **placeholder only**
-- Fill prices are **NOT** from real market quotes
-- This feature requires real-time quote fetching which is not built
+### ✅ Paper Trading (V1.1 IMPLEMENTED)
+- Order execution via TradeGate
+- Fill prices from real Polygon quotes with slippage model
+- Persisted to `data/paper-executions.json`
+- MHC (Manual Human Check) rules enforced
 
 ---
 
@@ -123,10 +124,106 @@ Stats are computed from these real tags, not fake array slicing.
 | Machine Learning | ❌ | No models, no training |
 | Prediction Probabilities | ❌ | Removed (fake) |
 | Day Trading | ❌ | Not wired (Phase B) |
-| Paper Trading Fills | ❌ | Not implemented |
-| Live Trading | ❌ | Not safe |
 | Intraday Backtesting | ❌ | Phase B |
 | Options Analysis | ❌ | Future |
+
+---
+
+## Execution Layer (V1.1)
+
+### Trading Modes
+
+| Mode | Description | Status |
+|------|-------------|--------|
+| **PAPER** | Simulated fills using real quotes + slippage | ✅ Default |
+| **LIVE** | Real broker orders | 🔒 Locked by default |
+
+### Live Mode Safety
+
+1. **Locked by default** - cannot select Live without unlock
+2. **Unlock requires typing "ENABLE LIVE" exactly**
+3. **Unlock expires after 15 minutes**
+4. **All live trades require MHC approval**
+
+### MHC (Manual Human Check) Rules
+
+Trades require manual approval if:
+
+| Rule | Threshold | Triggered When |
+|------|-----------|----------------|
+| Low confidence | < 0.70 | Score-based filtering |
+| Low score | < 75 | Weak signals |
+| Unapproved symbol | Not in watchlist | Unknown tickers |
+| Options trade | Any | Not supported V1 |
+| Large position | > $1000 | Size risk |
+| **Live mode** | Always | All live trades |
+
+### Execution Authority
+
+**HARD RULE: Only `TradeGate` can execute trades.**
+
+- Brains/Orchestrator propose `TradeIntent`
+- TradeGate routes to PaperBroker or LiveAdapter
+- No other module imports broker adapters
+
+### Execution Files
+
+```
+src/lib/execution/
+├── execution-types.ts      # TradeIntent, ExecutionResult types
+├── trade-gate.ts           # Single execution authority
+├── paper-broker.ts         # Simulated execution
+├── paper-store.ts          # JSON persistence
+├── broker-adapter.ts       # Broker interface
+└── brokers/
+    └── live-broker-stub.ts # Placeholder for real broker
+
+src/lib/risk/
+└── mhc.ts                  # Manual Human Check rules
+
+src/contexts/
+└── TradingModeContext.tsx  # App-wide mode state
+
+src/components/execution/
+├── TradingModeToggle.tsx
+├── LiveUnlockModal.tsx
+├── MHCApprovalModal.tsx
+└── ExecuteButton.tsx
+```
+
+---
+
+## Signal Journal (V1 - Performance Tracking)
+
+**Terminology:** We use "tracking", "evaluation", "performance", "calibration" - NOT "learning" or "AI".
+
+### What It Does
+- Records every scanner signal with strategy, score, direction, regime tags
+- Evaluates outcomes post-hoc against real daily bars
+- Computes MFE/MAE, hit target/stop rates, returns at 1/3/7/10 bar horizons
+- Aggregates stats by strategy, regime, score bucket
+
+### ⚠️ STORAGE WARNING
+
+**The JSON journal (`data/signal-journal.json`) is for DEV/SELF-HOST ONLY.**
+
+- All writes happen server-side via API routes
+- No durability guarantees - file may be lost on redeploy
+- For production: migrate to SQLite or Supabase
+- Vercel/serverless = NO persistent filesystem
+
+### Bar-Indexed Alignment
+
+Evaluation uses bar indexing for anti-lookahead:
+1. Signal computed on bar D (close)
+2. Entry at bar D+1 open
+3. Horizons: D+1, D+3, D+7, D+10 (trading bars, not calendar)
+4. Weekends/holidays automatically skipped
+
+### UI Access
+
+- **Signal Journal:** `/signal-journal`
+- **Manual Journal:** `/journal` (separate, for trade logging)
 
 ---
 
@@ -144,8 +241,21 @@ src/lib/
 ├── brains/specialists/
 │   └── swing-brain.ts    # V1 - Active
 │   └── day-trading-brain.ts  # V1 - NOT WIRED
+├── journal/              # Signal Journal (V1)
+│   ├── signal-types.ts   # SignalRecord, SignalOutcome types
+│   ├── signal-store.ts   # JSON file store (server-side)
+│   ├── signal-recorder.ts # Records signals from Orchestrator
+│   └── signal-evaluator.ts # Evaluates outcomes vs real data
 └── core/
-    └── orchestrator.ts   # Routes to SwingBrain only in V1
+    └── orchestrator.ts   # Routes to SwingBrain + records signals
+
+src/app/api/journal/      # Signal Journal API routes
+├── route.ts              # GET signals/stats
+├── record/route.ts       # POST record signals
+└── evaluate/route.ts     # POST trigger evaluation
+
+data/
+└── signal-journal.json   # Persisted signals (DEV/SELF-HOST ONLY)
 ```
 
 ---

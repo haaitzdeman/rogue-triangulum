@@ -16,6 +16,7 @@ import { useAppMode } from '@/contexts/AppModeContext';
 import { useDataProvider } from '@/hooks/useMarketData';
 import { getOrchestrator } from '@/lib/core/orchestrator';
 import { SwingBrain } from '@/lib/brains/specialists/swing-brain';
+import { prepareCandidatesForRecording, type ExtendedCandidate } from '@/lib/journal/signal-prep';
 // V1: DayTradingBrain removed - swing only
 import type { MarketContext, Candidate } from '@/lib/core/types';
 
@@ -88,6 +89,65 @@ function initOrchestrator(): void {
 
     orchestratorInitialized = true;
     console.log('[useLiveScanner] V1: Orchestrator initialized with SwingBrain only');
+}
+
+/**
+ * Record signals to journal via API (non-blocking)
+ * Uses ExtendedCandidate type - no fragile prediction extraction
+ */
+async function recordToJournal(
+    candidates: unknown[],
+    context: MarketContext
+): Promise<void> {
+    try {
+        // Cast to ExtendedCandidate - SwingBrain includes these extended fields
+        const extendedCandidates: ExtendedCandidate[] = candidates.map((c) => {
+            const r = c as Record<string, unknown>;
+            return {
+                symbol: String(r.symbol ?? ''),
+                score: Number(r.score ?? 0),
+                direction: (r.direction as 'long' | 'short' | 'neutral') ?? 'neutral',
+                reasons: (r.reasons as string[]) ?? [],
+                timestamp: Number(r.timestamp ?? context.timestamp),
+                name: r.name as string | undefined,
+                strategyName: r.strategyName as string | undefined,
+                setupType: r.setupType as string | undefined,
+                confidence: r.confidence as number | undefined,
+                invalidation: r.invalidation as number | undefined,
+                currentPrice: r.currentPrice as number | undefined,
+                priceChange: r.priceChange as number | undefined,
+                regimeTrending: r.regimeTrending as boolean | undefined,
+                regimeHighVol: r.regimeHighVol as boolean | undefined,
+                signals: r.signals as Array<{ name: string; direction: string; strength: number }> | undefined,
+            };
+        });
+
+        // Prepare for recording
+        const prepared = prepareCandidatesForRecording(
+            extendedCandidates,
+            { timestamp: context.timestamp }
+        );
+
+        console.log(`[Client] journal POST candidates=${extendedCandidates.length} prepared=${prepared.length}`);
+
+        if (prepared.length === 0) {
+            console.log('[Client] All candidates filtered out (neutral)');
+            return;
+        }
+
+        // Send to API for server-side persistence
+        const response = await fetch('/api/journal/record', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ candidates: prepared }),
+        });
+
+        const result = await response.json();
+        console.log(`[Client] journal POST status=${response.status} added=${result.added} skipped=${result.skipped}`);
+    } catch (error: unknown) {
+        // Non-blocking - don't fail the scan if journal recording fails
+        console.warn('[Client] Journal recording error:', error);
+    }
 }
 
 /**
@@ -165,6 +225,15 @@ export function useLiveScanner(
             const tradingCandidates = rankedCandidates
                 .map(toTradingCandidate)
                 .filter((c): c is TradingCandidate => c !== null);
+
+            // ---------- SIGNAL JOURNAL RECORDING ----------
+            // Record top 10 signals for performance tracking (non-blocking)
+            if (rankedCandidates.length > 0) {
+                recordToJournal(rankedCandidates.slice(0, 10), context).catch((err) => {
+                    console.warn('[Client] Journal recording error:', err);
+                });
+            }
+            // ------------------------------------------------
 
             setCandidates(tradingCandidates);
             setLastScan(new Date());

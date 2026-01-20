@@ -1,0 +1,78 @@
+﻿{
+    "success":  true,
+    "signals":  [
+                    {
+                        "id":  "NVDA-1768751719744-momentum",
+                        "version":  "V1",
+                        "symbol":  "NVDA",
+                        "strategyName":  "Momentum",
+                        "setupType":  "Momentum Breakout",
+                        "direction":  "long",
+                        "score":  82,
+                        "confidence":  0.82,
+                        "reasons":  [
+                                        "RSI bullish",
+                                        "Above SMA50"
+                                    ],
+                        "signalBarTimestamp":  1768751719744,
+                        "entryBarTimestamp":  null,
+                        "referenceEntryDate":  "2026-01-21",
+                        "referenceEntryPrice":  null,
+                        "riskStop":  120,
+                        "targetPrice":  140,
+                        "targetR":  2,
+                        "atrDollars":  5,
+                        "atrPercent":  4,
+                        "regimeTrending":  false,
+                        "regimeHighVol":  false,
+                        "horizonDays":  7,
+                        "status":  "pending",
+                        "createdAt":  "2026-01-20T15:55:20.005Z",
+                        "outcome":  null
+                    }
+                ],
+    "stats":  {
+                  "totalSignals":  3,
+                  "evaluated":  0,
+                  "pending":  1,
+                  "avgMFE":  0,
+                  "avgMAE":  0,
+                  "hitTargetRate":  0,
+                  "hitStopRate":  0,
+                  "timeoutRate":  0,
+                  "byStrategy":  {
+
+                                 },
+                  "byRegime":  {
+                                   "trending":  {
+                                                    "count":  0,
+                                                    "hitTargetRate":  0,
+                                                    "avgMFE":  0,
+                                                    "avgMAE":  0
+                                                },
+                                   "choppy":  {
+                                                  "count":  0,
+                                                  "hitTargetRate":  0,
+                                                  "avgMFE":  0,
+                                                  "avgMAE":  0
+                                              },
+                                   "highVol":  {
+                                                   "count":  0,
+                                                   "hitTargetRate":  0,
+                                                   "avgMFE":  0,
+                                                   "avgMAE":  0
+                                               },
+                                   "lowVol":  {
+                                                  "count":  0,
+                                                  "hitTargetRate":  0,
+                                                  "avgMFE":  0,
+                                                  "avgMAE":  0
+                                              }
+                               },
+                  "byScoreBucket":  {
+
+                                    }
+              },
+    "count":  1,
+    "includeSeed":  false
+}

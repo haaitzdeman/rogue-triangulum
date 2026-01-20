@@ -3,6 +3,8 @@
  * 
  * Routes user actions to the correct specialist brain based on active desk.
  * Never places orders directly - only TradeGate can do that.
+ * 
+ * NOTE: Signal Journal recording is handled in useLiveScanner.tsx (UI layer).
  */
 
 import type {
@@ -85,6 +87,8 @@ export class Orchestrator {
                     rank: index + 1,
                 }));
 
+
+
             console.log(`[Orchestrator] Found ${ranked.length} candidates for ${this.activeDesk}`);
             return ranked;
         } catch (error) {
@@ -92,6 +96,7 @@ export class Orchestrator {
             return [];
         }
     }
+
 
     /**
      * Request full prediction for a candidate

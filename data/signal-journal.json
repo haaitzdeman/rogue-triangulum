@@ -1,0 +1,93 @@
+{
+  "signals": [
+    {
+      "id": "AAPL-1768924502080-momentum-seed",
+      "version": "V1-SEED",
+      "symbol": "AAPL",
+      "strategyName": "Momentum",
+      "setupType": "Momentum RSI Breakout",
+      "direction": "long",
+      "score": 78,
+      "confidence": 0.78,
+      "reasons": [
+        "RSI crossing 50 from below",
+        "MACD bullish crossover",
+        "Above SMA20"
+      ],
+      "signalBarTimestamp": 1768060502080,
+      "entryBarTimestamp": null,
+      "referenceEntryDate": "2026-01-20",
+      "referenceEntryPrice": null,
+      "riskStop": 175.5,
+      "targetPrice": 195,
+      "targetR": 2,
+      "atrDollars": 4.5,
+      "atrPercent": 2.4,
+      "regimeTrending": false,
+      "regimeHighVol": false,
+      "horizonDays": 7,
+      "status": "pending",
+      "createdAt": "2026-01-20T15:55:02.082Z"
+    },
+    {
+      "id": "TSLA-1768924502080-meanrev-seed",
+      "version": "V1-SEED",
+      "symbol": "TSLA",
+      "strategyName": "MeanReversion",
+      "setupType": "Mean Reversion Oversold",
+      "direction": "long",
+      "score": 65,
+      "confidence": 0.65,
+      "reasons": [
+        "RSI below 30",
+        "Price at lower Bollinger Band",
+        "Volume spike"
+      ],
+      "signalBarTimestamp": 1767628502080,
+      "entryBarTimestamp": null,
+      "referenceEntryDate": "2026-01-20",
+      "referenceEntryPrice": null,
+      "riskStop": 230,
+      "targetPrice": 280,
+      "targetR": 2,
+      "atrDollars": 12,
+      "atrPercent": 4.8,
+      "regimeTrending": false,
+      "regimeHighVol": false,
+      "horizonDays": 7,
+      "status": "pending",
+      "createdAt": "2026-01-20T15:55:02.082Z"
+    },
+    {
+      "id": "NVDA-1768751719744-momentum",
+      "version": "V1",
+      "symbol": "NVDA",
+      "strategyName": "Momentum",
+      "setupType": "Momentum Breakout",
+      "direction": "long",
+      "score": 82,
+      "confidence": 0.82,
+      "reasons": [
+        "RSI bullish",
+        "Above SMA50"
+      ],
+      "signalBarTimestamp": 1768751719744,
+      "entryBarTimestamp": null,
+      "referenceEntryDate": "2026-01-21",
+      "referenceEntryPrice": null,
+      "riskStop": 120,
+      "targetPrice": 140,
+      "targetR": 2,
+      "atrDollars": 5,
+      "atrPercent": 4,
+      "regimeTrending": false,
+      "regimeHighVol": false,
+      "horizonDays": 7,
+      "status": "pending",
+      "createdAt": "2026-01-20T15:55:20.005Z"
+    }
+  ],
+  "outcomes": [],
+  "lastUpdated": "2026-01-20T15:55:20.006Z",
+  "version": "V1"
+}

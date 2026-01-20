@@ -204,8 +204,9 @@ export class SwingBrain extends BaseBrain {
                     direction: bestSignal.direction as 'long' | 'short',
                     reasons: bestSignal.reasons,
                     timestamp: context.timestamp,
-                    // Extended fields for UI
+                    // Extended fields for UI and Journal
                     name: STOCK_NAMES[symbol] || symbol,
+                    strategyName: strategyName,  // Source of truth for journal
                     setupType: strategyName,
                     confidence: bestSignal.confidence,
                     invalidation: bestSignal.invalidation || currentPrice * (bestSignal.direction === 'long' ? 0.95 : 1.05),
@@ -216,7 +217,7 @@ export class SwingBrain extends BaseBrain {
                         direction: s.signal.direction,
                         strength: s.signal.score / 100,
                     })),
-                } as Candidate & { name: string; setupType: string; confidence: number; invalidation: number; currentPrice: number; priceChange: number; signals: Array<{ name: string; direction: string; strength: number }> });
+                } as Candidate & { name: string; strategyName: string; setupType: string; confidence: number; invalidation: number; currentPrice: number; priceChange: number; signals: Array<{ name: string; direction: string; strength: number }> });
 
                 // Rate limit
                 await new Promise(r => setTimeout(r, 200));

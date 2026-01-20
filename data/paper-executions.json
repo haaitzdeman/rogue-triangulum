@@ -1,0 +1,22 @@
+{
+  "executions": [
+    {
+      "id": "paper-1768927140732-g0g3siym6",
+      "intentId": "intent-1768927140413-71ny4pmlf",
+      "symbol": "AAPL",
+      "side": "buy",
+      "quantity": 10,
+      "requestedPrice": 255.53,
+      "fillPrice": 255.58,
+      "slippagePercent": 0.02,
+      "value": 2555.81,
+      "commission": 0,
+      "strategyName": "Momentum",
+      "status": "filled",
+      "filledAt": "2026-01-20T16:39:00.732Z",
+      "createdAt": "2026-01-20T16:39:00.732Z"
+    }
+  ],
+  "lastUpdated": "2026-01-20T16:39:00.734Z",
+  "version": "V1"
+}
