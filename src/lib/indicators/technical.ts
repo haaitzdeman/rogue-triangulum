@@ -145,41 +145,67 @@ export function rsi(bars: Bar[], period: number = 14): number | null {
 export function macd(bars: Bar[]): { macd: number; signal: number; histogram: number } | null {
     if (bars.length < 26) return null;
 
-    const ema12 = ema(bars, 12);
-    const ema26 = ema(bars, 26);
+    const closes = bars.map(b => b.close);
 
-    if (!ema12 || !ema26) return null;
+    const ema12Series = calculateEmaSeries(closes, 12);
+    const ema26Series = calculateEmaSeries(closes, 26);
 
-    const macdLine = ema12 - ema26;
-
-    // Calculate signal line (9-period EMA of MACD values)
-    // For simplicity, approximate with recent MACD
     const macdValues: number[] = [];
-    for (let i = 26; i <= bars.length; i++) {
-        const slice = bars.slice(0, i);
-        const e12 = ema(slice, 12);
-        const e26 = ema(slice, 26);
-        if (e12 && e26) {
-            macdValues.push(e12 - e26);
+    let lastMacd: number | null = null;
+
+    // Calculate MACD line series (EMA12 - EMA26)
+    for (let i = 0; i < closes.length; i++) {
+        const e12 = ema12Series[i];
+        const e26 = ema26Series[i];
+        if (e12 !== null && e26 !== null) {
+            const val = e12 - e26;
+            macdValues.push(val);
+            lastMacd = val;
         }
     }
 
-    if (macdValues.length < 9) {
-        return { macd: macdLine, signal: macdLine, histogram: 0 };
+    if (macdValues.length < 9 || lastMacd === null) {
+        return lastMacd !== null
+            ? { macd: lastMacd, signal: lastMacd, histogram: 0 }
+            : null;
     }
 
-    // EMA of MACD values
-    const multiplier = 2 / 10; // 9-period
-    let signalLine = macdValues.slice(0, 9).reduce((a, b) => a + b, 0) / 9;
-    for (let i = 9; i < macdValues.length; i++) {
-        signalLine = (macdValues[i] - signalLine) * multiplier + signalLine;
+    // Calculate Signal Line (9-period EMA of MACD values)
+    const signalSeries = calculateEmaSeries(macdValues, 9);
+    const lastSignal = signalSeries[signalSeries.length - 1];
+
+    if (lastSignal === null) {
+        return { macd: lastMacd, signal: lastMacd, histogram: 0 };
     }
 
     return {
-        macd: macdLine,
-        signal: signalLine,
-        histogram: macdLine - signalLine,
+        macd: lastMacd,
+        signal: lastSignal,
+        histogram: lastMacd - lastSignal,
     };
+}
+
+function calculateEmaSeries(values: number[], period: number): (number | null)[] {
+    const result: (number | null)[] = new Array(values.length).fill(null);
+    if (values.length < period) return result;
+
+    const multiplier = 2 / (period + 1);
+
+    // SMA for the first valid EMA point
+    let sum = 0;
+    for (let i = 0; i < period; i++) {
+        sum += values[i];
+    }
+    let ema = sum / period;
+    result[period - 1] = ema;
+
+    // EMA for the rest
+    for (let i = period; i < values.length; i++) {
+        ema = (values[i] - ema) * multiplier + ema;
+        result[i] = ema;
+    }
+
+    return result;
 }
 
 /**
