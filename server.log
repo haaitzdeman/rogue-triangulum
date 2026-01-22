@@ -1,0 +1,20 @@
+
+> rogue-triangulum@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ✓ Ready in 1846ms
+ ○ Compiling /day-trading ...
+ ✓ Compiled /day-trading in 8.3s (653 modules)
+ GET /day-trading 200 in 9542ms
+ ✓ Compiled in 1234ms (311 modules)
+ GET /day-trading 200 in 57ms
+ GET /day-trading 200 in 38ms
+ ✓ Compiled in 745ms (635 modules)
+ GET /day-trading 200 in 218ms
+ ✓ Compiled in 2.9s (635 modules)
+ GET /day-trading 200 in 304ms
+ ✓ Compiled in 584ms (635 modules)
