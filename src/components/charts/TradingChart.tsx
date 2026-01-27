@@ -90,8 +90,19 @@ export function TradingChart({
     showTimeframeSelector = true,
     onTimeframeChange,
 }: TradingChartProps) {
-    const chartContainerRef = useRef<HTMLDivElement>(null);
+    const [chartContainer, setChartContainer] = useState<HTMLDivElement | null>(null);
     const chartRef = useRef<IChartApi | null>(null);
+
+    // Refs for series to avoid recreating them
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const candleSeriesRef = useRef<any>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const volumeSeriesRef = useRef<any>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const vwapSeriesRef = useRef<any>(null);
+
+    // Ref for candles to access latest data in init effect without dependency
+    const candlesRef = useRef(candles);
 
     const [currentRecipe, setCurrentRecipe] = useState<ChartRecipe>(recipe);
     const config = CHART_RECIPES[currentRecipe];
@@ -104,12 +115,17 @@ export function TradingChart({
         investing: ['1d', '1w', '1M'],
     };
 
+    // Sync candles ref
+    useEffect(() => {
+        candlesRef.current = candles;
+    }, [candles]);
+
     // Initialize chart
     useEffect(() => {
-        if (!chartContainerRef.current) return;
+        if (!chartContainer) return;
 
-        const chart = createChart(chartContainerRef.current, {
-            width: chartContainerRef.current.clientWidth,
+        const chart = createChart(chartContainer, {
+            width: chartContainer.clientWidth,
             height,
             layout: {
                 background: { type: ColorType.Solid, color: 'transparent' },
@@ -145,12 +161,11 @@ export function TradingChart({
             wickUpColor: config.candleUpColor,
             wickDownColor: config.candleDownColor,
         });
+        candleSeriesRef.current = candleSeries;
 
-        // Add volume series if enabled (v5 API) - use any to avoid complex generics
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let volumeSeries: any = null;
+        // Add volume series if enabled (v5 API)
         if (config.showVolume) {
-            volumeSeries = chart.addSeries(HistogramSeries, {
+            const volumeSeries = chart.addSeries(HistogramSeries, {
                 color: config.volumeUpColor,
                 priceFormat: { type: 'volume' },
                 priceScaleId: 'volume',
@@ -159,23 +174,28 @@ export function TradingChart({
             chart.priceScale('volume').applyOptions({
                 scaleMargins: { top: 0.8, bottom: 0 },
             });
+            volumeSeriesRef.current = volumeSeries;
+        } else {
+            volumeSeriesRef.current = null;
         }
 
         // Add VWAP line if enabled (v5 API)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let vwapSeries: any = null;
         if (config.showVWAP) {
-            vwapSeries = chart.addSeries(LineSeries, {
+            const vwapSeries = chart.addSeries(LineSeries, {
                 color: '#f59e0b',
                 lineWidth: 2,
                 priceScaleId: 'right',
                 title: 'VWAP',
             });
+            vwapSeriesRef.current = vwapSeries;
+        } else {
+            vwapSeriesRef.current = null;
         }
 
-        // Set data if available
-        if (candles.length > 0) {
-            const chartData = candles.map(c => ({
+        // Set initial data using the ref (so we don't depend on 'candles')
+        const currentCandles = candlesRef.current;
+        if (currentCandles.length > 0) {
+            const chartData = currentCandles.map(c => ({
                 time: (c.timestamp / 1000) as Time,
                 open: c.open,
                 high: c.high,
@@ -184,24 +204,24 @@ export function TradingChart({
             }));
             candleSeries.setData(chartData);
 
-            if (volumeSeries && config.showVolume) {
-                const volumeData = candles.map(c => ({
+            if (volumeSeriesRef.current && config.showVolume) {
+                const volumeData = currentCandles.map(c => ({
                     time: (c.timestamp / 1000) as Time,
                     value: c.volume,
                     color: c.close >= c.open ? config.volumeUpColor : config.volumeDownColor,
                 }));
-                volumeSeries.setData(volumeData);
+                volumeSeriesRef.current.setData(volumeData);
             }
 
-            if (vwapSeries && config.showVWAP) {
-                const vwapData = candles
+            if (vwapSeriesRef.current && config.showVWAP) {
+                const vwapData = currentCandles
                     .filter(c => c.vwap !== undefined)
                     .map(c => ({
                         time: (c.timestamp / 1000) as Time,
                         value: c.vwap!,
                     }));
                 if (vwapData.length > 0) {
-                    vwapSeries.setData(vwapData);
+                    vwapSeriesRef.current.setData(vwapData);
                 }
             }
 
@@ -210,9 +230,9 @@ export function TradingChart({
 
         // Handle resize
         const handleResize = () => {
-            if (chartContainerRef.current && chartRef.current) {
+            if (chartContainer && chartRef.current) {
                 chartRef.current.applyOptions({
-                    width: chartContainerRef.current.clientWidth,
+                    width: chartContainer.clientWidth,
                 });
             }
         };
@@ -222,8 +242,60 @@ export function TradingChart({
         return () => {
             window.removeEventListener('resize', handleResize);
             chart.remove();
+            chartRef.current = null;
+            candleSeriesRef.current = null;
+            volumeSeriesRef.current = null;
+            vwapSeriesRef.current = null;
         };
-    }, [height, config, currentRecipe, candles]);
+    }, [chartContainer, height, config, currentRecipe]);
+
+    // Update data when candles change
+    useEffect(() => {
+        // If series refs are not set, it means init hasn't happened or failed.
+        if (!candleSeriesRef.current) return;
+
+        if (candles.length > 0) {
+            const chartData = candles.map(c => ({
+                time: (c.timestamp / 1000) as Time,
+                open: c.open,
+                high: c.high,
+                low: c.low,
+                close: c.close,
+            }));
+            candleSeriesRef.current.setData(chartData);
+
+            if (volumeSeriesRef.current && config.showVolume) {
+                const volumeData = candles.map(c => ({
+                    time: (c.timestamp / 1000) as Time,
+                    value: c.volume,
+                    color: c.close >= c.open ? config.volumeUpColor : config.volumeDownColor,
+                }));
+                volumeSeriesRef.current.setData(volumeData);
+            }
+
+            if (vwapSeriesRef.current && config.showVWAP) {
+                const vwapData = candles
+                    .filter(c => c.vwap !== undefined)
+                    .map(c => ({
+                        time: (c.timestamp / 1000) as Time,
+                        value: c.vwap!,
+                    }));
+                if (vwapData.length > 0) {
+                    vwapSeriesRef.current.setData(vwapData);
+                } else {
+                    vwapSeriesRef.current.setData([]);
+                }
+            }
+
+            // Optional: fitContent on update.
+            // Keeping it to match previous behavior of full re-render
+            chartRef.current?.timeScale().fitContent();
+        } else {
+            candleSeriesRef.current.setData([]);
+            if (volumeSeriesRef.current) volumeSeriesRef.current.setData([]);
+            if (vwapSeriesRef.current) vwapSeriesRef.current.setData([]);
+        }
+    }, [candles, config]);
 
     return (
         <div className="card p-4">
@@ -270,7 +342,7 @@ export function TradingChart({
             </div>
 
             {/* Chart Container */}
-            <div ref={chartContainerRef} className="w-full" style={{ height }} />
+            <div ref={setChartContainer} className="w-full" style={{ height }} />
 
             {/* Legend */}
             {config.showVWAP && (
