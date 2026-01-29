@@ -92,22 +92,21 @@ export default function DayTradingPage() {
             </div>
 
             {/* Chart Section */}
-            <div className="mt-6">
-                {chartLoading ? (
-                    <div className="card p-6 h-[400px] flex items-center justify-center">
-                        <span className="text-foreground-muted">Loading chart...</span>
+            <div className="mt-6 relative">
+                {chartLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-background/50 z-10 rounded-lg backdrop-blur-sm">
+                        <span className="text-foreground-muted font-medium">Loading chart...</span>
                     </div>
-                ) : (
-                    <TradingChart
-                        candles={candles}
-                        symbol={selectedSymbol}
-                        timeframe={timeframe}
-                        recipe="daytrading"
-                        height={350}
-                        showTimeframeSelector={true}
-                        onTimeframeChange={setTimeframe}
-                    />
                 )}
+                <TradingChart
+                    candles={candles}
+                    symbol={selectedSymbol}
+                    timeframe={timeframe}
+                    recipe="daytrading"
+                    height={350}
+                    showTimeframeSelector={true}
+                    onTimeframeChange={setTimeframe}
+                />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
