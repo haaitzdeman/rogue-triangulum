@@ -7,7 +7,7 @@
  * based on the trading desk context.
  */
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import {
     createChart,
     ColorType,
@@ -15,7 +15,7 @@ import {
     HistogramSeries,
     LineSeries,
 } from 'lightweight-charts';
-import type { IChartApi, Time } from 'lightweight-charts';
+import type { IChartApi, ISeriesApi, Time } from 'lightweight-charts';
 import type { Candle, Timeframe } from '@/lib/data/types';
 
 // Chart recipe types for different desks
@@ -92,6 +92,9 @@ export function TradingChart({
 }: TradingChartProps) {
     const chartContainerRef = useRef<HTMLDivElement>(null);
     const chartRef = useRef<IChartApi | null>(null);
+    const candleSeriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
+    const volumeSeriesRef = useRef<ISeriesApi<"Histogram"> | null>(null);
+    const vwapSeriesRef = useRef<ISeriesApi<"Line"> | null>(null);
 
     const [currentRecipe, setCurrentRecipe] = useState<ChartRecipe>(recipe);
     const config = CHART_RECIPES[currentRecipe];
@@ -103,6 +106,43 @@ export function TradingChart({
         swing: ['1h', '4h', '1d', '1w'],
         investing: ['1d', '1w', '1M'],
     };
+
+    // Helper to update chart data without recreating chart
+    const updateChartData = useCallback(() => {
+        if (!candleSeriesRef.current) return;
+
+        if (candles.length > 0) {
+            const chartData = candles.map(c => ({
+                time: (c.timestamp / 1000) as Time,
+                open: c.open,
+                high: c.high,
+                low: c.low,
+                close: c.close,
+            }));
+            candleSeriesRef.current.setData(chartData);
+
+            if (volumeSeriesRef.current && config.showVolume) {
+                const volumeData = candles.map(c => ({
+                    time: (c.timestamp / 1000) as Time,
+                    value: c.volume,
+                    color: c.close >= c.open ? config.volumeUpColor : config.volumeDownColor,
+                }));
+                volumeSeriesRef.current.setData(volumeData);
+            }
+
+            if (vwapSeriesRef.current && config.showVWAP) {
+                const vwapData = candles
+                    .filter(c => c.vwap !== undefined)
+                    .map(c => ({
+                        time: (c.timestamp / 1000) as Time,
+                        value: c.vwap!,
+                    }));
+                if (vwapData.length > 0) {
+                    vwapSeriesRef.current.setData(vwapData);
+                }
+            }
+        }
+    }, [candles, config]);
 
     // Initialize chart
     useEffect(() => {
@@ -145,66 +185,40 @@ export function TradingChart({
             wickUpColor: config.candleUpColor,
             wickDownColor: config.candleDownColor,
         });
+        candleSeriesRef.current = candleSeries;
 
-        // Add volume series if enabled (v5 API) - use any to avoid complex generics
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let volumeSeries: any = null;
+        // Add volume series if enabled (v5 API)
         if (config.showVolume) {
-            volumeSeries = chart.addSeries(HistogramSeries, {
+            const volumeSeries = chart.addSeries(HistogramSeries, {
                 color: config.volumeUpColor,
                 priceFormat: { type: 'volume' },
                 priceScaleId: 'volume',
             });
+            volumeSeriesRef.current = volumeSeries;
 
             chart.priceScale('volume').applyOptions({
                 scaleMargins: { top: 0.8, bottom: 0 },
             });
+        } else {
+            volumeSeriesRef.current = null;
         }
 
         // Add VWAP line if enabled (v5 API)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let vwapSeries: any = null;
         if (config.showVWAP) {
-            vwapSeries = chart.addSeries(LineSeries, {
+            const vwapSeries = chart.addSeries(LineSeries, {
                 color: '#f59e0b',
                 lineWidth: 2,
                 priceScaleId: 'right',
                 title: 'VWAP',
             });
+            vwapSeriesRef.current = vwapSeries;
+        } else {
+            vwapSeriesRef.current = null;
         }
 
-        // Set data if available
+        // Initial data load
+        updateChartData();
         if (candles.length > 0) {
-            const chartData = candles.map(c => ({
-                time: (c.timestamp / 1000) as Time,
-                open: c.open,
-                high: c.high,
-                low: c.low,
-                close: c.close,
-            }));
-            candleSeries.setData(chartData);
-
-            if (volumeSeries && config.showVolume) {
-                const volumeData = candles.map(c => ({
-                    time: (c.timestamp / 1000) as Time,
-                    value: c.volume,
-                    color: c.close >= c.open ? config.volumeUpColor : config.volumeDownColor,
-                }));
-                volumeSeries.setData(volumeData);
-            }
-
-            if (vwapSeries && config.showVWAP) {
-                const vwapData = candles
-                    .filter(c => c.vwap !== undefined)
-                    .map(c => ({
-                        time: (c.timestamp / 1000) as Time,
-                        value: c.vwap!,
-                    }));
-                if (vwapData.length > 0) {
-                    vwapSeries.setData(vwapData);
-                }
-            }
-
             chart.timeScale().fitContent();
         }
 
@@ -222,8 +236,18 @@ export function TradingChart({
         return () => {
             window.removeEventListener('resize', handleResize);
             chart.remove();
+            chartRef.current = null;
+            candleSeriesRef.current = null;
+            volumeSeriesRef.current = null;
+            vwapSeriesRef.current = null;
         };
-    }, [height, config, currentRecipe, candles]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [height, config, currentRecipe, symbol, timeframe]); // removed candles to avoid full re-render on data update
+
+    // Data update effect
+    useEffect(() => {
+        updateChartData();
+    }, [updateChartData]);
 
     return (
         <div className="card p-4">
