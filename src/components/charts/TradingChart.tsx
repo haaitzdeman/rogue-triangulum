@@ -7,7 +7,7 @@
  * based on the trading desk context.
  */
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import {
     createChart,
     ColorType,
@@ -15,7 +15,7 @@ import {
     HistogramSeries,
     LineSeries,
 } from 'lightweight-charts';
-import type { IChartApi, Time } from 'lightweight-charts';
+import type { IChartApi, ISeriesApi, Time } from 'lightweight-charts';
 import type { Candle, Timeframe } from '@/lib/data/types';
 
 // Chart recipe types for different desks
@@ -93,6 +93,11 @@ export function TradingChart({
     const chartContainerRef = useRef<HTMLDivElement>(null);
     const chartRef = useRef<IChartApi | null>(null);
 
+    // Series refs to access them across effects without recreating chart
+    const candleSeriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
+    const volumeSeriesRef = useRef<ISeriesApi<"Histogram"> | null>(null);
+    const vwapSeriesRef = useRef<ISeriesApi<"Line"> | null>(null);
+
     const [currentRecipe, setCurrentRecipe] = useState<ChartRecipe>(recipe);
     const config = CHART_RECIPES[currentRecipe];
 
@@ -104,9 +109,48 @@ export function TradingChart({
         investing: ['1d', '1w', '1M'],
     };
 
+    // Memoize data to prevent expensive mapping on every render
+    const chartData = useMemo(() => {
+        return candles.map(c => ({
+            time: (c.timestamp / 1000) as Time,
+            open: c.open,
+            high: c.high,
+            low: c.low,
+            close: c.close,
+        }));
+    }, [candles]);
+
+    const volumeData = useMemo(() => {
+        if (!config.showVolume) return [];
+        return candles.map(c => ({
+            time: (c.timestamp / 1000) as Time,
+            value: c.volume,
+            color: c.close >= c.open ? config.volumeUpColor : config.volumeDownColor,
+        }));
+    }, [candles, config.showVolume, config.volumeUpColor, config.volumeDownColor]);
+
+    const vwapData = useMemo(() => {
+        if (!config.showVWAP) return [];
+        return candles
+            .filter(c => c.vwap !== undefined)
+            .map(c => ({
+                time: (c.timestamp / 1000) as Time,
+                value: c.vwap!,
+            }));
+    }, [candles, config.showVWAP]);
+
     // Initialize chart
     useEffect(() => {
         if (!chartContainerRef.current) return;
+
+        // Cleanup existing chart if any
+        if (chartRef.current) {
+            chartRef.current.remove();
+            chartRef.current = null;
+            candleSeriesRef.current = null;
+            volumeSeriesRef.current = null;
+            vwapSeriesRef.current = null;
+        }
 
         const chart = createChart(chartContainerRef.current, {
             width: chartContainerRef.current.clientWidth,
@@ -145,67 +189,31 @@ export function TradingChart({
             wickUpColor: config.candleUpColor,
             wickDownColor: config.candleDownColor,
         });
+        candleSeriesRef.current = candleSeries;
 
-        // Add volume series if enabled (v5 API) - use any to avoid complex generics
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let volumeSeries: any = null;
+        // Add volume series if enabled
         if (config.showVolume) {
-            volumeSeries = chart.addSeries(HistogramSeries, {
+            const volumeSeries = chart.addSeries(HistogramSeries, {
                 color: config.volumeUpColor,
                 priceFormat: { type: 'volume' },
                 priceScaleId: 'volume',
             });
+            volumeSeriesRef.current = volumeSeries;
 
             chart.priceScale('volume').applyOptions({
                 scaleMargins: { top: 0.8, bottom: 0 },
             });
         }
 
-        // Add VWAP line if enabled (v5 API)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let vwapSeries: any = null;
+        // Add VWAP line if enabled
         if (config.showVWAP) {
-            vwapSeries = chart.addSeries(LineSeries, {
+            const vwapSeries = chart.addSeries(LineSeries, {
                 color: '#f59e0b',
                 lineWidth: 2,
                 priceScaleId: 'right',
                 title: 'VWAP',
             });
-        }
-
-        // Set data if available
-        if (candles.length > 0) {
-            const chartData = candles.map(c => ({
-                time: (c.timestamp / 1000) as Time,
-                open: c.open,
-                high: c.high,
-                low: c.low,
-                close: c.close,
-            }));
-            candleSeries.setData(chartData);
-
-            if (volumeSeries && config.showVolume) {
-                const volumeData = candles.map(c => ({
-                    time: (c.timestamp / 1000) as Time,
-                    value: c.volume,
-                    color: c.close >= c.open ? config.volumeUpColor : config.volumeDownColor,
-                }));
-                volumeSeries.setData(volumeData);
-            }
-
-            if (vwapSeries && config.showVWAP) {
-                const vwapData = candles
-                    .filter(c => c.vwap !== undefined)
-                    .map(c => ({
-                        time: (c.timestamp / 1000) as Time,
-                        value: c.vwap!,
-                    }));
-                if (vwapData.length > 0) {
-                    vwapSeries.setData(vwapData);
-                }
-            }
-
-            chart.timeScale().fitContent();
+            vwapSeriesRef.current = vwapSeries;
         }
 
         // Handle resize
@@ -219,11 +227,62 @@ export function TradingChart({
 
         window.addEventListener('resize', handleResize);
 
+        // NOTE: Initial data set is handled in the data update effect
+        // but we need to ensure fitContent is called on first load.
+        // We can do this by exposing a flag or checking if data was empty.
+        // For simplicity, we'll let the data effect handle setData,
+        // but we need a way to fitContent ONLY on mount/recipe change.
+
+        // Actually, we can set data here immediately if available to ensure smooth init
+        if (chartData.length > 0) {
+            candleSeries.setData(chartData);
+            if (volumeSeriesRef.current && volumeData.length > 0) {
+                volumeSeriesRef.current.setData(volumeData);
+            }
+            if (vwapSeriesRef.current && vwapData.length > 0) {
+                vwapSeriesRef.current.setData(vwapData);
+            }
+            chart.timeScale().fitContent();
+        }
+
         return () => {
             window.removeEventListener('resize', handleResize);
             chart.remove();
+            chartRef.current = null;
         };
-    }, [height, config, currentRecipe, candles]);
+        // Re-run this effect ONLY if recipe changes (config).
+        // We purposefully exclude 'candles', 'chartData', etc. to avoid re-init on data stream.
+        // We also exclude 'height' because the separate height effect handles resizing.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentRecipe]);
+
+    // Handle Data Updates
+    useEffect(() => {
+        if (!chartRef.current) return;
+
+        if (candleSeriesRef.current && chartData.length > 0) {
+            candleSeriesRef.current.setData(chartData);
+        }
+
+        if (volumeSeriesRef.current && config.showVolume && volumeData.length > 0) {
+            volumeSeriesRef.current.setData(volumeData);
+        }
+
+        if (vwapSeriesRef.current && config.showVWAP && vwapData.length > 0) {
+            vwapSeriesRef.current.setData(vwapData);
+        }
+
+        // Bolt Optimization: We intentionally DO NOT call fitContent() here
+        // to preserve the user's zoom level during real-time updates.
+
+    }, [chartData, volumeData, vwapData, config.showVolume, config.showVWAP]);
+
+    // Handle Height Updates without recreation
+    useEffect(() => {
+        if (chartRef.current) {
+             chartRef.current.applyOptions({ height });
+        }
+    }, [height]);
 
     return (
         <div className="card p-4">
