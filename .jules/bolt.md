@@ -1,0 +1,3 @@
+## 2026-02-02 - Decoupling Chart Initialization
+**Learning:** In React components wrapping imperative charting libraries (like Lightweight Charts), putting the chart initialization logic in the same `useEffect` as data updates causes full chart destruction/recreation on every data tick.
+**Action:** Always split into two `useEffect` hooks: one for chart instance lifecycle (init/destroy) depending on config/refs, and a second for data updates using `setData` on stored series refs. Ensure the data effect depends on config if config changes trigger chart recreation, to re-apply data to the new instance.
