@@ -1,0 +1,500 @@
+{
+  "schemaVersion": "1.0",
+  "createdAt": "2026-01-28T08:09:33.762Z",
+  "lastUpdated": "2026-01-28T08:09:33.762Z",
+  "dataLimited": false,
+  "symbols": [
+    {
+      "symbol": "AAPL",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "MSFT",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "NVDA",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "GOOGL",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "AMZN",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "META",
+      "barCount": 1059,
+      "startDate": "2021-06-30",
+      "endDate": "2026-01-27",
+      "completenessPercent": 84.05,
+      "gaps": [
+        {
+          "from": "2022-01-28",
+          "to": "2022-06-09",
+          "days": 94
+        }
+      ],
+      "isValid": false
+    },
+    {
+      "symbol": "TSLA",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "AMD",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "NFLX",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "ADBE",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "CRM",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "ORCL",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "INTC",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "CSCO",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "IBM",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "QCOM",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "SPY",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "QQQ",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "IWM",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "DIA",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "JPM",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "BAC",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "GS",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "MS",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "WFC",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "C",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "XOM",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "CVX",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "COP",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "SLB",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "OXY",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "UNH",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "JNJ",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "PFE",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "MRK",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "ABBV",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "LLY",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "COST",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "WMT",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "HD",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "MCD",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "NKE",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "SBUX",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "BA",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "CAT",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "GE",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "UPS",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    },
+    {
+      "symbol": "HON",
+      "barCount": 1254,
+      "startDate": "2021-01-29",
+      "endDate": "2026-01-27",
+      "completenessPercent": 99.52,
+      "gaps": [],
+      "isValid": true
+    }
+  ],
+  "config": {
+    "universe": [
+      "AAPL",
+      "MSFT",
+      "NVDA",
+      "GOOGL",
+      "AMZN",
+      "META",
+      "TSLA",
+      "AMD",
+      "NFLX",
+      "ADBE",
+      "CRM",
+      "ORCL",
+      "INTC",
+      "CSCO",
+      "IBM",
+      "QCOM",
+      "SPY",
+      "QQQ",
+      "IWM",
+      "DIA",
+      "JPM",
+      "BAC",
+      "GS",
+      "MS",
+      "WFC",
+      "C",
+      "XOM",
+      "CVX",
+      "COP",
+      "SLB",
+      "OXY",
+      "UNH",
+      "JNJ",
+      "PFE",
+      "MRK",
+      "ABBV",
+      "LLY",
+      "COST",
+      "WMT",
+      "HD",
+      "MCD",
+      "NKE",
+      "SBUX",
+      "BA",
+      "CAT",
+      "GE",
+      "UPS",
+      "HON"
+    ],
+    "startDate": "2021-01-28",
+    "endDate": "2026-01-28"
+  }
+}

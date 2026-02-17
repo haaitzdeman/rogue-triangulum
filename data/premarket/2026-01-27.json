@@ -1,0 +1,85 @@
+{
+  "date": "2026-01-27",
+  "universeCount": 48,
+  "candidateCount": 2,
+  "resolved": {
+    "requestedDate": null,
+    "effectiveDate": "2026-01-27",
+    "mode": "DATASET_REPLAY",
+    "reason": "No date specified; using dataset's last available date (2026-01-27)",
+    "datasetRange": {
+      "firstDate": "2021-01-29",
+      "lastDate": "2026-01-27"
+    }
+  },
+  "dataModeSummary": {
+    "PREMARKET": 0,
+    "OPEN_FALLBACK": 2
+  },
+  "inputCoverageSummary": {
+    "symbolsWithPrevClose": 48,
+    "symbolsWithOpen": 48,
+    "symbolsWithPremarketPrice": 0
+  },
+  "candidates": [
+    {
+      "symbol": "UNH",
+      "gapPct": -16.4,
+      "direction": "DOWN",
+      "prevClose": 351.64,
+      "gapReferencePrice": 293.97,
+      "avgDailyVolume20": 9841148,
+      "dataMode": "OPEN_FALLBACK",
+      "playType": "AVOID",
+      "confidence": "LOW",
+      "lowConfidence": true,
+      "because": "LOW CONFIDENCE: Only 1 analogs found (below threshold). Based on 1 historical gap down analogs: Statistics are mixed (0% hit rate, -19.61% avg return). No clear statistical edge identified in normal volatility regime. Trade not recommended.",
+      "keyLevels": {
+        "prevClose": 351.64,
+        "gapReferencePrice": 293.97,
+        "premarketHigh": 299.5,
+        "premarketLow": 280.4
+      },
+      "invalidation": "No invalidation rule - trade is not recommended.",
+      "riskNote": "LOW SAMPLE: Only 1 historical analogs found. HIGH MAE RISK: Historical average adverse excursion of -1.88%.",
+      "analogStats": {
+        "sampleSize": 1,
+        "hitRate": 0,
+        "avgMFE": 4.62,
+        "avgMAE": -1.88,
+        "continuationPct": -19.61,
+        "regimeTag": "normal"
+      }
+    },
+    {
+      "symbol": "INTC",
+      "gapPct": 3.48,
+      "direction": "UP",
+      "prevClose": 42.49,
+      "gapReferencePrice": 43.97,
+      "avgDailyVolume20": 131828356,
+      "dataMode": "OPEN_FALLBACK",
+      "playType": "AVOID",
+      "confidence": "LOW",
+      "lowConfidence": true,
+      "because": "LOW CONFIDENCE: Only 29 analogs found (below threshold). Based on 29 historical gap up analogs: Statistics are mixed (17% hit rate, 2.87% avg return). No clear statistical edge identified in normal volatility regime. Trade not recommended.",
+      "keyLevels": {
+        "prevClose": 42.49,
+        "gapReferencePrice": 43.97,
+        "premarketHigh": 44.53,
+        "premarketLow": 43.1
+      },
+      "invalidation": "No invalidation rule - trade is not recommended.",
+      "riskNote": "LOW SAMPLE: Only 29 historical analogs found. HIGH MAE RISK: Historical average adverse excursion of -2.87%.",
+      "analogStats": {
+        "sampleSize": 29,
+        "hitRate": 0.17,
+        "avgMFE": 2.52,
+        "avgMAE": -2.87,
+        "continuationPct": 2.87,
+        "regimeTag": "normal"
+      }
+    }
+  ],
+  "generatedAt": "2026-02-17T00:52:26.327Z"
+}

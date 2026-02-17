@@ -1,0 +1,69 @@
+# Ticker Universe for Calibration System
+# Lines starting with # are comments
+# Phase A: 20 symbols
+# Phase B: 50 symbols
+# Phase C: 150+ symbols
+
+# Mega Cap Tech
+AAPL
+MSFT
+NVDA
+GOOGL
+AMZN
+META
+TSLA
+AMD
+
+# Large Cap Tech
+NFLX
+ADBE
+CRM
+ORCL
+INTC
+CSCO
+IBM
+QCOM
+
+# ETFs
+SPY
+QQQ
+IWM
+DIA
+
+# Financials
+JPM
+BAC
+GS
+MS
+WFC
+C
+
+# Energy
+XOM
+CVX
+COP
+SLB
+OXY
+
+# Healthcare
+UNH
+JNJ
+PFE
+MRK
+ABBV
+LLY
+
+# Consumer
+COST
+WMT
+HD
+MCD
+NKE
+SBUX
+
+# Industrials
+BA
+CAT
+GE
+UPS
+HON

@@ -76,10 +76,58 @@ interface LiveStats {
 }
 
 export default function JournalPage() {
-    const [entries] = useState<JournalEntry[]>(JOURNAL_ENTRIES);
+    const [entries, setEntries] = useState<JournalEntry[]>(JOURNAL_ENTRIES);
     const [prices, setPrices] = useState<Map<string, number>>(new Map());
     const [loading, setLoading] = useState(true);
     const [stats, setStats] = useState<LiveStats>({ totalPnL: 0, winRate: 0, totalTrades: 0 });
+    const [showNewEntry, setShowNewEntry] = useState(false);
+    const [validating, setValidating] = useState(false);
+    const [validationError, setValidationError] = useState<string | null>(null);
+    const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
+    const [newEntry, setNewEntry] = useState({
+        symbol: '',
+        outcome: 'win' as 'win' | 'loss',
+        pnl: 0,
+        lessons: '',
+        mistakeTags: [] as string[],
+    });
+
+    // Validate symbol exists via Polygon API
+    const validateSymbol = async (symbol: string): Promise<boolean> => {
+        if (!symbol || symbol.length < 1 || symbol.length > 5) return false;
+        // Basic format check
+        if (!/^[A-Z]{1,5}$/.test(symbol)) return false;
+
+        try {
+            const apiKey = process.env.NEXT_PUBLIC_POLYGON_API_KEY || '';
+            if (!apiKey) return true; // Skip API check if no key
+
+            const res = await fetch(`https://api.polygon.io/v3/reference/tickers/${symbol}?apiKey=${apiKey}`);
+            if (res.status === 200) {
+                const data = await res.json();
+                return data.results?.ticker === symbol;
+            }
+            return false;
+        } catch {
+            // If API fails, allow it through with just format validation
+            return /^[A-Z]{1,5}$/.test(symbol);
+        }
+    };
+
+    // Delete entry and recalculate stats
+    const deleteEntry = (id: string) => {
+        const newEntries = entries.filter(e => e.id !== id);
+        setEntries(newEntries);
+
+        const wins = newEntries.filter(e => e.outcome === 'win').length;
+        const total = newEntries.length;
+        const pnl = newEntries.reduce((sum, e) => sum + e.pnl, 0);
+        setStats({
+            totalPnL: pnl,
+            winRate: total > 0 ? (wins / total) * 100 : 0,
+            totalTrades: total,
+        });
+    };
 
     const fetchPrices = useCallback(async () => {
         setLoading(true);
@@ -119,6 +167,7 @@ export default function JournalPage() {
                 winRate: total > 0 ? (wins / total) * 100 : 0,
                 totalTrades: total,
             });
+            setLastRefresh(new Date());
         } catch (err) {
             console.error('Journal fetch error:', err);
         } finally {
@@ -146,16 +195,23 @@ export default function JournalPage() {
 
             {/* Live Data Banner */}
             <div className="mt-4 px-4 py-2 rounded-lg text-sm flex items-center justify-between bg-green-600/20 border border-green-600/30 text-green-400">
-                <span>
-                    🔴 Live Prices from Polygon API for journal symbols
-                </span>
+                <div className="flex items-center gap-3">
+                    <span>
+                        🔴 Live Prices from Polygon API for journal symbols
+                    </span>
+                    {lastRefresh && !loading && (
+                        <span className="text-xs text-green-400/70">
+                            ✓ Updated {lastRefresh.toLocaleTimeString()}
+                        </span>
+                    )}
+                </div>
                 <button
                     onClick={fetchPrices}
                     disabled={loading}
-                    className="flex items-center gap-1 px-3 py-1 bg-background-tertiary rounded hover:bg-background text-foreground-muted hover:text-foreground transition-colors"
+                    className="flex items-center gap-1 px-3 py-1 bg-background-tertiary rounded hover:bg-background text-foreground-muted hover:text-foreground transition-colors disabled:opacity-50"
                 >
                     <ArrowPathIcon className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-                    {loading ? 'Loading...' : 'Refresh'}
+                    {loading ? 'Refreshing...' : 'Refresh'}
                 </button>
             </div>
 
@@ -184,10 +240,167 @@ export default function JournalPage() {
                     </div>
 
                     {/* New Entry Button */}
-                    <button className="btn-primary w-full">
+                    <button
+                        className="btn-primary w-full"
+                        onClick={() => setShowNewEntry(true)}
+                    >
                         <PlusIcon className="w-5 h-5" />
                         New Journal Entry
                     </button>
+
+                    {/* New Entry Form Modal */}
+                    {showNewEntry && (
+                        <div className="card p-4 border-2 border-accent">
+                            <h3 className="text-sm font-medium mb-4">New Entry</h3>
+                            <div className="space-y-3">
+                                <div>
+                                    <label className="block text-xs text-foreground-muted mb-1">Symbol</label>
+                                    <input
+                                        type="text"
+                                        value={newEntry.symbol}
+                                        onChange={(e) => setNewEntry(prev => ({ ...prev, symbol: e.target.value.toUpperCase() }))}
+                                        placeholder="AAPL"
+                                        className="w-full px-3 py-2 bg-background-secondary border border-border rounded text-sm"
+                                    />
+                                </div>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label className="block text-xs text-foreground-muted mb-1">Outcome</label>
+                                        <select
+                                            value={newEntry.outcome}
+                                            onChange={(e) => setNewEntry(prev => ({ ...prev, outcome: e.target.value as 'win' | 'loss' }))}
+                                            className="w-full px-3 py-2 bg-background-secondary border border-border rounded text-sm"
+                                        >
+                                            <option value="win">Win</option>
+                                            <option value="loss">Loss</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs text-foreground-muted mb-1">P&L ($)</label>
+                                        <input
+                                            type="number"
+                                            value={newEntry.pnl}
+                                            onChange={(e) => setNewEntry(prev => ({ ...prev, pnl: parseFloat(e.target.value) || 0 }))}
+                                            className="w-full px-3 py-2 bg-background-secondary border border-border rounded text-sm"
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-xs text-foreground-muted mb-1">Lessons Learned</label>
+                                    <textarea
+                                        value={newEntry.lessons}
+                                        onChange={(e) => setNewEntry(prev => ({ ...prev, lessons: e.target.value }))}
+                                        placeholder="What did you learn from this trade?"
+                                        className="w-full px-3 py-2 bg-background-secondary border border-border rounded text-sm h-20"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-xs text-foreground-muted mb-1">Mistake Tags</label>
+                                    <div className="flex flex-wrap gap-2">
+                                        {['chased', 'moved_stop', 'fomo', 'oversized', 'no_plan'].map(tag => (
+                                            <button
+                                                key={tag}
+                                                type="button"
+                                                onClick={() => setNewEntry(prev => ({
+                                                    ...prev,
+                                                    mistakeTags: prev.mistakeTags.includes(tag)
+                                                        ? prev.mistakeTags.filter(t => t !== tag)
+                                                        : [...prev.mistakeTags, tag]
+                                                }))}
+                                                className={`px-2 py-1 text-xs rounded ${newEntry.mistakeTags.includes(tag)
+                                                    ? 'bg-red-500/30 text-red-400 border border-red-500'
+                                                    : 'bg-background-tertiary text-foreground-muted border border-border'
+                                                    }`}
+                                            >
+                                                {tag}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Validation Error */}
+                                {validationError && (
+                                    <div className="text-red-400 text-xs bg-red-500/10 border border-red-500/30 rounded p-2">
+                                        ⚠️ {validationError}
+                                    </div>
+                                )}
+
+                                <div className="flex gap-2 pt-2">
+                                    <button
+                                        onClick={async () => {
+                                            setValidationError(null);
+
+                                            // Basic validation
+                                            if (!newEntry.symbol) {
+                                                setValidationError('Symbol is required');
+                                                return;
+                                            }
+
+                                            // P&L sanity check
+                                            if (Math.abs(newEntry.pnl) > 100000) {
+                                                setValidationError('P&L seems unrealistic (>$100k). Please verify.');
+                                                return;
+                                            }
+
+                                            // Win/Loss P&L consistency
+                                            if (newEntry.outcome === 'win' && newEntry.pnl < 0) {
+                                                setValidationError('Outcome is "Win" but P&L is negative. Please correct.');
+                                                return;
+                                            }
+                                            if (newEntry.outcome === 'loss' && newEntry.pnl > 0) {
+                                                setValidationError('Outcome is "Loss" but P&L is positive. Please correct.');
+                                                return;
+                                            }
+
+                                            // Validate symbol via API
+                                            setValidating(true);
+                                            const isValid = await validateSymbol(newEntry.symbol);
+                                            setValidating(false);
+
+                                            if (!isValid) {
+                                                setValidationError(`"${newEntry.symbol}" is not a valid ticker symbol`);
+                                                return;
+                                            }
+
+                                            const entry: JournalEntry = {
+                                                id: Date.now().toString(),
+                                                symbol: newEntry.symbol,
+                                                date: new Date().toISOString().slice(0, 10),
+                                                outcome: newEntry.outcome,
+                                                pnl: newEntry.pnl,
+                                                lessons: newEntry.lessons.split('\n').filter(l => l.trim()),
+                                                mistakeTags: newEntry.mistakeTags,
+                                            };
+                                            setEntries(prev => [entry, ...prev]);
+                                            setShowNewEntry(false);
+                                            setNewEntry({ symbol: '', outcome: 'win', pnl: 0, lessons: '', mistakeTags: [] });
+                                            setValidationError(null);
+                                            // Recalculate stats
+                                            const allEntries = [entry, ...entries];
+                                            const wins = allEntries.filter(e => e.outcome === 'win').length;
+                                            const total = allEntries.length;
+                                            const pnl = allEntries.reduce((sum, e) => sum + e.pnl, 0);
+                                            setStats({ totalPnL: pnl, winRate: total > 0 ? (wins / total) * 100 : 0, totalTrades: total });
+                                        }}
+                                        disabled={validating}
+                                        className="btn-primary flex-1"
+                                    >
+                                        {validating ? '⏳ Validating...' : 'Save Entry'}
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            setShowNewEntry(false);
+                                            setNewEntry({ symbol: '', outcome: 'win', pnl: 0, lessons: '', mistakeTags: [] });
+                                            setValidationError(null);
+                                        }}
+                                        className="px-4 py-2 bg-background-tertiary text-foreground-muted rounded hover:bg-background transition-colors"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     {/* Recent Entries */}
                     <div className="card p-4">
@@ -218,6 +431,18 @@ export default function JournalPage() {
                                             <span className={`font-mono ${entry.pnl >= 0 ? "text-bullish" : "text-bearish"}`}>
                                                 {entry.pnl >= 0 ? "+" : ""}{entry.pnl}
                                             </span>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    if (confirm(`Delete ${entry.symbol} entry from ${entry.date}?`)) {
+                                                        deleteEntry(entry.id);
+                                                    }
+                                                }}
+                                                className="text-red-400 hover:text-red-300 text-xs opacity-50 hover:opacity-100 transition-opacity"
+                                                title="Delete entry"
+                                            >
+                                                🗑️
+                                            </button>
                                         </div>
                                     </div>
                                 );

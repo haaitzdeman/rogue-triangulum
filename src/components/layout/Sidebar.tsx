@@ -15,6 +15,7 @@ import {
     QuestionMarkCircleIcon,
     SignalIcon,
     BeakerIcon as FlaskIcon,
+    SunIcon,
 } from "@heroicons/react/24/outline";
 import { useBeginnerMode } from "@/components/providers/BeginnerModeProvider";
 import { useAppMode } from "@/contexts/AppModeContext";
@@ -34,6 +35,13 @@ const desks: NavItem[] = [
         icon: ChartBarIcon,
         color: "border-desk-day",
         description: "Intraday momentum, VWAP, levels",
+    },
+    {
+        name: "Premarket",
+        href: "/premarket",
+        icon: SunIcon,
+        color: "border-amber-500",
+        description: "Gap scanner, early signals",
     },
     {
         name: "Options",

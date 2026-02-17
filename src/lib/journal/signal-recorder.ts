@@ -96,7 +96,7 @@ export function prepareCandidatesForRecording(
         currentPrice?: number;
         signals?: Array<{ name: string; direction: string; strength: number }>;
     }>,
-    context: { timestamp: number }
+    _context: { timestamp: number }
 ): CandidateForRecording[] {
     const result: CandidateForRecording[] = [];
 

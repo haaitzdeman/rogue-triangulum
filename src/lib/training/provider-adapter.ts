@@ -5,8 +5,6 @@
  * Supports multiple data providers with a unified API.
  */
 
-import type { DeskType } from '../core/types';
-
 /**
  * OHLCV bar data
  */
@@ -187,7 +185,7 @@ export class MockTrainingProvider implements TrainingProvider {
         return chain;
     }
 
-    async getEvents(start: Date, end: Date, symbols?: string[]): Promise<MarketEvent[]> {
+    async getEvents(_start: Date, _end: Date, _symbols?: string[]): Promise<MarketEvent[]> {
         return [
             { type: 'fomc', date: new Date(), description: 'Mock FOMC Meeting' },
         ];

@@ -1,0 +1,5328 @@
+﻿node.exe : PASS src/li
+b/premarket/__tests__/
+analog-engine.test.ts
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (PASS src/l   
+ ib/pr...-engine.t    
+est.ts:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+PASS src/lib/training/
+__tests__/walkforward-
+trainer.test.ts
+PASS src/lib/risk/__te
+sts__/risk-engine.test
+.ts
+PASS src/lib/integrati
+on/__tests__/morning-r
+un-store.test.ts
+  ΓùÅ Console
+
+    console.error
+      
+[MorningRunStore] 
+saveMorningRun error: 
+{ message: 'DB down' }
+
+    [0m [90m 69 
+|[39m
+     [90m 70 |[39m  
+   [36mif[39m 
+(error) {
+    [31m[1m>[22m[3
+9m[90m 71 |[39m     
+    console[33m.[39m
+error([32m'[MorningRu
+nStore] 
+saveMorningRun error:'
+[39m[33m,[39m 
+error)[33m;[39m
+     [90m    |[39m  
+               
+[31m[1m^[22m[39m
+     [90m 72 |[39m  
+       
+[36mthrow[39m 
+[36mnew[39m [33mErr
+or[39m([32m`Failed 
+to save morning run: $
+{error.message}`[39m)
+[33m;[39m
+     [90m 73 |[39m  
+   }
+     [90m 74 |[39m 
+}[0m
+
+      at src/lib/integ
+ration/morning-run-sto
+re.ts:71:17
+      at fulfilled (sr
+c/lib/integration/morn
+ing-run-store.ts:14:58
+)
+
+    console.error
+      
+[MorningRunStore] 
+loadMorningRunByRunId 
+error: { code: 
+'42P01', message: 
+'table not found' }
+
+    [0m [90m 91 
+|[39m         
+[90m// PGRST116 = no 
+rows found (not a 
+real error)[39m
+     [90m 92 |[39m  
+       [36mif[39m 
+(error[33m.[39mcode 
+[33m===[39m 
+[32m'PGRST116'[39m) 
+[36mreturn[39m [36m
+null[39m[33m;[39m
+    [31m[1m>[22m[3
+9m[90m 93 |[39m     
+    console[33m.[39m
+error([32m'[MorningRu
+nStore] 
+loadMorningRunByRunId 
+error:'[39m[33m,[39
+m error)[33m;[39m
+     [90m    |[39m  
+               
+[31m[1m^[22m[39m
+     [90m 94 |[39m  
+       
+[36mthrow[39m 
+[36mnew[39m [33mErr
+or[39m([32m`Failed 
+to load morning run: $
+{error.message}`[39m)
+[33m;[39m
+     [90m 95 |[39m  
+   }
+     [90m 96 
+|[39m[0m
+
+      at src/lib/integ
+ration/morning-run-sto
+re.ts:93:17
+      at fulfilled (sr
+c/lib/integration/morn
+ing-run-store.ts:14:58
+)
+
+    console.error
+      
+[MorningRunStore] purg
+eMorningRunsBefore 
+error: { message: 
+'permission denied' }
+
+    [0m [90m 153 
+|[39m
+     [90m 154 |[39m 
+    [36mif[39m 
+(error) {
+    [31m[1m>[22m[3
+9m[90m 155 |[39m    
+     console[33m.[39
+merror([32m'[MorningR
+unStore] purgeMorningR
+unsBefore error:'[39m
+[33m,[39m 
+error)[33m;[39m
+     [90m     |[39m 
+                
+[31m[1m^[22m[39m
+     [90m 156 |[39m 
+        
+[36mthrow[39m 
+[36mnew[39m [33mErr
+or[39m([32m`Failed 
+to purge morning 
+runs: ${error.message}
+`[39m)[33m;[39m
+     [90m 157 |[39m 
+    }
+     [90m 158 
+|[39m[0m
+
+      at src/lib/integ
+ration/morning-run-sto
+re.ts:155:17
+      at fulfilled (sr
+c/lib/integration/morn
+ing-run-store.ts:14:58
+)
+
+PASS src/lib/integrati
+on/__tests__/opportuni
+ty-engine.test.ts
+PASS src/lib/premarket
+/__tests__/signal-util
+s.test.ts
+PASS src/lib/options/_
+_tests__/options-engin
+e.test.ts
+PASS src/lib/risk/__te
+sts__/risk-normalizer.
+test.ts
+PASS src/lib/broker/__
+tests__/reconcile-engi
+ne.test.ts
+PASS src/lib/broker/__
+tests__/broker.test.ts
+PASS src/app/api/morni
+ng-run/__tests__/route
+.test.ts
+PASS src/lib/premarket
+/__tests__/polygon-liv
+e-provider.test.ts
+PASS src/lib/training/
+__tests__/calibration-
+status.test.ts
+PASS src/lib/accountin
+g/__tests__/trade-ledg
+er-store.test.ts
+  ΓùÅ Console
+
+    console.error
+      [TradeLedger] 
+writeLedgerEntry 
+error: { message: 
+'permission denied' }
+
+    [0m [90m 80 
+|[39m
+     [90m 81 |[39m  
+   [36mif[39m 
+(error) {
+    [31m[1m>[22m[3
+9m[90m 82 |[39m     
+    console[33m.[39m
+error([32m'[TradeLedg
+er] writeLedgerEntry e
+rror:'[39m[33m,[39m
+ error)[33m;[39m
+     [90m    |[39m  
+               
+[31m[1m^[22m[39m
+     [90m 83 |[39m  
+       
+[36mthrow[39m 
+[36mnew[39m [33mErr
+or[39m([32m`Failed 
+to write ledger 
+entry: ${error.message
+}`[39m)[33m;[39m
+     [90m 84 |[39m  
+   }
+     [90m 85 
+|[39m[0m
+
+      at src/lib/accou
+nting/trade-ledger-sto
+re.ts:82:17
+      at fulfilled (sr
+c/lib/accounting/trade
+-ledger-store.ts:13:58
+)
+
+    console.error
+      [TradeLedger] lo
+adRealizedPnLForDate 
+error: { message: 
+'timeout' }
+
+    [0m [90m 108 
+|[39m
+     [90m 109 |[39m 
+    [36mif[39m 
+(error) {
+    [31m[1m>[22m[3
+9m[90m 110 |[39m    
+     console[33m.[39
+merror([32m'[TradeLed
+ger] loadRealizedPnLFo
+rDate error:'[39m[33
+m,[39m 
+error)[33m;[39m
+     [90m     |[39m 
+                
+[31m[1m^[22m[39m
+     [90m 111 |[39m 
+        
+[36mthrow[39m 
+[36mnew[39m [33mErr
+or[39m([32m`Failed 
+to load realized PnL: 
+${error.message}`[39m
+)[33m;[39m
+     [90m 112 |[39m 
+    }
+     [90m 113 
+|[39m[0m
+
+      at src/lib/accou
+nting/trade-ledger-sto
+re.ts:110:17
+      at fulfilled (sr
+c/lib/accounting/trade
+-ledger-store.ts:13:58
+)
+
+PASS src/lib/premarket
+/__tests__/gap-scanner
+.test.ts
+PASS src/lib/agent/__t
+ests__/skills-loader.t
+est.ts
+  ΓùÅ Console
+
+    console.log
+      [SkillsLoader] 
+Cache cleared
+
+      at 
+clearSkillsCache (src/
+lib/agent/skills-loade
+r.ts:185:13)
+
+    console.log
+      [SkillsLoader] 
+Loading skills from C:
+\Users\haait\AppData\L
+ocal\Temp\skills-test-
+IavWQc
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:112:13)
+
+    console.log
+      [SkillsLoader] 
+Cache cleared
+
+      at 
+clearSkillsCache (src/
+lib/agent/skills-loade
+r.ts:185:13)
+
+    console.log
+      [SkillsLoader] 
+Loading skills from C:
+\Users\haait\AppData\L
+ocal\Temp\skills-test-
+2rc3H3
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:112:13)
+
+    console.log
+      [SkillsLoader] 
+Cache cleared
+
+      at 
+clearSkillsCache (src/
+lib/agent/skills-loade
+r.ts:185:13)
+
+    console.log
+      [SkillsLoader] 
+Loading skills from C:
+\Users\haait\AppData\L
+ocal\Temp\skills-test-
+qTd8ss\does-not-exist
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:112:13)
+
+    console.log
+      [SkillsLoader] 
+Cache cleared
+
+      at 
+clearSkillsCache (src/
+lib/agent/skills-loade
+r.ts:185:13)
+
+    console.log
+      [SkillsLoader] 
+Loading skills from C:
+\Users\haait\AppData\L
+ocal\Temp\skills-test-
+7V8K7U
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:112:13)
+
+    console.log
+      [SkillsLoader] 
+Cache cleared
+
+      at 
+clearSkillsCache (src/
+lib/agent/skills-loade
+r.ts:185:13)
+
+    console.log
+      [SkillsLoader] 
+Loading skills from C:
+\Users\haait\AppData\L
+ocal\Temp\skills-test-
+Dr25Mx
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:112:13)
+
+    console.log
+      [SkillsLoader] 
+Cache cleared
+
+      at 
+clearSkillsCache (src/
+lib/agent/skills-loade
+r.ts:185:13)
+
+    console.log
+      [SkillsLoader] 
+Loading skills from C:
+\Users\haait\AppData\L
+ocal\Temp\skills-test-
+Dr25Mx
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:112:13)
+
+    console.log
+      [SkillsLoader] 
+Cache cleared
+
+      at 
+clearSkillsCache (src/
+lib/agent/skills-loade
+r.ts:185:13)
+
+    console.log
+      [SkillsLoader] 
+Loading skills from C:
+\Users\haait\AppData\L
+ocal\Temp\skills-test-
+zGFt58
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:112:13)
+
+    console.log
+      [SkillsLoader] 
+Cache cleared
+
+      at 
+clearSkillsCache (src/
+lib/agent/skills-loade
+r.ts:185:13)
+
+    console.log
+      [SkillsLoader] 
+Loading skills from C:
+\Users\haait\AppData\L
+ocal\Temp\skills-test-
+Vjt3fM
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:112:13)
+
+PASS src/lib/options/_
+_tests__/contract-sele
+ctor.test.ts
+PASS src/lib/shared/__
+tests__/sizing.test.ts
+PASS src/lib/premarket
+/__tests__/date-resolv
+er.test.ts
+PASS src/lib/risk/__te
+sts__/risk-hardening.t
+est.ts
+PASS src/lib/broker/__
+tests__/options-fill-g
+rouper.test.ts
+PASS src/lib/guards/__
+tests__/schema-health.
+test.ts
+PASS src/lib/brains/__
+tests__/boundary-enfor
+cement.test.ts
+PASS src/lib/risk/__te
+sts__/risk-loader.test
+.ts
+PASS src/__integration
+__/e2e-trade-flow.test
+.ts
+PASS src/lib/guards/__
+tests__/health-aggrega
+tor.test.ts
+PASS src/lib/guards/__
+tests__/schema-gate.te
+st.ts
+PASS src/lib/auth/__te
+sts__/admin-gate.test.
+ts
+PASS src/lib/agent/__t
+ests__/rules-loader.te
+st.ts
+  ΓùÅ Console
+
+    console.log
+      [RulesLoader] 
+Loading rules from: C:
+\Users\haait\OneDrive\
+Desktop\PROJECTS\tradi
+ng-app\rules
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:122:13)
+
+    console.log
+      [RulesLoader] 
+Loaded 6 rules, bundle
+Sha256=877602940069c1b
+2...
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:175:13)
+
+    console.log
+      [RulesLoader] 
+Loading rules from: C:
+\Users\haait\OneDrive\
+Desktop\PROJECTS\tradi
+ng-app\rules
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:122:13)
+
+    console.log
+      [RulesLoader] 
+Loaded 6 rules, bundle
+Sha256=877602940069c1b
+2...
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:175:13)
+
+    console.log
+      [RulesLoader] 
+Loading rules from: C:
+\Users\haait\OneDrive\
+Desktop\PROJECTS\tradi
+ng-app\rules
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:122:13)
+
+    console.log
+      [RulesLoader] 
+Loaded 6 rules, bundle
+Sha256=877602940069c1b
+2...
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:175:13)
+
+    console.log
+      [RulesLoader] 
+Loading rules from: C:
+\Users\haait\OneDrive\
+Desktop\PROJECTS\tradi
+ng-app\rules
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:122:13)
+
+    console.log
+      [RulesLoader] 
+Loaded 6 rules, bundle
+Sha256=877602940069c1b
+2...
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:175:13)
+
+    console.log
+      [RulesLoader] 
+Loading rules from: C:
+\Users\haait\OneDrive\
+Desktop\PROJECTS\tradi
+ng-app\rules
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:122:13)
+
+    console.log
+      [RulesLoader] 
+Loaded 6 rules, bundle
+Sha256=877602940069c1b
+2...
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:175:13)
+
+    console.log
+      [RulesLoader] 
+Loading rules from: C:
+\Users\haait\OneDrive\
+Desktop\PROJECTS\tradi
+ng-app\rules
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:122:13)
+
+    console.log
+      [RulesLoader] 
+Loaded 6 rules, bundle
+Sha256=877602940069c1b
+2...
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:175:13)
+
+    console.log
+      [RulesLoader] 
+Loading rules from: C:
+\Users\haait\OneDrive\
+Desktop\PROJECTS\tradi
+ng-app\rules
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:122:13)
+
+    console.log
+      [RulesLoader] 
+Loaded 6 rules, bundle
+Sha256=877602940069c1b
+2...
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:175:13)
+
+    console.log
+      [RulesLoader] 
+Loading rules from: C:
+\Users\haait\OneDrive\
+Desktop\PROJECTS\tradi
+ng-app\rules
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:122:13)
+
+    console.log
+      [RulesLoader] 
+Loaded 6 rules, bundle
+Sha256=877602940069c1b
+2...
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:175:13)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [RulesLoader] 
+Loading rules from: 
+/nonexistent/path
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:122:13)
+
+    console.log
+      [RulesLoader] 
+Loading rules from: C:
+\Users\haait\OneDrive\
+Desktop\PROJECTS\tradi
+ng-app\rules
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:122:13)
+
+    console.log
+      [RulesLoader] 
+Loaded 6 rules, bundle
+Sha256=877602940069c1b
+2...
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:175:13)
+
+PASS src/app/api/dev/_
+_tests__/schema-health
+.test.ts
+PASS src/lib/agent/__t
+ests__/prompt-builder.
+test.ts
+  ΓùÅ Console
+
+    console.log
+      [RulesLoader] 
+Loading rules from: C:
+\Users\haait\OneDrive\
+Desktop\PROJECTS\tradi
+ng-app\rules
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:122:13)
+
+    console.log
+      [RulesLoader] 
+Loaded 6 rules, bundle
+Sha256=877602940069c1b
+2...
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:175:13)
+
+    console.log
+      [SkillsLoader] 
+Loading skills from C:
+\Users\haait\OneDrive\
+Desktop\PROJECTS\tradi
+ng-app\skills
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:112:13)
+
+    console.log
+      [SkillsLoader] 
+Cached 14 skills
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:174:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+PASS src/app/api/dev/_
+_tests__/health-aggreg
+ator.test.ts
+PASS src/lib/premarket
+/__tests__/diagnostics
+.test.ts
+PASS src/lib/execution
+/__tests__/trade-gate.
+test.ts
+  ΓùÅ Console
+
+    console.log
+      [TradeGate] 
+Live trading locked
+
+      at 
+lockLiveTrading (src/l
+ib/execution/trade-gat
+e.ts:145:13)
+
+    console.log
+      [TradeGate] 
+Execute request: AAPL 
+buy 1 (mode: paper, 
+requestedMode: live)
+
+      at 
+TradeGate.<anonymous> 
+(src/lib/execution/tra
+de-gate.ts:237:17)
+
+    console.warn
+      [TradeGate] 
+REJECTING: 
+requestedMode=live 
+but 
+effectiveMode=paper
+
+    [0m [90m 239 
+|[39m         
+[90m// 0. 
+Belt+suspenders: if 
+caller explicitly 
+requests LIVE but 
+we're in PAPER, 
+reject[39m
+     [90m 240 |[39m 
+        [36mif[39m 
+(requestedMode 
+[33m===[39m 
+[32m'live'[39m 
+[33m&&[39m mode 
+[33m!==[39m 
+[32m'live'[39m) {
+    [31m[1m>[22m[3
+9m[90m 241 |[39m    
+         console[33m.
+[39mwarn([32m'[Trade
+Gate] REJECTING: 
+requestedMode=live 
+but effectiveMode=pape
+r'[39m)[33m;[39m
+     [90m     |[39m 
+                    
+[31m[1m^[22m[39m
+     [90m 242 |[39m 
+            
+[36mreturn[39m {
+     [90m 243 |[39m 
+                
+success[33m:[39m [3
+6mfalse[39m[33m,[39
+m
+     [90m 244 |[39m 
+                
+error[33m:[39m 
+[32m'LIVE mode is 
+locked. Unlock require
+d.'[39m[33m,[39m[0
+m
+
+      at 
+TradeGate.<anonymous> 
+(src/lib/execution/tra
+de-gate.ts:241:21)
+      at src/lib/execu
+tion/trade-gate.ts:17:
+71
+      at __awaiter (sr
+c/lib/execution/trade-
+gate.ts:13:12)
+      at 
+TradeGate.execute (src
+/lib/execution/trade-g
+ate.ts:205:16)
+      at src/lib/execu
+tion/__tests__/trade-g
+ate.test.ts:43:44
+      at src/lib/execu
+tion/__tests__/trade-g
+ate.test.ts:16:71
+      at __awaiter (sr
+c/lib/execution/__test
+s__/trade-gate.test.ts
+:12:12)
+      at 
+Object.<anonymous> (sr
+c/lib/execution/__test
+s__/trade-gate.test.ts
+:24:74)
+
+    console.log
+      [TradeGate] 
+Live trading locked
+
+      at 
+lockLiveTrading (src/l
+ib/execution/trade-gat
+e.ts:145:13)
+
+    console.log
+      [TradeGate] 
+Execute request: AAPL 
+buy 1 (mode: paper, 
+requestedMode: paper)
+
+      at 
+TradeGate.<anonymous> 
+(src/lib/execution/tra
+de-gate.ts:237:17)
+
+    console.log
+      [PaperBroker] 
+Executing paper 
+trade: buy 1 AAPL
+
+      at PaperBroker.<
+anonymous> (src/lib/ex
+ecution/paper-broker.t
+s:100:17)
+
+    console.warn
+      [PaperBroker] 
+No Polygon API key - 
+using mock price
+
+    [0m [90m 45 
+|[39m
+     [90m 46 |[39m  
+   [36mif[39m 
+([33m![39mapiKey) {
+    [31m[1m>[22m[3
+9m[90m 47 |[39m     
+    console[33m.[39m
+warn([32m'[PaperBroke
+r] No Polygon API key 
+- using mock price'[3
+9m)[33m;[39m
+     [90m    |[39m  
+               
+[31m[1m^[22m[39m
+     [90m 48 |[39m  
+       
+[36mreturn[39m [36m
+null[39m[33m;[39m
+     [90m 49 |[39m  
+   }
+     [90m 50 
+|[39m[0m
+
+      at src/lib/execu
+tion/paper-broker.ts:4
+7:17
+      at src/lib/execu
+tion/paper-broker.ts:5
+4:71
+      at __awaiter (sr
+c/lib/execution/paper-
+broker.ts:50:12)
+      at fetchQuote (s
+rc/lib/execution/paper
+-broker.ts:82:12)
+      at PaperBroker.<
+anonymous> (src/lib/ex
+ecution/paper-broker.t
+s:104:35)
+      at src/lib/execu
+tion/paper-broker.ts:5
+4:71
+      at __awaiter (sr
+c/lib/execution/paper-
+broker.ts:50:12)
+      at PaperBroker.p
+laceOrder (src/lib/exe
+cution/paper-broker.ts
+:139:16)
+      at 
+TradeGate.<anonymous> 
+(src/lib/execution/tra
+de-gate.ts:322:37)
+      at src/lib/execu
+tion/trade-gate.ts:17:
+71
+      at __awaiter (sr
+c/lib/execution/trade-
+gate.ts:13:12)
+      at 
+TradeGate.execute (src
+/lib/execution/trade-g
+ate.ts:205:16)
+      at src/lib/execu
+tion/__tests__/trade-g
+ate.test.ts:67:44
+      at src/lib/execu
+tion/__tests__/trade-g
+ate.test.ts:16:71
+      at __awaiter (sr
+c/lib/execution/__test
+s__/trade-gate.test.ts
+:12:12)
+      at 
+Object.<anonymous> (sr
+c/lib/execution/__test
+s__/trade-gate.test.ts
+:51:65)
+
+    console.log
+      [PaperBroker] 
+Using fallback price: 
+100
+
+      at PaperBroker.<
+anonymous> (src/lib/ex
+ecution/paper-broker.t
+s:109:25)
+
+    console.log
+      [TradeGate] 
+Execution result: 
+SUCCESS - paper-177132
+2265489-kpdteowd5
+
+      at 
+TradeGate.<anonymous> 
+(src/lib/execution/tra
+de-gate.ts:330:17)
+
+    console.log
+      [PaperStore] 
+Recorded execution: 
+AAPL buy 1 @ 100.02
+
+      at addExecution 
+(src/lib/execution/pap
+er-store.ts:83:13)
+
+    console.log
+      [TradeGate] 
+Live trading locked
+
+      at 
+lockLiveTrading (src/l
+ib/execution/trade-gat
+e.ts:145:13)
+
+    console.log
+      [TradeGate] 
+Execute request: AAPL 
+buy 1 (mode: paper, 
+requestedMode: paper)
+
+      at 
+TradeGate.<anonymous> 
+(src/lib/execution/tra
+de-gate.ts:237:17)
+
+    console.log
+      [TradeGate] 
+Live trading locked
+
+      at 
+lockLiveTrading (src/l
+ib/execution/trade-gat
+e.ts:145:13)
+
+    console.log
+      [TradeGate] 
+Execute request: AAPL 
+buy 1 (mode: paper, 
+requestedMode: paper)
+
+      at 
+TradeGate.<anonymous> 
+(src/lib/execution/tra
+de-gate.ts:237:17)
+
+    console.log
+      [PaperBroker] 
+Executing paper 
+trade: buy 1 AAPL
+
+      at PaperBroker.<
+anonymous> (src/lib/ex
+ecution/paper-broker.t
+s:100:17)
+
+    console.warn
+      [PaperBroker] 
+No Polygon API key - 
+using mock price
+
+    [0m [90m 45 
+|[39m
+     [90m 46 |[39m  
+   [36mif[39m 
+([33m![39mapiKey) {
+    [31m[1m>[22m[3
+9m[90m 47 |[39m     
+    console[33m.[39m
+warn([32m'[PaperBroke
+r] No Polygon API key 
+- using mock price'[3
+9m)[33m;[39m
+     [90m    |[39m  
+               
+[31m[1m^[22m[39m
+     [90m 48 |[39m  
+       
+[36mreturn[39m [36m
+null[39m[33m;[39m
+     [90m 49 |[39m  
+   }
+     [90m 50 
+|[39m[0m
+
+      at src/lib/execu
+tion/paper-broker.ts:4
+7:17
+      at src/lib/execu
+tion/paper-broker.ts:5
+4:71
+      at __awaiter (sr
+c/lib/execution/paper-
+broker.ts:50:12)
+      at fetchQuote (s
+rc/lib/execution/paper
+-broker.ts:82:12)
+      at PaperBroker.<
+anonymous> (src/lib/ex
+ecution/paper-broker.t
+s:104:35)
+      at src/lib/execu
+tion/paper-broker.ts:5
+4:71
+      at __awaiter (sr
+c/lib/execution/paper-
+broker.ts:50:12)
+      at PaperBroker.p
+laceOrder (src/lib/exe
+cution/paper-broker.ts
+:139:16)
+      at 
+TradeGate.<anonymous> 
+(src/lib/execution/tra
+de-gate.ts:322:37)
+      at src/lib/execu
+tion/trade-gate.ts:17:
+71
+      at __awaiter (sr
+c/lib/execution/trade-
+gate.ts:13:12)
+      at 
+TradeGate.execute (src
+/lib/execution/trade-g
+ate.ts:205:16)
+      at src/lib/execu
+tion/__tests__/trade-g
+ate.test.ts:116:44
+      at src/lib/execu
+tion/__tests__/trade-g
+ate.test.ts:16:71
+      at __awaiter (sr
+c/lib/execution/__test
+s__/trade-gate.test.ts
+:12:12)
+      at 
+Object.<anonymous> (sr
+c/lib/execution/__test
+s__/trade-gate.test.ts
+:100:76)
+
+    console.log
+      [PaperBroker] 
+Using fallback price: 
+100
+
+      at PaperBroker.<
+anonymous> (src/lib/ex
+ecution/paper-broker.t
+s:109:25)
+
+    console.log
+      [TradeGate] 
+Execution result: 
+SUCCESS - paper-177132
+2265539-qhfjzkcun
+
+      at 
+TradeGate.<anonymous> 
+(src/lib/execution/tra
+de-gate.ts:330:17)
+
+    console.log
+      [PaperStore] 
+Recorded execution: 
+AAPL buy 1 @ 100.02
+
+      at addExecution 
+(src/lib/execution/pap
+er-store.ts:83:13)
+
+    console.log
+      [TradeGate] 
+Live trading locked
+
+      at 
+lockLiveTrading (src/l
+ib/execution/trade-gat
+e.ts:145:13)
+
+    console.log
+      [TradeGate] 
+Execute request: AAPL 
+buy 1 (mode: paper, 
+requestedMode: paper)
+
+      at 
+TradeGate.<anonymous> 
+(src/lib/execution/tra
+de-gate.ts:237:17)
+
+    console.log
+      [PaperBroker] 
+Executing paper 
+trade: buy 1 AAPL
+
+      at PaperBroker.<
+anonymous> (src/lib/ex
+ecution/paper-broker.t
+s:100:17)
+
+    console.warn
+      [PaperBroker] 
+No Polygon API key - 
+using mock price
+
+    [0m [90m 45 
+|[39m
+     [90m 46 |[39m  
+   [36mif[39m 
+([33m![39mapiKey) {
+    [31m[1m>[22m[3
+9m[90m 47 |[39m     
+    console[33m.[39m
+warn([32m'[PaperBroke
+r] No Polygon API key 
+- using mock price'[3
+9m)[33m;[39m
+     [90m    |[39m  
+               
+[31m[1m^[22m[39m
+     [90m 48 |[39m  
+       
+[36mreturn[39m [36m
+null[39m[33m;[39m
+     [90m 49 |[39m  
+   }
+     [90m 50 
+|[39m[0m
+
+      at src/lib/execu
+tion/paper-broker.ts:4
+7:17
+      at src/lib/execu
+tion/paper-broker.ts:5
+4:71
+      at __awaiter (sr
+c/lib/execution/paper-
+broker.ts:50:12)
+      at fetchQuote (s
+rc/lib/execution/paper
+-broker.ts:82:12)
+      at PaperBroker.<
+anonymous> (src/lib/ex
+ecution/paper-broker.t
+s:104:35)
+      at src/lib/execu
+tion/paper-broker.ts:5
+4:71
+      at __awaiter (sr
+c/lib/execution/paper-
+broker.ts:50:12)
+      at PaperBroker.p
+laceOrder (src/lib/exe
+cution/paper-broker.ts
+:139:16)
+      at 
+TradeGate.<anonymous> 
+(src/lib/execution/tra
+de-gate.ts:322:37)
+      at src/lib/execu
+tion/trade-gate.ts:17:
+71
+      at __awaiter (sr
+c/lib/execution/trade-
+gate.ts:13:12)
+      at 
+TradeGate.execute (src
+/lib/execution/trade-g
+ate.ts:205:16)
+      at src/lib/execu
+tion/__tests__/trade-g
+ate.test.ts:139:44
+      at src/lib/execu
+tion/__tests__/trade-g
+ate.test.ts:16:71
+      at __awaiter (sr
+c/lib/execution/__test
+s__/trade-gate.test.ts
+:12:12)
+      at 
+Object.<anonymous> (sr
+c/lib/execution/__test
+s__/trade-gate.test.ts
+:123:76)
+
+    console.log
+      [PaperBroker] 
+Using fallback price: 
+100
+
+      at PaperBroker.<
+anonymous> (src/lib/ex
+ecution/paper-broker.t
+s:109:25)
+
+    console.log
+      [TradeGate] 
+Execution result: 
+SUCCESS - paper-177132
+2265544-ntj47kr0k
+
+      at 
+TradeGate.<anonymous> 
+(src/lib/execution/tra
+de-gate.ts:330:17)
+
+    console.log
+      [PaperStore] 
+Recorded execution: 
+AAPL buy 1 @ 100.02
+
+      at addExecution 
+(src/lib/execution/pap
+er-store.ts:83:13)
+
+    console.log
+      [TradeGate] 
+Live trading locked
+
+      at 
+lockLiveTrading (src/l
+ib/execution/trade-gat
+e.ts:145:13)
+
+    console.log
+      [TradeGate] 
+Execute request: 
+RANDOM buy 1 (mode: 
+paper, requestedMode: 
+paper)
+
+      at 
+TradeGate.<anonymous> 
+(src/lib/execution/tra
+de-gate.ts:237:17)
+
+PASS src/lib/backtest/
+__tests__/anti-lookahe
+ad.test.ts
+PASS src/lib/premarket
+/__tests__/api-routes.
+test.ts
+PASS src/app/api/execu
+tions/__tests__/route.
+test.ts
+  ΓùÅ Console
+
+    console.warn
+      [API] LIVE 
+trade rejected: 
+server mode is paper
+
+    [0m [90m 70 
+|[39m         
+[90m// Do NOT call 
+tradeGate.execute() 
+in this case[39m
+     [90m 71 |[39m  
+       [36mif[39m 
+(requestedMode 
+[33m===[39m 
+[32m'live'[39m 
+[33m&&[39m 
+effectiveMode 
+[33m!==[39m 
+[32m'live'[39m) {
+    [31m[1m>[22m[3
+9m[90m 72 |[39m     
+        console[33m.
+[39mwarn([32m`[API] 
+LIVE trade rejected: 
+server mode is ${effec
+tiveMode}`[39m)[33m;
+[39m
+     [90m    |[39m  
+                   
+[31m[1m^[22m[39m
+     [90m 73 |[39m  
+           
+[36mreturn[39m [33m
+NextResponse[39m[33m
+.[39mjson({
+     [90m 74 |[39m  
+               
+success[33m:[39m [3
+6mfalse[39m[33m,[39
+m
+     [90m 75 |[39m  
+               
+result[33m:[39m 
+{[0m
+
+      at src/app/api/e
+xecutions/route.ts:72:
+21
+      at fulfilled (sr
+c/app/api/executions/r
+oute.ts:16:58)
+
+    console.log
+      [API] Trade 
+executed: SUCCESS - 
+paper-123
+
+      at src/app/api/e
+xecutions/route.ts:110
+:17
+
+PASS src/lib/agent/__t
+ests__/agent-runner.te
+st.ts (11.675 s)
+  ΓùÅ Console
+
+    console.log
+      [RulesLoader] 
+Loading rules from: C:
+\Users\haait\OneDrive\
+Desktop\PROJECTS\tradi
+ng-app\rules
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:122:13)
+
+    console.log
+      [RulesLoader] 
+Loaded 6 rules, bundle
+Sha256=877602940069c1b
+2...
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:175:13)
+
+    console.log
+      [SkillsLoader] 
+Loading skills from C:
+\Users\haait\OneDrive\
+Desktop\PROJECTS\tradi
+ng-app\skills
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:112:13)
+
+    console.log
+      [SkillsLoader] 
+Cached 14 skills
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:174:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [AgentRunner] 
+Provider xai in 
+cooldown for 900s
+
+      at setCooldown (
+src/lib/agent/agent-ru
+nner.ts:385:13)
+
+    console.log
+      [AgentRunner] 
+Provider xai in 
+cooldown for 900s
+
+      at setCooldown (
+src/lib/agent/agent-ru
+nner.ts:385:13)
+
+    console.log
+      [AgentRunner] 
+Provider xai in 
+cooldown for 900s
+
+      at setCooldown (
+src/lib/agent/agent-ru
+nner.ts:385:13)
+
+    console.log
+      [AgentRunner] 
+Provider openai in 
+cooldown for 900s
+
+      at setCooldown (
+src/lib/agent/agent-ru
+nner.ts:385:13)
+
+    console.log
+      [AgentRunner] 
+Provider xai in 
+cooldown for 900s
+
+      at setCooldown (
+src/lib/agent/agent-ru
+nner.ts:385:13)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with xai: 
+response length=12 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with xai: 
+response length=12 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with xai: 
+response length=12 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with xai: 
+response length=12 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai failed: 
+HTTP 401, code=AUTH, 
+shouldFallback=true
+
+      at src/lib/agent
+/agent-runner.ts:743:1
+7
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai failed: 
+HTTP 403, code=AUTH, 
+shouldFallback=true
+
+      at src/lib/agent
+/agent-runner.ts:743:1
+7
+
+    console.log
+      [AgentRunner] 
+Trying 
+provider=openai 
+model=gpt-4o-mini
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with openai: 
+response length=15 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai failed: 
+HTTP 401, code=AUTH, 
+shouldFallback=true
+
+      at src/lib/agent
+/agent-runner.ts:743:1
+7
+
+    console.log
+      [AgentRunner] 
+Trying 
+provider=openai 
+model=gpt-4o-mini
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with openai: 
+response length=15 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai returned 
+429, retrying in 
+492ms (attempt 1/2)
+
+      at src/lib/agent
+/agent-runner.ts:562:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai returned 
+429, retrying in 
+868ms (attempt 2/2)
+
+      at src/lib/agent
+/agent-runner.ts:562:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai failed: 
+HTTP 429, 
+code=RATE_LIMIT, 
+shouldFallback=true
+
+      at src/lib/agent
+/agent-runner.ts:743:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai in 
+cooldown for 900s
+
+      at setCooldown (
+src/lib/agent/agent-ru
+nner.ts:385:13)
+
+    console.log
+      [AgentRunner] 
+Trying 
+provider=openai 
+model=gpt-4o-mini
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with openai: 
+response length=15 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai failed: 
+HTTP 403, code=AUTH, 
+shouldFallback=true
+
+      at src/lib/agent
+/agent-runner.ts:743:1
+7
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai failed: 
+HTTP 403, code=AUTH, 
+shouldFallback=true
+
+      at src/lib/agent
+/agent-runner.ts:743:1
+7
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai failed: 
+HTTP 403, code=AUTH, 
+shouldFallback=true
+
+      at src/lib/agent
+/agent-runner.ts:743:1
+7
+
+    console.log
+      [AgentRunner] 
+Trying 
+provider=openai 
+model=gpt-4o-mini
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with openai: 
+response length=15 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying 
+provider=gemini 
+model=gemini-2.0-flash
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider gemini 
+returned 400, 
+retrying in 473ms 
+(attempt 1/2)
+
+      at src/lib/agent
+/agent-runner.ts:562:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider gemini 
+returned 400, 
+retrying in 801ms 
+(attempt 2/2)
+
+      at src/lib/agent
+/agent-runner.ts:562:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider gemini 
+failed: HTTP 400, 
+code=QUOTA, 
+shouldFallback=true
+
+      at src/lib/agent
+/agent-runner.ts:743:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider gemini in 
+cooldown for 900s
+
+      at setCooldown (
+src/lib/agent/agent-ru
+nner.ts:385:13)
+
+    console.log
+      [AgentRunner] 
+Trying 
+provider=openai 
+model=gpt-4o-mini
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with openai: 
+response length=15 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai returned 
+429, retrying in 
+402ms (attempt 1/2)
+
+      at src/lib/agent
+/agent-runner.ts:562:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai returned 
+429, retrying in 
+889ms (attempt 2/2)
+
+      at src/lib/agent
+/agent-runner.ts:562:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai failed: 
+HTTP 429, 
+code=RATE_LIMIT, 
+shouldFallback=true
+
+      at src/lib/agent
+/agent-runner.ts:743:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai in 
+cooldown for 900s
+
+      at setCooldown (
+src/lib/agent/agent-ru
+nner.ts:385:13)
+
+    console.log
+      [AgentRunner] 
+Trying 
+provider=openai 
+model=gpt-4o-mini
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider openai 
+returned 429, 
+retrying in 425ms 
+(attempt 1/2)
+
+      at src/lib/agent
+/agent-runner.ts:562:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider openai 
+returned 429, 
+retrying in 800ms 
+(attempt 2/2)
+
+      at src/lib/agent
+/agent-runner.ts:562:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider openai 
+failed: HTTP 429, 
+code=RATE_LIMIT, 
+shouldFallback=true
+
+      at src/lib/agent
+/agent-runner.ts:743:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider openai in 
+cooldown for 900s
+
+      at setCooldown (
+src/lib/agent/agent-ru
+nner.ts:385:13)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai failed: 
+HTTP 400, 
+code=BAD_REQUEST, 
+shouldFallback=true
+
+      at src/lib/agent
+/agent-runner.ts:743:1
+7
+
+    console.log
+      [AgentRunner] 
+Trying 
+provider=openai 
+model=gpt-4o-mini
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with openai: 
+response length=15 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [AgentRunner] 
+Provider xai in 
+cooldown for 900s
+
+      at setCooldown (
+src/lib/agent/agent-ru
+nner.ts:385:13)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Skipping xai - in 
+cooldown
+
+      at src/lib/agent
+/agent-runner.ts:672:2
+1
+
+    console.log
+      [AgentRunner] 
+Trying 
+provider=openai 
+model=gpt-4o-mini
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with openai: 
+response length=15 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai returned 
+429, retrying in 
+435ms (attempt 1/2)
+
+      at src/lib/agent
+/agent-runner.ts:562:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai returned 
+429, retrying in 
+874ms (attempt 2/2)
+
+      at src/lib/agent
+/agent-runner.ts:562:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai failed: 
+HTTP 429, 
+code=RATE_LIMIT, 
+shouldFallback=true
+
+      at src/lib/agent
+/agent-runner.ts:743:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai in 
+cooldown for 900s
+
+      at setCooldown (
+src/lib/agent/agent-ru
+nner.ts:385:13)
+
+    console.log
+      [AgentRunner] 
+Trying 
+provider=openai 
+model=gpt-4o-mini
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with openai: 
+response length=15 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying 
+provider=openai 
+model=gpt-4o-mini
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with openai: 
+response length=13 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying 
+provider=openai 
+model=gpt-4o-mini
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with openai: 
+response length=13 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying 
+provider=openai 
+model=gpt-4o-mini
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with openai: 
+response length=13 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying 
+provider=gemini 
+model=gemini-2.0-flash
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with gemini: 
+response length=15 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai failed: 
+HTTP 400, 
+code=BAD_REQUEST, 
+shouldFallback=true
+
+      at src/lib/agent
+/agent-runner.ts:743:1
+7
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai failed: 
+HTTP 400, 
+code=BAD_REQUEST, 
+shouldFallback=true
+
+      at src/lib/agent
+/agent-runner.ts:743:1
+7
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai failed: 
+HTTP 401, code=AUTH, 
+shouldFallback=true
+
+      at src/lib/agent
+/agent-runner.ts:743:1
+7
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai returned 
+429, retrying in 
+423ms (attempt 1/2)
+
+      at src/lib/agent
+/agent-runner.ts:562:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai returned 
+429, retrying in 
+841ms (attempt 2/2)
+
+      at src/lib/agent
+/agent-runner.ts:562:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai failed: 
+HTTP 429, 
+code=RATE_LIMIT, 
+shouldFallback=true
+
+      at src/lib/agent
+/agent-runner.ts:743:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai in 
+cooldown for 900s
+
+      at setCooldown (
+src/lib/agent/agent-ru
+nner.ts:385:13)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai returned 
+400, retrying in 
+436ms (attempt 1/2)
+
+      at src/lib/agent
+/agent-runner.ts:562:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai returned 
+400, retrying in 
+877ms (attempt 2/2)
+
+      at src/lib/agent
+/agent-runner.ts:562:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai failed: 
+HTTP 400, code=QUOTA, 
+shouldFallback=true
+
+      at src/lib/agent
+/agent-runner.ts:743:1
+7
+
+    console.log
+      [AgentRunner] 
+Provider xai in 
+cooldown for 900s
+
+      at setCooldown (
+src/lib/agent/agent-ru
+nner.ts:385:13)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with xai: 
+response length=12 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying 
+provider=openai 
+model=gpt-4o-mini
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with openai: 
+response length=15 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying 
+provider=gemini 
+model=gemini-2.0-flash
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with gemini: 
+response length=15 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with xai: 
+response length=12 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [SkillsLoader] 
+Cache hit
+
+      at 
+loadSkillsBundle (src/
+lib/agent/skills-loade
+r.ts:108:17)
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+    console.log
+      [AgentRunner] 
+Trying provider=xai 
+model=grok-2-latest
+
+      at src/lib/agent
+/agent-runner.ts:686:1
+7
+
+    console.log
+      [AgentRunner] 
+Skills injected: 
+count=14 bundleSha256=
+8a59a322f9023ce9d9642e
+372cbe41df0eeb319f6039
+7b007a82b9607b890eef
+
+      at src/lib/agent
+/agent-runner.ts:687:1
+7
+
+    console.log
+      [AgentRunner] 
+Rules injected: 
+count=6 bundleSha256=8
+77602940069c1b2ad97899
+370d6e56e3957f40b39bdc
+d9f729e86f7a806ccff
+
+      at src/lib/agent
+/agent-runner.ts:688:1
+7
+
+    console.log
+      [AgentRunner] 
+Success with xai: 
+response length=12 
+chars
+
+      at src/lib/agent
+/agent-runner.ts:704:2
+1
+
+    console.log
+      [RulesLoader] 
+Cache hit
+
+      at 
+loadRulesBundle (src/l
+ib/agent/rules-loader.
+ts:118:17)
+
+
+Test Suites: 38 
+passed, 38 total
+Tests:       3 
+skipped, 530 passed, 
+533 total
+Snapshots:   0 total
+Time:        12.907 s
+Ran all test suites.

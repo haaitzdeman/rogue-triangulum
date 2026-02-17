@@ -1,0 +1,26 @@
+{
+  "date": "2026-02-17",
+  "universeCount": 48,
+  "candidateCount": 0,
+  "resolved": {
+    "requestedDate": null,
+    "effectiveDate": "2026-02-17",
+    "mode": "LIVE_PREMARKET",
+    "reason": "preferLive=true; live provider configured, 10/48 symbols have premarket data",
+    "datasetRange": {
+      "firstDate": "2021-01-29",
+      "lastDate": "2026-01-27"
+    }
+  },
+  "dataModeSummary": {
+    "PREMARKET": 0,
+    "OPEN_FALLBACK": 0
+  },
+  "inputCoverageSummary": {
+    "symbolsWithPrevClose": 48,
+    "symbolsWithOpen": 0,
+    "symbolsWithPremarketPrice": 0
+  },
+  "candidates": [],
+  "generatedAt": "2026-02-17T05:47:53.383Z"
+}

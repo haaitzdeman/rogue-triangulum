@@ -1,0 +1,48 @@
+﻿node.exe : PASS src/ap
+p/api/dev/__tests__/sc
+hema-health.test.ts
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (PASS src/a   
+ pp/ap...-health.t    
+est.ts:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+  
+/api/dev/schema-health
+    ΓêÜ returns 404 
+when not admin (47 ms)
+    ΓêÜ returns 503 
+when server DB not 
+configured (13 ms)
+    ΓêÜ returns PASS 
+when all required 
+checks pass (10 ms)
+    ΓêÜ returns FAIL 
+when at least one 
+table/column missing 
+(11 ms)
+
+Test Suites: 1 
+passed, 1 total
+Tests:       4 
+passed, 4 total
+Snapshots:   0 total
+Time:        0.673 s
+Ran all test suites 
+matching src/app/api/d
+ev/__tests__/schema-he
+alth.test.ts.

@@ -1,0 +1,30 @@
+{
+    "description": "Calibration system configuration",
+    "universeSource": "file",
+    "universeFile": "data/universe/tickers.txt",
+    "symbolCount": 20,
+    "walkForward": {
+        "trainWindowMonths": 24,
+        "testWindowMonths": 6,
+        "stepMonths": 6,
+        "minBarsRequired": 200
+    },
+    "safety": {
+        "minSampleSizePerBucket": 200,
+        "maxProfileAgeDays": 30,
+        "requireCalibrationImprovement": true
+    },
+    "scaling": {
+        "phase": "B",
+        "phaseSymbolCounts": {
+            "A": 20,
+            "B": 50,
+            "C": 150
+        },
+        "notes": {
+            "A": "20 symbols - stability and initial calibration",
+            "B": "50-100 symbols - diversity and sector coverage",
+            "C": "150+ symbols - scale testing"
+        }
+    }
+}

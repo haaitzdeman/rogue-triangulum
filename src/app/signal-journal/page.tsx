@@ -25,9 +25,40 @@ interface JournalResponse {
     count: number;
 }
 
+interface ScoreBucketComparison {
+    bucket: string;
+    expectedWinRate: number;
+    calibrationSampleSize: number;
+    drift: number | null;
+    insufficientDataNote?: string;
+}
+
+interface CalibrationStatusResponse {
+    status: 'ON' | 'OFF' | 'STALE';
+    reason: string;
+    profile: {
+        createdAt: string;
+        dataRange: { symbolCount: number; totalSignals: number };
+        benchmark: {
+            winRate_base: number;
+            winRate_calibrated: number;
+            avgReturn_base: number;
+            avgReturn_calibrated: number;
+            sampleSize: number;
+            calibrationApplied: boolean;
+        } | null;
+    } | null;
+    scoreBuckets: ScoreBucketComparison[];
+    thresholds: {
+        minSampleSizePerBucket: number;
+        maxProfileAgeDays: number;
+    };
+}
+
 export default function SignalJournalPage() {
     const [signals, setSignals] = useState<SignalWithOutcome[]>([]);
     const [stats, setStats] = useState<SignalJournalStats | null>(null);
+    const [calibration, setCalibration] = useState<CalibrationStatusResponse | null>(null);
     const [loading, setLoading] = useState(true);
     const [evaluating, setEvaluating] = useState(false);
     const [filter, setFilter] = useState<'all' | 'pending' | 'evaluated'>('all');
@@ -50,6 +81,16 @@ export default function SignalJournalPage() {
             console.error(err);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const fetchCalibrationStatus = async () => {
+        try {
+            const response = await fetch('/api/calibration/status');
+            const data = await response.json() as CalibrationStatusResponse;
+            setCalibration(data);
+        } catch (err) {
+            console.error('Error fetching calibration status:', err);
         }
     };
 
@@ -79,6 +120,7 @@ export default function SignalJournalPage() {
 
     useEffect(() => {
         fetchJournal();
+        fetchCalibrationStatus();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
 
@@ -98,6 +140,12 @@ export default function SignalJournalPage() {
         return 'text-yellow-400';
     };
 
+    const getStatusColor = (status: string) => {
+        if (status === 'ON') return 'bg-green-900/50 text-green-400 border-green-600';
+        if (status === 'STALE') return 'bg-yellow-900/50 text-yellow-400 border-yellow-600';
+        return 'bg-red-900/50 text-red-400 border-red-600';
+    };
+
     return (
         <div className="min-h-screen bg-gray-900 text-white p-6">
             <div className="max-w-7xl mx-auto">
@@ -109,7 +157,13 @@ export default function SignalJournalPage() {
                             Performance tracking & outcome evaluation
                         </p>
                     </div>
-                    <div className="flex gap-4">
+                    <div className="flex gap-4 items-center">
+                        {/* Calibration Status Badge */}
+                        {calibration && (
+                            <div className={`px-3 py-1 rounded border text-sm font-medium ${getStatusColor(calibration.status)}`}>
+                                Calibration: {calibration.status}
+                            </div>
+                        )}
                         <select
                             value={filter}
                             onChange={(e) => setFilter(e.target.value as 'all' | 'pending' | 'evaluated')}
@@ -133,6 +187,33 @@ export default function SignalJournalPage() {
                 {error && (
                     <div className="bg-red-900/50 border border-red-700 rounded p-4 mb-6">
                         {error}
+                    </div>
+                )}
+
+                {/* Calibration Info Panel */}
+                {calibration && calibration.status !== 'OFF' && calibration.profile?.benchmark && (
+                    <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 border border-blue-700/50 rounded-lg p-4 mb-6">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <h3 className="font-semibold text-blue-300">📊 Calibration Benchmark</h3>
+                                <p className="text-xs text-gray-400 mt-1">{calibration.reason}</p>
+                            </div>
+                            <div className="flex gap-6 text-sm">
+                                <div>
+                                    <div className="text-gray-400">Base Win Rate</div>
+                                    <div className="text-lg font-mono">{(calibration.profile.benchmark.winRate_base * 100).toFixed(1)}%</div>
+                                </div>
+                                <div className="text-2xl text-gray-600">→</div>
+                                <div>
+                                    <div className="text-gray-400">Calibrated Win Rate</div>
+                                    <div className="text-lg font-mono text-green-400">{(calibration.profile.benchmark.winRate_calibrated * 100).toFixed(1)}%</div>
+                                </div>
+                                <div className="border-l border-gray-600 pl-6">
+                                    <div className="text-gray-400">Sample Size</div>
+                                    <div className="text-lg font-mono">{calibration.profile.benchmark.sampleSize.toLocaleString()}</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 )}
 
@@ -195,24 +276,68 @@ export default function SignalJournalPage() {
                     </div>
                 )}
 
-                {/* Score Buckets */}
+                {/* Score Buckets - Expected vs Realized */}
                 {stats && Object.keys(stats.byScoreBucket).length > 0 && (
                     <div className="bg-gray-800/50 rounded-lg p-6 mb-8">
-                        <h2 className="text-xl font-semibold mb-4">Calibration by Score</h2>
+                        <div className="flex justify-between items-center mb-4">
+                            <h2 className="text-xl font-semibold">Expected vs Realized by Score</h2>
+                            {calibration && calibration.status !== 'OFF' && (
+                                <span className="text-xs text-gray-400">Expected from calibration profile</span>
+                            )}
+                        </div>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                             {Object.entries(stats.byScoreBucket)
                                 .sort((a, b) => b[0].localeCompare(a[0]))
-                                .map(([bucket, perf]) => (
-                                    <div key={bucket} className="bg-gray-700/50 rounded p-3 text-center">
-                                        <div className="font-mono text-lg">{bucket}</div>
-                                        <div className="text-sm text-gray-400 mt-1">
-                                            n={perf.count}
+                                .map(([bucket, perf]) => {
+                                    // Find expected from calibration scoreBuckets
+                                    const calibBucket = calibration?.scoreBuckets?.find(
+                                        (b: ScoreBucketComparison) => b.bucket === bucket
+                                    );
+                                    const minSampleSize = calibration?.thresholds?.minSampleSizePerBucket || 200;
+                                    const hasEnoughRealized = perf.count >= minSampleSize;
+
+                                    // Calculate drift only when both have enough samples
+                                    const canCalculateDrift = calibBucket &&
+                                        calibBucket.calibrationSampleSize >= minSampleSize &&
+                                        hasEnoughRealized;
+                                    const drift = canCalculateDrift
+                                        ? (perf.hitTargetRate - calibBucket.expectedWinRate) * 100
+                                        : null;
+
+                                    return (
+                                        <div key={bucket} className="bg-gray-700/50 rounded p-3 text-center">
+                                            <div className="font-mono text-lg">{bucket}</div>
+                                            <div className="text-xs text-gray-400 mt-1">n={perf.count}</div>
+
+                                            {/* Expected */}
+                                            {calibBucket && (
+                                                <div className="text-xs text-gray-500 mt-1">
+                                                    Exp: {(calibBucket.expectedWinRate * 100).toFixed(0)}%
+                                                </div>
+                                            )}
+
+                                            {/* Realized - only show if enough samples */}
+                                            {hasEnoughRealized ? (
+                                                <div className={`text-lg font-semibold ${perf.hitTargetRate >= 0.5 ? 'text-green-400' : 'text-yellow-400'}`}>
+                                                    {(perf.hitTargetRate * 100).toFixed(0)}%
+                                                </div>
+                                            ) : (
+                                                <div className="text-xs text-gray-500 mt-2">
+                                                    Insufficient sample (&lt;{minSampleSize})
+                                                </div>
+                                            )}
+
+                                            {/* Drift indicator */}
+                                            {drift !== null && (
+                                                <div className={`text-xs ${Math.abs(drift) < 5 ? 'text-gray-500' :
+                                                    drift > 0 ? 'text-green-400' : 'text-red-400'
+                                                    }`}>
+                                                    {drift > 0 ? '+' : ''}{drift.toFixed(0)}% drift
+                                                </div>
+                                            )}
                                         </div>
-                                        <div className={`text-lg font-semibold ${perf.hitTargetRate >= 0.5 ? 'text-green-400' : 'text-yellow-400'}`}>
-                                            {(perf.hitTargetRate * 100).toFixed(0)}%
-                                        </div>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                         </div>
                     </div>
                 )}

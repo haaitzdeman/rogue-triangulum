@@ -1,0 +1,88 @@
+
+./src/app/api/premarket/journal/route.ts
+25:11  Warning: 'JournalEntry' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/agent/agent-runner.ts
+433:51  Warning: 'provider' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/agent/__tests__/agent-runner.test.ts
+19:5  Warning: 'getApiKey' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/broker/__tests__/options-fill-grouper.test.ts
+5:34  Warning: 'OptionsFillGroup' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/data/polygon-provider.ts
+22:5  Warning: 'OptionContract' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+23:5  Warning: 'IVData' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+26:5  Warning: 'CalendarEvent' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/data/provider.ts
+11:5  Warning: 'Candle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/indicators/extended.ts
+8:10  Warning: 'sma' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/journal/signal-evaluator.ts
+11:52  Warning: 'writeStore' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+159:15  Warning: 'barClose' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/journal/signal-recorder.ts
+99:5  Warning: 'context' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/premarket/analog-engine.ts
+148:5  Warning: 'config' is assigned a value but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/premarket/date-resolver.ts
+13:13  Warning: 'path' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/premarket/decision-layer.ts
+224:11  Warning: 'continuationWord' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+270:11  Warning: 'entryConcept' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/premarket/__tests__/analog-engine.test.ts
+250:28  Warning: 'lowConfidence' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/shared/sizing.ts
+266:5  Warning: 'spreadWidth' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+267:5  Warning: 'netCredit' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/strategies/meanReversion.ts
+25:30  Warning: 'adxTrend' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/strategies/trendFollow.ts
+25:13  Warning: 'trendDirection' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/strategies/types.ts
+8:15  Warning: 'Bar' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/training/calibration-types.ts
+297:18  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/lib/training/polygon-provider.ts
+127:26  Warning: 'symbol' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/training/provider-adapter.ts
+8:15  Warning: 'DeskType' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+190:21  Warning: 'start' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+190:34  Warning: 'end' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+190:45  Warning: 'symbols' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/training/walkforward-trainer.ts
+23:5  Warning: 'DEFAULT_WALKFORWARD_CONFIG' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/training/__tests__/calibration-status.test.ts
+13:5  Warning: 'loadCalibrationProfile' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+23:7  Warning: 'PROFILE_PATH' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/training/__tests__/walkforward-trainer.test.ts
+10:15  Warning: 'CalibrationProfile' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+72:19  Warning: 'trainMonths' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+73:19  Warning: 'testMonths' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+76:19  Warning: 'trainStart' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+79:19  Warning: 'testEnd' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+157:23  Warning: 'bucket' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/__integration__/e2e-trade-flow.test.ts
+48:15  Error: Unexpected aliasing of 'this' to local variable.  @typescript-eslint/no-this-alias
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules

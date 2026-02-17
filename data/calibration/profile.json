@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "createdAt": "2026-01-28T08:31:05.207Z",
+  "lastUpdated": "2026-01-28T08:31:05.207Z",
+  "dataLimited": false,
+  "walkForwardConfig": {
+    "trainWindowMonths": 24,
+    "testWindowMonths": 6,
+    "stepMonths": 6,
+    "minBarsRequired": 200
+  },
+  "dataRange": {
+    "start": "2021-01-28",
+    "end": "2026-01-28",
+    "symbolCount": 47,
+    "totalSignals": 36449
+  },
+  "benchmark": {
+    "winRate_base": 0.483,
+    "winRate_calibrated": 0.463,
+    "avgReturn_base": -0.24,
+    "avgReturn_calibrated": -0.14,
+    "sampleSize": 36449,
+    "calibrationApplied": false,
+    "reason": "Calibration rejected (calibrated winRate 46.3% <= base 48.3%)"
+  },
+  "strategyWeights": {},
+  "calibrationCurve": [],
+  "parameterOverrides": {},
+  "summary": {
+    "totalTrades": 36449,
+    "winRate": 0.483,
+    "avgReturn": -0.24,
+    "sharpeRatio": 0,
+    "maxDrawdown": 0
+  }
+}

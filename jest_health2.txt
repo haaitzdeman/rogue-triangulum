@@ -1,0 +1,102 @@
+﻿node.exe : FAIL src/ap
+p/api/dev/__tests__/he
+alth-aggregator.test.t
+s
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (FAIL src/a   
+ pp/ap...regator.t    
+est.ts:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+  /api/dev/health
+    ├ù returns PASS 
+when all subsystems 
+pass (130 ms)
+    ΓêÜ returns FAIL 
+when any subsystem 
+fails (2 ms)
+
+  ΓùÅ /api/dev/health 
+ΓÇ║ returns PASS when 
+all subsystems pass
+
+    expect(received).t
+oBe(expected) // 
+Object.is equality
+
+    Expected: "PASS"
+    Received: "FAIL"
+
+    [0m [90m  97 
+|[39m         
+[36mconst[39m body 
+[33m=[39m 
+[36mawait[39m res[3
+3m.[39mjson()[33m;[
+39m
+     [90m  98 |[39m
+    [31m[1m>[22m[3
+9m[90m  99 |[39m    
+     expect(body[33m.
+[39mstatus)[33m.[39
+mtoBe([32m'PASS'[39m
+)[33m;[39m
+     [90m     |[39m 
+                      
+      
+[31m[1m^[22m[39m
+     [90m 100 |[39m 
+        expect(body[3
+3m.[39msubsystems[33
+m.[39menv[33m.[39ms
+tatus)[33m.[39mtoBe(
+[32m'PASS'[39m)[33m
+;[39m
+     [90m 101 |[39m 
+        expect(body[3
+3m.[39msubsystems[33
+m.[39mschema[33m.[3
+9mstatus)[33m.[39mto
+Be([32m'PASS'[39m)[
+33m;[39m
+     [90m 102 |[39m 
+        expect(body[3
+3m.[39msubsystems[33
+m.[39mrisk[33m.[39m
+status)[33m.[39mtoBe
+([32m'PASS'[39m)[33
+m;[39m[0m
+
+      at src/app/api/d
+ev/__tests__/health-ag
+gregator.test.ts:99:29
+      at fulfilled (sr
+c/app/api/dev/__tests_
+_/health-aggregator.te
+st.ts:50:58)
+
+Test Suites: 1 
+failed, 1 total
+Tests:       1 
+failed, 1 passed, 2 
+total
+Snapshots:   0 total
+Time:        0.717 s
+Ran all test suites 
+matching src/app/api/d
+ev/__tests__/health-ag
+gregator.test.ts.

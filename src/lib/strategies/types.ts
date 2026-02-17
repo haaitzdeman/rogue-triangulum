@@ -5,8 +5,6 @@
  * NO FAKE LEARNING - just honest rule-based analysis.
  */
 
-import type { Bar } from '../indicators';
-
 /**
  * Trading direction
  */

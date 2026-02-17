@@ -5,7 +5,7 @@
  */
 
 import type { Bar } from './technical';
-import { sma, ema } from './technical';
+import { ema } from './technical';
 
 /**
  * Stochastic Oscillator

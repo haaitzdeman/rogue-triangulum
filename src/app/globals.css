@@ -41,6 +41,17 @@
     @apply bg-background text-foreground font-sans;
     @apply min-h-screen;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    cursor: default;
+  }
+
+  /* Only allow text cursor on actual input elements */
+  input, textarea, [contenteditable="true"] {
+    cursor: text;
+  }
+
+  /* Buttons and links should use pointer */
+  a, button, [role="button"], label[for], select {
+    cursor: pointer;
   }
 
   /* Custom scrollbar */

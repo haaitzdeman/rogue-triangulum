@@ -1,0 +1,166 @@
+/**
+ * Premarket Journal API Tests
+ * 
+ * Tests for journal API routes with Supabase mocked.
+ */
+
+import { NextRequest } from 'next/server';
+
+// Mock Supabase client
+const mockSelect = jest.fn();
+const mockInsert = jest.fn();
+const mockUpdate = jest.fn();
+const mockOrder = jest.fn();
+const mockLimit = jest.fn();
+const mockEq = jest.fn();
+const mockSingle = jest.fn();
+
+jest.mock('@/lib/supabase/client', () => ({
+    isSupabaseConfigured: jest.fn(() => true),
+    supabase: {
+        from: jest.fn(() => ({
+            select: mockSelect,
+            insert: mockInsert,
+            update: mockUpdate,
+        })),
+    },
+}));
+
+// Setup mock chains
+mockSelect.mockReturnValue({ order: mockOrder });
+mockOrder.mockReturnValue({ limit: mockLimit });
+mockLimit.mockResolvedValue({ data: [], error: null });
+
+mockInsert.mockReturnValue({ select: jest.fn(() => ({ single: mockSingle })) });
+mockSingle.mockResolvedValue({
+    data: { id: 'test-id-123', symbol: 'AAPL' },
+    error: null
+});
+
+mockUpdate.mockReturnValue({ eq: mockEq });
+mockEq.mockReturnValue({ select: jest.fn(() => ({ single: mockSingle })) });
+
+// Import handlers after mocks
+import { GET, POST } from '@/app/api/premarket/journal/route';
+import { isSupabaseConfigured } from '@/lib/supabase/client';
+
+// Helper to create mock request
+function createRequest(
+    path: string,
+    method: string = 'GET',
+    body?: unknown
+): NextRequest {
+    const url = new URL(path, 'http://localhost');
+    if (body) {
+        return new NextRequest(url, {
+            method,
+            body: JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' },
+        });
+    }
+    return new NextRequest(url, { method });
+}
+
+describe('/api/premarket/journal', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+        (isSupabaseConfigured as jest.Mock).mockReturnValue(true);
+    });
+
+    describe('GET - List entries', () => {
+        it('returns entries when configured', async () => {
+            mockLimit.mockResolvedValueOnce({
+                data: [
+                    { id: '1', symbol: 'AAPL', gap_pct: 5.2 },
+                    { id: '2', symbol: 'TSLA', gap_pct: -3.1 },
+                ],
+                error: null,
+            });
+
+            const res = await GET();
+            const data = await res.json();
+
+            expect(res.status).toBe(200);
+            expect(data.success).toBe(true);
+            expect(data.entries).toHaveLength(2);
+            expect(data.count).toBe(2);
+        });
+
+        it('returns 503 when Supabase not configured', async () => {
+            (isSupabaseConfigured as jest.Mock).mockReturnValue(false);
+
+            const res = await GET();
+            const data = await res.json();
+
+            expect(res.status).toBe(503);
+            expect(data.errorCode).toBe('SUPABASE_NOT_CONFIGURED');
+        });
+
+        it('returns 500 on database error', async () => {
+            mockLimit.mockResolvedValueOnce({
+                data: null,
+                error: { message: 'Connection failed' },
+            });
+
+            const res = await GET();
+            const data = await res.json();
+
+            expect(res.status).toBe(500);
+            expect(data.errorCode).toBe('DATABASE_ERROR');
+        });
+    });
+
+    describe('POST - Create entry', () => {
+        const validPayload = {
+            effectiveDate: '2026-01-27',
+            symbol: 'AAPL',
+            gapPct: 5.2,
+            direction: 'UP',
+            playType: 'CONTINUATION',
+            confidence: 'HIGH',
+            lowConfidence: false,
+            because: 'Strong historical pattern',
+            keyLevels: { prevClose: 150, gapReferencePrice: 157.5 },
+            invalidation: 'Close below 150',
+            riskNote: 'Earnings soon',
+            analogStats: { sampleSize: 45, hitRate: 0.65 },
+            scanGeneratedAt: '2026-01-27T08:00:00Z',
+            configUsed: { minAbsGapPct: 3 },
+        };
+
+        it('creates entry with valid payload', async () => {
+            const req = createRequest('/api/premarket/journal', 'POST', validPayload);
+            const res = await POST(req);
+            const data = await res.json();
+
+            expect(res.status).toBe(201);
+            expect(data.success).toBe(true);
+            expect(data.entry).toBeDefined();
+        });
+
+        it('returns 400 for missing required fields', async () => {
+            const req = createRequest('/api/premarket/journal', 'POST', {
+                symbol: 'AAPL',
+                // Missing other required fields
+            });
+
+            const res = await POST(req);
+            const data = await res.json();
+
+            expect(res.status).toBe(400);
+            expect(data.errorCode).toBe('BAD_REQUEST');
+            expect(data.message).toContain('Missing required fields');
+        });
+
+        it('returns 503 when Supabase not configured', async () => {
+            (isSupabaseConfigured as jest.Mock).mockReturnValue(false);
+
+            const req = createRequest('/api/premarket/journal', 'POST', validPayload);
+            const res = await POST(req);
+            const data = await res.json();
+
+            expect(res.status).toBe(503);
+            expect(data.errorCode).toBe('SUPABASE_NOT_CONFIGURED');
+        });
+    });
+});

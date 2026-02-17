@@ -124,7 +124,7 @@ export class PolygonTrainingProvider implements TrainingProvider {
     /**
      * Get options chain (requires higher tier API)
      */
-    async getOptionChain(symbol: string, _date: Date): Promise<OptionChainItem[]> {
+    async getOptionChain(_symbol: string, _date: Date): Promise<OptionChainItem[]> {
         // Options data requires a higher tier, return empty for now
         console.warn(`[Polygon] Options chain not available for free tier`);
         return [];

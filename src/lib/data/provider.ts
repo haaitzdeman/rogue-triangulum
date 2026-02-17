@@ -8,7 +8,6 @@
  */
 
 import type {
-    Candle,
     Timeframe,
     Quote,
     SymbolInfo,

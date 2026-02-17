@@ -8,7 +8,7 @@
  */
 
 import type { SignalRecord, SignalOutcome } from './signal-types';
-import { getPendingSignals, addOutcome, readStore, writeStore } from './signal-store';
+import { getPendingSignals, addOutcome, readStore } from './signal-store';
 
 // Polygon API types
 interface PolygonBar {
@@ -156,7 +156,6 @@ async function evaluateSignal(
         // Check intrabar for stop/target hits
         const barHigh = bar.h;
         const barLow = bar.l;
-        const barClose = bar.c;
 
         // Favorable excursion
         const favorable = isLong

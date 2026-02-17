@@ -178,6 +178,107 @@ export interface Database {
                     created_at?: string;
                 };
             };
+
+            // Premarket journal entries for paper mode trading
+            premarket_journal_entries: {
+                Row: {
+                    id: string;
+                    created_at: string;
+                    effective_date: string;
+                    symbol: string;
+                    gap_pct: number;
+                    direction: string;
+                    play_type: string;
+                    confidence: string;
+                    low_confidence: boolean;
+                    because: string;
+                    key_levels: Json;
+                    invalidation: string;
+                    risk_note: string;
+                    analog_stats: Json;
+                    scan_generated_at: string;
+                    config_used: Json;
+                    user_note: string | null;
+                    status: string;
+                    outcome: Json | null;
+                };
+                Insert: {
+                    id?: string;
+                    created_at?: string;
+                    effective_date: string;
+                    symbol: string;
+                    gap_pct: number;
+                    direction: string;
+                    play_type: string;
+                    confidence: string;
+                    low_confidence?: boolean;
+                    because: string;
+                    key_levels: Json;
+                    invalidation: string;
+                    risk_note: string;
+                    analog_stats: Json;
+                    scan_generated_at: string;
+                    config_used: Json;
+                    user_note?: string | null;
+                    status?: string;
+                    outcome?: Json | null;
+                };
+                Update: {
+                    id?: string;
+                    created_at?: string;
+                    effective_date?: string;
+                    symbol?: string;
+                    gap_pct?: number;
+                    direction?: string;
+                    play_type?: string;
+                    confidence?: string;
+                    low_confidence?: boolean;
+                    because?: string;
+                    key_levels?: Json;
+                    invalidation?: string;
+                    risk_note?: string;
+                    analog_stats?: Json;
+                    scan_generated_at?: string;
+                    config_used?: Json;
+                    user_note?: string | null;
+                    status?: string;
+                    outcome?: Json | null;
+                };
+            };
+
+            // Broker trade fills (synced from broker integrations)
+            broker_trade_fills: {
+                Row: {
+                    id: string;
+                    broker: string;
+                    broker_trade_id: string;
+                    payload: Json | null;
+                    normalized: Json;
+                    filled_at: string;
+                    symbol: string;
+                    created_at: string;
+                };
+                Insert: {
+                    id?: string;
+                    broker: string;
+                    broker_trade_id: string;
+                    payload?: Json | null;
+                    normalized: Json;
+                    filled_at: string;
+                    symbol: string;
+                    created_at?: string;
+                };
+                Update: {
+                    id?: string;
+                    broker?: string;
+                    broker_trade_id?: string;
+                    payload?: Json | null;
+                    normalized?: Json;
+                    filled_at?: string;
+                    symbol?: string;
+                    created_at?: string;
+                };
+            };
         };
         Views: {
             [_ in never]: never;
@@ -197,3 +298,4 @@ export type Watchlist = Database['public']['Tables']['watchlist']['Row'];
 export type JournalEntry = Database['public']['Tables']['journal_entries']['Row'];
 export type ExpertCalibration = Database['public']['Tables']['expert_calibration']['Row'];
 export type MarketDataCache = Database['public']['Tables']['market_data_cache']['Row'];
+export type BrokerTradeFill = Database['public']['Tables']['broker_trade_fills']['Row'];

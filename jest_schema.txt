@@ -1,0 +1,232 @@
+﻿  console.error
+    [SchemaHealth] Error: TypeError: supabase.from is not a function
+        at C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\lib\guards\schema-check.ts:120:14
+        at Generator.next (<anonymous>)
+        at C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\lib\guards\schema-check.ts:19:71
+        at new Promise (<anonymous>)
+        at __awaiter (C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\lib\guards\schema-check.ts:15:12)
+        at checkSchema (C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\lib\guards\schema-check.ts:81:12)
+        at C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\app\api\dev\schema-health\route.ts:38:41
+        at Generator.next (<anonymous>)
+        at C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\app\api\dev\schema-health\route.ts:21:71
+        at new Promise (<anonymous>)
+        at __awaiter (C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\app\api\dev\schema-health\route.ts:17:12)
+        at GET (C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\app\api\dev\schema-health\route.ts:34:12)
+        at C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\app\api\dev\__tests__\schema-health.test.ts:90:27
+        at Generator.next (<anonymous>)
+        at fulfilled (C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\app\api\dev\__tests__\schema-health.test.ts:47:58)
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+    [0m [90m 39 |[39m         [36mreturn[39m [33mNextResponse[39m[33m.[39mjson(result)[33m;[39m
+     [90m 40 |[39m     } [36mcatch[39m (error) {
+    [31m[1m>[22m[39m[90m 41 |[39m         console[33m.[39merror([32m'[SchemaHealth] Error:'[39m[33m,[39m error)[33m;[39m
+     [90m    |[39m                 [31m[1m^[22m[39m
+     [90m 42 |[39m         [36mreturn[39m [33mNextResponse[39m[33m.[39mjson(
+     [90m 43 |[39m             {
+     [90m 44 |[39m                 status[33m:[39m [32m'FAIL'[39m[33m,[39m[0m
+
+      at src/app/api/dev/schema-health/route.ts:41:17
+          at Generator.throw (<anonymous>)
+      at rejected (src/app/api/dev/schema-health/route.ts:19:65)
+
+  console.error
+    [SchemaHealth] Error: TypeError: supabase.from is not a function
+        at C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\lib\guards\schema-check.ts:120:14
+        at Generator.next (<anonymous>)
+        at C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\lib\guards\schema-check.ts:19:71
+        at new Promise (<anonymous>)
+        at __awaiter (C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\lib\guards\schema-check.ts:15:12)
+        at checkSchema (C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\lib\guards\schema-check.ts:81:12)
+        at C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\app\api\dev\schema-health\route.ts:38:41
+        at Generator.next (<anonymous>)
+        at C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\app\api\dev\schema-health\route.ts:21:71
+        at new Promise (<anonymous>)
+        at __awaiter (C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\app\api\dev\schema-health\route.ts:17:12)
+        at GET (C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\app\api\dev\schema-health\route.ts:34:12)
+        at C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\app\api\dev\__tests__\schema-health.test.ts:112:27
+        at Generator.next (<anonymous>)
+        at fulfilled (C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\src\app\api\dev\__tests__\schema-health.test.ts:47:58)
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+    [0m [90m 39 |[39m         [36mreturn[39m [33mNextResponse[39m[33m.[39mjson(result)[33m;[39m
+     [90m 40 |[39m     } [36mcatch[39m (error) {
+    [31m[1m>[22m[39m[90m 41 |[39m         console[33m.[39merror([32m'[SchemaHealth] Error:'[39m[33m,[39m error)[33m;[39m
+     [90m    |[39m                 [31m[1m^[22m[39m
+     [90m 42 |[39m         [36mreturn[39m [33mNextResponse[39m[33m.[39mjson(
+     [90m 43 |[39m             {
+     [90m 44 |[39m                 status[33m:[39m [32m'FAIL'[39m[33m,[39m[0m
+
+      at src/app/api/dev/schema-health/route.ts:41:17
+          at Generator.throw (<anonymous>)
+      at rejected (src/app/api/dev/schema-health/route.ts:19:65)
+
+node.exe : FAIL src/ap
+p/api/dev/__tests__/sc
+hema-health.test.ts
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (FAIL src/a   
+ pp/ap...-health.t    
+est.ts:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+  
+/api/dev/schema-health
+    ΓêÜ returns 404 
+when not admin (63 ms)
+    ΓêÜ returns 503 
+when server DB not 
+configured (11 ms)
+    ├ù returns PASS 
+when all required 
+checks pass (44 ms)
+    ├ù returns FAIL 
+when at least one 
+table/column missing 
+(12 ms)
+
+  ΓùÅ /api/dev/schema-
+health ΓÇ║ returns 
+PASS when all 
+required checks pass
+
+    expect(received).t
+oBe(expected) // 
+Object.is equality
+
+    Expected: 200
+    Received: 500
+
+    [0m [90m 89 
+|[39m         
+[36mconst[39m { 
+[33mGET[39m } 
+[33m=[39m 
+[36mawait[39m [36mi
+mport[39m([32m'../sc
+hema-health/route'[39
+m)[33m;[39m
+     [90m 90 |[39m  
+       
+[36mconst[39m res 
+[33m=[39m 
+[36mawait[39m [33mG
+ET[39m(makeRequest())
+[33m;[39m
+    [31m[1m>[22m[3
+9m[90m 91 |[39m     
+    expect(res[33m.[
+39mstatus)[33m.[39mt
+oBe([35m200[39m)[33
+m;[39m
+     [90m    |[39m  
+                      
+    
+[31m[1m^[22m[39m
+     [90m 92 |[39m
+     [90m 93 |[39m  
+       
+[36mconst[39m body 
+[33m=[39m 
+[36mawait[39m res[3
+3m.[39mjson()[33m;[
+39m
+     [90m 94 |[39m  
+       expect(body[33
+m.[39mstatus)[33m.[
+39mtoBe([32m'PASS'[3
+9m)[33m;[39m[0m
+
+      at src/app/api/d
+ev/__tests__/schema-he
+alth.test.ts:91:28
+      at fulfilled (sr
+c/app/api/dev/__tests_
+_/schema-health.test.t
+s:47:58)
+
+  ΓùÅ /api/dev/schema-
+health ΓÇ║ returns 
+FAIL when at least 
+one table/column 
+missing
+
+    expect(received).t
+oBe(expected) // 
+Object.is equality
+
+    Expected: 200
+    Received: 500
+
+    [0m [90m 111 
+|[39m         
+[36mconst[39m { 
+[33mGET[39m } 
+[33m=[39m 
+[36mawait[39m [36mi
+mport[39m([32m'../sc
+hema-health/route'[39
+m)[33m;[39m
+     [90m 112 |[39m 
+        
+[36mconst[39m res 
+[33m=[39m 
+[36mawait[39m [33mG
+ET[39m(makeRequest())
+[33m;[39m
+    [31m[1m>[22m[3
+9m[90m 113 |[39m    
+     expect(res[33m.
+[39mstatus)[33m.[39m
+toBe([35m200[39m)[3
+3m;[39m
+     [90m     |[39m 
+                      
+     
+[31m[1m^[22m[39m
+     [90m 114 |[39m
+     [90m 115 |[39m 
+        
+[36mconst[39m body 
+[33m=[39m 
+[36mawait[39m res[3
+3m.[39mjson()[33m;[
+39m
+     [90m 116 |[39m 
+        expect(body[3
+3m.[39mstatus)[33m.
+[39mtoBe([32m'FAIL'[
+39m)[33m;[39m[0m
+
+      at src/app/api/d
+ev/__tests__/schema-he
+alth.test.ts:113:28
+      at fulfilled (sr
+c/app/api/dev/__tests_
+_/schema-health.test.t
+s:47:58)
+
+Test Suites: 1 
+failed, 1 total
+Tests:       2 
+failed, 2 passed, 4 
+total
+Snapshots:   0 total
+Time:        0.718 s
+Ran all test suites 
+matching src/app/api/d
+ev/__tests__/schema-he
+alth.test.ts.

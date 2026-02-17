@@ -1,0 +1,100 @@
+{
+    "signals": [
+        {
+            "id": "DRIFT-60-1",
+            "version": "V1",
+            "symbol": "AAPL",
+            "strategyName": "Momentum",
+            "setupType": "Test",
+            "direction": "long",
+            "score": 65,
+            "confidence": 0.65,
+            "reasons": [
+                "drift test"
+            ],
+            "signalBarTimestamp": 1768000000000,
+            "entryBarTimestamp": 1768086400000,
+            "referenceEntryDate": "2026-01-15",
+            "referenceEntryPrice": 100,
+            "riskStop": 95,
+            "targetPrice": 110,
+            "targetR": 2,
+            "atrDollars": 2.5,
+            "atrPercent": 2.5,
+            "regimeTrending": true,
+            "regimeHighVol": false,
+            "horizonDays": 7,
+            "status": "evaluated",
+            "createdAt": "2026-01-15T00:00:00Z"
+        },
+        {
+            "id": "DRIFT-60-2",
+            "version": "V1",
+            "symbol": "MSFT",
+            "strategyName": "Momentum",
+            "setupType": "Test",
+            "direction": "long",
+            "score": 62,
+            "confidence": 0.62,
+            "reasons": [
+                "drift test"
+            ],
+            "signalBarTimestamp": 1768003600000,
+            "entryBarTimestamp": 1768090000000,
+            "referenceEntryDate": "2026-01-15",
+            "referenceEntryPrice": 100,
+            "riskStop": 95,
+            "targetPrice": 110,
+            "targetR": 2,
+            "atrDollars": 2.5,
+            "atrPercent": 2.5,
+            "regimeTrending": true,
+            "regimeHighVol": false,
+            "horizonDays": 7,
+            "status": "evaluated",
+            "createdAt": "2026-01-15T00:00:00Z"
+        }
+    ],
+    "outcomes": [
+        {
+            "signalId": "DRIFT-60-1",
+            "evaluatedAt": "2026-01-21T00:00:00Z",
+            "entryPrice": 100,
+            "return1Bar": 1,
+            "return3Bar": 2,
+            "return7Bar": 3,
+            "return10Bar": 4,
+            "mfe": 5,
+            "mae": -1,
+            "hitTargetFirst": true,
+            "hitStopFirst": false,
+            "exitReason": "target",
+            "exitBar": 5,
+            "exitPrice": 110,
+            "expectedMove": 10,
+            "realizedMove": 3,
+            "errorVsExpected": -7
+        },
+        {
+            "signalId": "DRIFT-60-2",
+            "evaluatedAt": "2026-01-21T00:00:00Z",
+            "entryPrice": 100,
+            "return1Bar": -1,
+            "return3Bar": -2,
+            "return7Bar": -3,
+            "return10Bar": -4,
+            "mfe": 1,
+            "mae": -4,
+            "hitTargetFirst": false,
+            "hitStopFirst": true,
+            "exitReason": "stop",
+            "exitBar": 3,
+            "exitPrice": 95,
+            "expectedMove": 10,
+            "realizedMove": -3,
+            "errorVsExpected": -13
+        }
+    ],
+    "lastUpdated": "2026-01-21T13:58:00.000Z",
+    "version": "V1"
+}

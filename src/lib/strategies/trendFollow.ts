@@ -22,7 +22,7 @@ export const TrendFollowStrategy: Strategy = {
     analyze(indicators: IndicatorSnapshot): StrategySignal {
         const {
             price, sma20, sma50, ema9, adx, adxTrend,
-            trendDirection, atr, nearestSupport, nearestResistance
+            atr, nearestSupport, nearestResistance
         } = indicators;
 
         if (sma20 === null || sma50 === null || adx === null) {

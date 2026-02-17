@@ -1,0 +1,42 @@
+﻿node.exe : PASS src/ap
+p/api/dev/__tests__/he
+alth-aggregator.test.t
+s
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (PASS src/a   
+ pp/ap...regator.t    
+est.ts:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+  /api/dev/health
+    ΓêÜ returns PASS 
+when all subsystems 
+pass (10 ms)
+    ΓêÜ returns FAIL 
+when any subsystem 
+fails (2 ms)
+
+Test Suites: 1 
+passed, 1 total
+Tests:       2 
+passed, 2 total
+Snapshots:   0 total
+Time:        0.622 s
+Ran all test suites 
+matching src/app/api/d
+ev/__tests__/health-ag
+gregator.test.ts.

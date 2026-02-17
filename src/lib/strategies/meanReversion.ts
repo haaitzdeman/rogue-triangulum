@@ -22,7 +22,7 @@ export const MeanReversionStrategy: Strategy = {
     analyze(indicators: IndicatorSnapshot): StrategySignal {
         const {
             rsi, bbPercentB, bbLower, bbUpper, bbMiddle,
-            price, atr, adx, adxTrend, vwap
+            price, atr, adx, vwap
         } = indicators;
 
         if (rsi === null || bbPercentB === null) {

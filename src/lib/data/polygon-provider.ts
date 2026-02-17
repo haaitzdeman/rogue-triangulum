@@ -19,11 +19,8 @@ import type {
     Timeframe,
     Quote,
     SymbolInfo,
-    OptionContract,
-    IVData,
     FundamentalData,
     TechnicalIndicator,
-    CalendarEvent,
     AggregateBar,
     DataResponse,
 } from './types';

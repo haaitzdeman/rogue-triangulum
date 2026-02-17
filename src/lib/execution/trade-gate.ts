@@ -225,14 +225,28 @@ export class TradeGate {
      * 
      * @param intent - The trade intent to execute
      * @param mhcApproved - Whether user has approved MHC (required if MHC triggered)
+     * @param requestedMode - Mode requested by caller (belt+suspenders check)
      */
     async execute(
         intent: TradeIntent,
-        mhcApproved: boolean = false
+        mhcApproved: boolean = false,
+        requestedMode?: TradingMode
     ): Promise<ExecutionResult> {
         const mode = getTradingMode();
 
-        console.log(`[TradeGate] Execute request: ${intent.symbol} ${intent.side} ${intent.quantity} (mode: ${mode})`);
+        console.log(`[TradeGate] Execute request: ${intent.symbol} ${intent.side} ${intent.quantity} (mode: ${mode}, requestedMode: ${requestedMode || 'not specified'})`);
+
+        // 0. Belt+suspenders: if caller explicitly requests LIVE but we're in PAPER, reject
+        if (requestedMode === 'live' && mode !== 'live') {
+            console.warn('[TradeGate] REJECTING: requestedMode=live but effectiveMode=paper');
+            return {
+                success: false,
+                error: 'LIVE mode is locked. Unlock required.',
+                errorCode: 'live_locked',
+                mode,
+                simulated: true,
+            };
+        }
 
         // 1. Check kill switch
         if (this._guardrails.killSwitchActive) {
