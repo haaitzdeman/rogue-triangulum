@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 /**
  * Alpaca Sync API Route
  *

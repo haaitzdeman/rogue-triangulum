@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 /**
  * Premarket Live Diagnostics Route (DEV ONLY)
  * 

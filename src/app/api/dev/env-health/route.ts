@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 /**
  * Environment Health API Route
  *

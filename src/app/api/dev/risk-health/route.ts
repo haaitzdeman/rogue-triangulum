@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 /**
  * Risk Health API Route
  *

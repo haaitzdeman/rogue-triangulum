@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 /**
  * Today Risk State API Route
  *

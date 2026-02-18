@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 /**
  * Dev Agent Prompt Meta API Route
  * 

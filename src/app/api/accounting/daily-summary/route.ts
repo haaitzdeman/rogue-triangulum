@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 /**
  * Daily Accounting Summary API Route
  *

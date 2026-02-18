@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 /**
  * Calibration API Route
  * 
