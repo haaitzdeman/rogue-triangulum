@@ -7,6 +7,9 @@ export const dynamic = 'force-dynamic';
  *
  * Aggregates results from env-health, schema-health, and risk-health
  * into a single PASS/FAIL verdict with full subsystem details.
+ *
+ * Forwards the caller's x-admin-token header to each sub-route so
+ * they pass their own admin gate checks.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -25,7 +28,7 @@ interface SubsystemResult {
 }
 
 interface HealthIndex {
-    status: 'PASS' | 'FAIL' | 'DEGRADED';
+    status: 'PASS' | 'FAIL';
     subsystems: {
         env: SubsystemResult;
         schema: SubsystemResult;
@@ -49,10 +52,19 @@ const SUBSYSTEMS: Record<string, SubsystemGET> = {
 async function fetchSubsystem(
     name: string,
     getter: SubsystemGET,
+    parentRequest: NextRequest,
 ): Promise<SubsystemResult> {
     try {
+        // Forward auth headers so sub-routes pass their own admin gate
+        const headers: Record<string, string> = {};
+        const adminToken = parentRequest.headers.get('x-admin-token');
+        if (adminToken) {
+            headers['x-admin-token'] = adminToken;
+        }
+
         const fakeRequest = new NextRequest(
             `http://localhost:3000/api/dev/${name}-health`,
+            { headers },
         );
         const response = await getter(fakeRequest);
 
@@ -98,28 +110,16 @@ export async function GET(request: NextRequest) {
     if (!auth.authorized) return new NextResponse(null, { status: 404 });
 
     const [env, schema, risk] = await Promise.all([
-        fetchSubsystem('env', SUBSYSTEMS.env),
-        fetchSubsystem('schema', SUBSYSTEMS.schema),
-        fetchSubsystem('risk', SUBSYSTEMS.risk),
+        fetchSubsystem('env', SUBSYSTEMS.env, request),
+        fetchSubsystem('schema', SUBSYSTEMS.schema, request),
+        fetchSubsystem('risk', SUBSYSTEMS.risk, request),
     ]);
 
     const statuses = [env.status, schema.status, risk.status];
     const allPass = statuses.every((s) => s === 'PASS');
-    const anyFail = statuses.some(
-        (s) => s === 'ERROR' || s === 'FAIL',
-    );
-
-    let overallStatus: HealthIndex['status'];
-    if (allPass) {
-        overallStatus = 'PASS';
-    } else if (anyFail) {
-        overallStatus = 'FAIL';
-    } else {
-        overallStatus = 'DEGRADED';
-    }
 
     const result: HealthIndex = {
-        status: overallStatus,
+        status: allPass ? 'PASS' : 'FAIL',
         subsystems: { env, schema, risk },
         checkedAt: new Date().toISOString(),
     };
