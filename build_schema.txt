@@ -1,0 +1,76 @@
+﻿
+> rogue-triangulum@0.1.0 build
+> next build
+
+  Γû▓ Next.js 14.2.35
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully
+   Linting and checking validity of types ...
+node.exe : Failed to 
+compile.
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
+    + CategoryInfo         
+     : NotSpecified: (Fai  
+  led to compile.:String   
+ ) [], RemoteException
+    + FullyQualifiedErrorI 
+   d : NativeCommandError
+ 
+
+./src/app/api/dev/schema-he
+alth/route.ts:134:32
+Type error: Type 
+'Set<string>' can only be 
+iterated through when 
+using the 
+'--downlevelIteration' 
+flag or with a '--target' 
+of 'es2015' or higher.
+
+[0m [90m 132 |[39m      
+       [90m// Fallback: 
+probe tables 
+individually[39m[0m
+[0m [90m 133 |[39m      
+       existingCols 
+[33m=[39m [36mnew[39m 
+[33mSet[39m[33m<[39m[33
+mstring[39m[33m>[39m()[
+33m;[39m[0m
+[0m[31m[1m>[22m[39m[9
+0m 134 |[39m             
+[36mconst[39m tables 
+[33m=[39m [[33m...[39m
+[36mnew[39m [33mSet[39m(
+[33mREQUIRED[39m[33m.[3
+9mmap((r) [33m=>[39m r[3
+3m.[39mtable))][33m;[39m
+[0m
+[0m [90m     |[39m      
+                          
+[31m[1m^[22m[39m[0m
+[0m [90m 135 |[39m[0m
+[0m [90m 136 |[39m      
+       [36mfor[39m 
+([36mconst[39m table 
+[36mof[39m tables) {[0m
+[0m [90m 137 |[39m      
+           [36mconst[39m 
+tableCols [33m=[39m [33m
+REQUIRED[39m[33m.[39mfil
+ter((r) [33m=>[39m 
+r[33m.[39mtable 
+[33m===[39m 
+table)[33m.[39mmap([0m
+Next.js build worker 
+exited with code: 1 and 
+signal: null

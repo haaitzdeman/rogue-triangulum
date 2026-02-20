@@ -1,0 +1,96 @@
+﻿
+> rogue-triangulum@0.1.0 build
+> next build
+
+  Γû▓ Next.js 14.2.35
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/23) ...
+   Generating static pages (5/23) 
+   Generating static pages (11/23) 
+   Generating static pages (17/23) 
+ Γ£ô Generating static pages (23/23)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                     Size     First Load JS
+Γöî Γùï /                                           175 B          96.2 kB
+Γö£ Γùï /_not-found                                 873 B          88.2 kB
+Γö£ ╞Æ /api/accounting/daily-summary               0 B                0 B
+Γö£ ╞Æ /api/agent/run                              0 B                0 B
+Γö£ ╞Æ /api/broker/alpaca/sync                     0 B                0 B
+Γö£ ╞Æ /api/broker/fills                           0 B                0 B
+Γö£ ╞Æ /api/calibration/run                        0 B                0 B
+Γö£ ╞Æ /api/calibration/status                     0 B                0 B
+Γö£ ╞Æ /api/cron/broker-sync                       0 B                0 B
+Γö£ ╞Æ /api/dev/agent-env                          0 B                0 B
+Γö£ ╞Æ /api/dev/agent-prompt-meta                  0 B                0 B
+Γö£ ╞Æ /api/dev/broker-env                         0 B                0 B
+Γö£ ╞Æ /api/dev/broker-health                      0 B                0 B
+Γö£ ╞Æ /api/dev/env-health                         0 B                0 B
+Γö£ ╞Æ /api/dev/health                             0 B                0 B
+Γö£ ╞Æ /api/dev/premarket-diagnostics              0 B                0 B
+Γö£ ╞Æ /api/dev/premarket-live-diagnostics         0 B                0 B
+Γö£ ╞Æ /api/dev/premarket-verify                   0 B                0 B
+Γö£ ╞Æ /api/dev/provider-health                    0 B                0 B
+Γö£ ╞Æ /api/dev/purge-cache                        0 B                0 B
+Γö£ ╞Æ /api/dev/risk-health                        0 B                0 B
+Γö£ ╞Æ /api/dev/rules                              0 B                0 B
+Γö£ ╞Æ /api/dev/schema-health                      0 B                0 B
+Γö£ ╞Æ /api/dev/skills                             0 B                0 B
+Γö£ ╞Æ /api/dev/smoke/paper-e2e                    0 B                0 B
+Γö£ ╞Æ /api/dev/smoke/paper-trade-lifecycle        0 B                0 B
+Γö£ ╞Æ /api/dev/system/routes                      0 B                0 B
+Γö£ ╞Æ /api/executions                             0 B                0 B
+Γö£ ╞Æ /api/journal                                0 B                0 B
+Γö£ ╞Æ /api/journal/debug/seed                     0 B                0 B
+Γö£ ╞Æ /api/journal/debug/seed-drift               0 B                0 B
+Γö£ ╞Æ /api/journal/evaluate                       0 B                0 B
+Γö£ ╞Æ /api/journal/record                         0 B                0 B
+Γö£ ╞Æ /api/morning-run                            0 B                0 B
+Γö£ ╞Æ /api/morning-run/history                    0 B                0 B
+Γö£ ╞Æ /api/morning-run/history/[runId]            0 B                0 B
+Γö£ ╞Æ /api/options/history                        0 B                0 B
+Γö£ ╞Æ /api/options/journal                        0 B                0 B
+Γö£ ╞Æ /api/options/journal/[id]                   0 B                0 B
+Γö£ ╞Æ /api/options/scan                           0 B                0 B
+Γö£ ╞Æ /api/premarket/gaps                         0 B                0 B
+Γö£ ╞Æ /api/premarket/history                      0 B                0 B
+Γö£ ╞Æ /api/premarket/journal                      0 B                0 B
+Γö£ ╞Æ /api/premarket/journal/[id]                 0 B                0 B
+Γö£ ╞Æ /api/premarket/journal/[id]/clear-override  0 B                0 B
+Γö£ ╞Æ /api/premarket/journal/[id]/override-fills  0 B                0 B
+Γö£ ╞Æ /api/premarket/journal/[id]/split-trades    0 B                0 B
+Γö£ ╞Æ /api/today/opportunities                    0 B                0 B
+Γö£ ╞Æ /api/today/risk-state                       0 B                0 B
+Γö£ Γùï /brain                                      2.07 kB        89.4 kB
+Γö£ Γùï /day-trading                                2.56 kB         159 kB
+Γö£ Γùï /investing                                  4.97 kB         149 kB
+Γö£ Γùï /journal                                    5.37 kB        96.8 kB
+Γö£ Γùï /learning                                   7.13 kB        98.4 kB
+Γö£ Γùï /options                                    6.99 kB        94.3 kB
+Γö£ Γùï /performance                                3.41 kB        90.7 kB
+Γö£ Γùï /premarket                                  6.98 kB         103 kB
+Γö£ Γùï /premarket/journal                          12.1 kB         108 kB
+Γö£ Γùï /readiness                                  8.25 kB        95.6 kB
+Γö£ Γùï /reinforcement                              600 B          87.9 kB
+Γö£ Γùï /settings                                   2.36 kB        89.7 kB
+Γö£ Γùï /signal-journal                             3.06 kB        90.4 kB
+Γö£ Γùï /simulation                                 437 B          87.8 kB
+Γö£ Γùï /swing                                      2.3 kB          159 kB
+Γö£ Γùï /today                                      5.42 kB        92.7 kB
+Γö£ Γùï /training                                   570 B          87.9 kB
+Γöö Γùï /watchlist                                  3.64 kB        95.1 kB
++ First Load JS shared by all                   87.3 kB
+  Γö£ chunks/117-48a2f1a945f634b1.js              31.7 kB
+  Γö£ chunks/fd9d1056-b9b281d6c2728617.js         53.6 kB
+  Γöö other shared chunks (total)                 1.95 kB
+
+
+Γùï  (Static)   prerendered as static content
+╞Æ  (Dynamic)  server-rendered on demand
+

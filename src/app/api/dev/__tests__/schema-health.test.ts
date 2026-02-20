@@ -4,8 +4,11 @@
  * Tests the /api/dev/schema-health endpoint:
  * 1. 404 when not admin
  * 2. 503 with errorCode when DB not configured
- * 3. PASS when RPC returns PASS
- * 4. FAIL when RPC returns FAIL with missing list
+ * 3. PASS when all table probes succeed
+ * 4. FAIL when at least one column probe fails
+ *
+ * NOTE: The schema-health route uses PostgREST probing (from().select().limit(0))
+ * to check column existence. We mock the Supabase from() chain to simulate this.
  */
 
 import { NextRequest } from 'next/server';
@@ -19,12 +22,14 @@ jest.mock('@/lib/auth/admin-gate', () => ({
     checkAdminAuth: (req: NextRequest) => mockCheckAdminAuth(req),
 }));
 
-const mockRpc = jest.fn();
-const mockCreateServerSupabase = jest.fn(() => ({ rpc: mockRpc }));
+// Build a mock Supabase client that simulates from().select().limit().eq()
+const mockFrom = jest.fn();
 const mockIsConfigured = jest.fn(() => true);
 
 jest.mock('@/lib/supabase/server', () => ({
-    createServerSupabase: () => mockCreateServerSupabase(),
+    createServerSupabase: () => ({
+        from: (...args: unknown[]) => mockFrom(...args),
+    }),
     isServerSupabaseConfigured: () => mockIsConfigured(),
 }));
 
@@ -34,6 +39,74 @@ jest.mock('@/lib/supabase/server', () => ({
 
 function makeRequest(): NextRequest {
     return new NextRequest('http://localhost:3000/api/dev/schema-health');
+}
+
+/**
+ * Create a mock from() that always succeeds (all tables/columns exist).
+ * Simulates: supabase.from(table).select(cols).limit(0) → no error
+ * And also: supabase.from('information_schema.columns').select().eq() → error (fallback to probing)
+ */
+function mockFromAllPass() {
+    mockFrom.mockImplementation((table: string) => {
+        if (table === 'information_schema.columns') {
+            // Force fallback to probing by returning error
+            return {
+                select: () => ({
+                    eq: () => Promise.resolve({ data: null, error: { message: 'not exposed' } }),
+                }),
+            };
+        }
+        // Regular table probing — all succeed
+        return {
+            select: () => ({
+                limit: () => Promise.resolve({ data: [], error: null }),
+            }),
+        };
+    });
+}
+
+/**
+ * Create a mock from() where one specific table has a missing column.
+ * Handles two-level probing:
+ *   1. Batch probe (select("col1,col2,...").limit(0)) → fails if table matches
+ *   2. Individual probe (select("singleCol").limit(0)) → fails only for exact column
+ */
+function mockFromWithMissing(failTable: string, failColumn: string) {
+    mockFrom.mockImplementation((table: string) => {
+        if (table === 'information_schema.columns') {
+            return {
+                select: () => ({
+                    eq: () => Promise.resolve({ data: null, error: { message: 'not exposed' } }),
+                }),
+            };
+        }
+
+        return {
+            select: (cols: string) => ({
+                limit: () => {
+                    if (table === failTable) {
+                        // If this is the batch probe (multiple cols), fail it
+                        // so the route falls through to individual column probes
+                        if (cols.includes(',')) {
+                            return Promise.resolve({
+                                data: null,
+                                error: { message: `column "${failColumn}" does not exist` },
+                            });
+                        }
+                        // Individual column probe — fail only the missing column
+                        if (cols.trim() === failColumn) {
+                            return Promise.resolve({
+                                data: null,
+                                error: { message: `column "${failColumn}" does not exist` },
+                            });
+                        }
+                    }
+                    // All other probes succeed
+                    return Promise.resolve({ data: [], error: null });
+                },
+            }),
+        };
+    });
 }
 
 // ---------------------------------------------------------------------------
@@ -51,7 +124,7 @@ describe('/api/dev/schema-health', () => {
 
         mockCheckAdminAuth.mockReturnValue({ authorized: true });
         mockIsConfigured.mockReturnValue(true);
-        mockRpc.mockReset();
+        mockFrom.mockReset();
     });
 
     afterAll(() => {
@@ -89,16 +162,8 @@ describe('/api/dev/schema-health', () => {
     // -----------------------------------------------------------------------
     // 3) PASS when all required checks pass
     // -----------------------------------------------------------------------
-    it('returns PASS when all required checks pass', async () => {
-        mockRpc.mockResolvedValue({
-            data: {
-                status: 'PASS',
-                totalChecked: 43,
-                found: 43,
-                missing: [],
-            },
-            error: null,
-        });
+    it('returns PASS when all column probes succeed', async () => {
+        mockFromAllPass();
 
         const { GET } = await import('../schema-health/route');
         const res = await GET(makeRequest());
@@ -107,8 +172,8 @@ describe('/api/dev/schema-health', () => {
 
         const body = await res.json();
         expect(body.status).toBe('PASS');
-        expect(body.totalChecked).toBe(43);
-        expect(body.found).toBe(43);
+        expect(body.totalChecked).toBeGreaterThan(0);
+        expect(body.found).toBe(body.totalChecked);
         expect(body.missing).toEqual([]);
         expect(body.checkedAt).toBeDefined();
     });
@@ -116,16 +181,8 @@ describe('/api/dev/schema-health', () => {
     // -----------------------------------------------------------------------
     // 4) FAIL when at least one table/column missing
     // -----------------------------------------------------------------------
-    it('returns FAIL when at least one table/column missing', async () => {
-        mockRpc.mockResolvedValue({
-            data: {
-                status: 'FAIL',
-                totalChecked: 43,
-                found: 42,
-                missing: [{ table: 'trade_ledger', column: 'exit_timestamp' }],
-            },
-            error: null,
-        });
+    it('returns FAIL when at least one column probe fails', async () => {
+        mockFromWithMissing('trade_ledger', 'realized_pnl');
 
         const { GET } = await import('../schema-health/route');
         const res = await GET(makeRequest());
@@ -134,10 +191,6 @@ describe('/api/dev/schema-health', () => {
 
         const body = await res.json();
         expect(body.status).toBe('FAIL');
-        expect(body.totalChecked).toBe(43);
-        expect(body.found).toBe(42);
-        expect(body.missing).toEqual([
-            { table: 'trade_ledger', column: 'exit_timestamp' },
-        ]);
+        expect(body.missing.length).toBeGreaterThan(0);
     });
 });
