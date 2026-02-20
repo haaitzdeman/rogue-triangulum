@@ -37,7 +37,7 @@ interface CheckResult {
     detail?: string;
 }
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
     // ── Auth ──────────────────────────────────────────────────────────────
     const auth = validateCronRequest(request, 'CRON_DAILY_CHECK_ENABLED');
     if (!auth.authorized) return new NextResponse(null, { status: 404 });

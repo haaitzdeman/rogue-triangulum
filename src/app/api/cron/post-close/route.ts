@@ -42,7 +42,7 @@ const LOCK_TTL = 300; // 5 minutes
 const POST_CLOSE_START_MINUTES = 16 * 60 + 10; // 4:10 PM
 const POST_CLOSE_END_MINUTES = 20 * 60;         // 8:00 PM
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
     // ── Auth ──────────────────────────────────────────────────────────────
     const auth = validateCronRequest(request, 'CRON_POST_CLOSE_ENABLED');
     if (!auth.authorized) return new NextResponse(null, { status: 404 });

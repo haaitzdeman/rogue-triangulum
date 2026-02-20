@@ -34,7 +34,7 @@ import { linkFillsToJournal } from '@/lib/broker/journal-linker';
 const JOB_NAME = 'intraday-sync';
 const LOCK_TTL = 120; // 2 minutes
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
     // ── Auth ──────────────────────────────────────────────────────────────
     const auth = validateCronRequest(request, 'CRON_INTRADAY_SYNC_ENABLED');
     if (!auth.authorized) return new NextResponse(null, { status: 404 });
