@@ -162,12 +162,14 @@ describe('alpaca-mapper', () => {
 // Dedup Tests (mock supabase)
 // =============================================================================
 
-// Mock supabase before importing fill-store
-jest.mock('@/lib/supabase/client', () => {
-    const mockSelect = jest.fn().mockResolvedValue({ data: [{ id: 'uuid-1' }], error: null });
-    const mockUpsert = jest.fn().mockReturnValue({ select: mockSelect });
-    const mockOrder = jest.fn().mockResolvedValue({ data: [], error: null });
-    const mockFrom = jest.fn().mockReturnValue({
+// Mock untypedFrom before importing fill-store
+// (untypedFrom now uses createServerSupabase which requires env vars)
+const mockSelect = jest.fn().mockResolvedValue({ data: [{ id: 'uuid-1' }], error: null });
+const mockUpsert = jest.fn().mockReturnValue({ select: mockSelect });
+const mockOrder = jest.fn().mockResolvedValue({ data: [], error: null });
+
+jest.mock('@/lib/supabase/untyped', () => ({
+    untypedFrom: jest.fn().mockReturnValue({
         upsert: mockUpsert,
         select: jest.fn().mockReturnValue({
             order: mockOrder,
@@ -175,14 +177,8 @@ jest.mock('@/lib/supabase/client', () => {
             lte: jest.fn().mockReturnThis(),
             eq: jest.fn().mockReturnThis(),
         }),
-    });
-
-    return {
-        supabase: {
-            from: mockFrom,
-        },
-    };
-});
+    }),
+}));
 
 describe('fill-store', () => {
     // Import after mocks are set up

@@ -9,9 +9,10 @@ export const dynamic = 'force-dynamic';
  * Creates signals with evaluated outcomes across multiple score buckets.
  */
 
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { addSignals, addOutcome } from '@/lib/journal/signal-store';
 import type { SignalRecord, SignalOutcome } from '@/lib/journal/signal-types';
+import { checkAdminAuth } from '@/lib/auth/admin-gate';
 
 const STRATEGIES = ['Momentum', 'MeanReversion', 'TrendFollow', 'RSI_Oversold'];
 const SYMBOLS = ['AAPL', 'MSFT', 'NVDA', 'TSLA', 'GOOGL', 'AMZN', 'META', 'AMD', 'NFLX', 'SPY'];
@@ -22,7 +23,10 @@ const BUCKET_TARGETS: { [bucket: string]: { count: number; winRate: number } } =
     '70-79': { count: 210, winRate: 0.62 },  // 62% win rate for this bucket
 };
 
-export async function POST() {
+export async function POST(request: NextRequest) {
+    const auth = checkAdminAuth(request);
+    if (!auth.authorized) return new NextResponse(null, { status: 404 });
+
     try {
         const now = Date.now();
         const signals: SignalRecord[] = [];

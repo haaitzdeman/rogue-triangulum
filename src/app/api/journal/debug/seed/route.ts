@@ -9,11 +9,15 @@ export const dynamic = 'force-dynamic';
  * DEV ONLY - for testing journal UI without waiting for real scans.
  */
 
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { addSignals } from '@/lib/journal/signal-store';
 import type { SignalRecord } from '@/lib/journal/signal-types';
+import { checkAdminAuth } from '@/lib/auth/admin-gate';
 
-export async function POST() {
+export async function POST(request: NextRequest) {
+    const auth = checkAdminAuth(request);
+    if (!auth.authorized) return new NextResponse(null, { status: 404 });
+
     try {
         const now = Date.now();
         const today = new Date().toISOString().slice(0, 10);
