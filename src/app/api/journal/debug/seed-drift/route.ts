@@ -26,7 +26,12 @@ const BUCKET_TARGETS: { [bucket: string]: { count: number; winRate: number } } =
 };
 
 export async function POST(request: NextRequest) {
-    // ── Kill switch (FIRST check — before any logic) ─────────────────────
+    // ── HARD KILL: never execute in production ───────────────────────────
+    if (process.env.NODE_ENV === 'production') {
+        return new NextResponse(null, { status: 404 });
+    }
+
+    // ── Kill switch (dev-only second gate) ────────────────────────────────
     if (process.env.DEBUG_SEED_ROUTES_ENABLED !== 'true') {
         return new NextResponse(null, { status: 404 });
     }
