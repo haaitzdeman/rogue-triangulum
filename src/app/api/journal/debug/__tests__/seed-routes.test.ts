@@ -1,28 +1,13 @@
 /**
- * Tests for debug seed routes
+ * Tests for debug seed routes — NUCLEAR DISABLED.
  *
- * Validates THREE guard layers:
- *   1. VERCEL env var or NODE_ENV=production → 404 (platform hard kill)
- *   2. DEBUG_SEED_ROUTES_ENABLED must be 'true' → 404 otherwise
- *   3. checkAdminAuth blocks without token → 404
- *   4. All gates pass (local dev) → 200 (no fs writes, mocked signal-store)
+ * Both routes unconditionally return 404 in all environments.
+ * This is the permanent production state — these routes serve no
+ * purpose on deployed infrastructure (they use Node.js fs which
+ * crashes on serverless).
  */
 
 import { NextRequest } from 'next/server';
-
-// ─── Mocks ───────────────────────────────────────────────────────────────────
-
-const mockCheckAdminAuth = jest.fn();
-jest.mock('@/lib/auth/admin-gate', () => ({
-    checkAdminAuth: (req: NextRequest) => mockCheckAdminAuth(req),
-}));
-
-jest.mock('@/lib/journal/signal-store', () => ({
-    addSignals: jest.fn().mockReturnValue({ added: 2, skipped: 0 }),
-    addOutcome: jest.fn().mockReturnValue(true),
-}));
-
-// ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function makeReq(token?: string): NextRequest {
     const headers: Record<string, string> = {};
@@ -33,9 +18,7 @@ function makeReq(token?: string): NextRequest {
     });
 }
 
-// ─── Seed Route Tests ────────────────────────────────────────────────────────
-
-describe('debug/seed route', () => {
+describe('debug/seed route (disabled)', () => {
     let POST: (req: NextRequest) => Promise<Response>;
 
     beforeAll(async () => {
@@ -43,56 +26,20 @@ describe('debug/seed route', () => {
         POST = mod.POST;
     });
 
-    afterEach(() => {
-        jest.clearAllMocks();
+    it('always returns 404 regardless of flags or tokens', async () => {
+        process.env.DEBUG_SEED_ROUTES_ENABLED = 'true';
+        const res = await POST(makeReq('valid-token'));
+        expect(res.status).toBe(404);
         delete process.env.DEBUG_SEED_ROUTES_ENABLED;
-        delete process.env.VERCEL;
     });
 
-    it('returns 404 on Vercel even with all flags and tokens', async () => {
-        process.env.VERCEL = '1';
-        process.env.DEBUG_SEED_ROUTES_ENABLED = 'true';
-        mockCheckAdminAuth.mockReturnValue({ authorized: true });
-        const res = await POST(makeReq('valid-token'));
-        expect(res.status).toBe(404);
-        expect(mockCheckAdminAuth).not.toHaveBeenCalled();
-    });
-
-    it('returns 404 when DEBUG_SEED_ROUTES_ENABLED is not set', async () => {
-        const res = await POST(makeReq('valid-token'));
-        expect(res.status).toBe(404);
-        expect(mockCheckAdminAuth).not.toHaveBeenCalled();
-    });
-
-    it('returns 404 when kill switch is OFF even with valid token', async () => {
-        process.env.DEBUG_SEED_ROUTES_ENABLED = 'false';
-        const res = await POST(makeReq('valid-token'));
-        expect(res.status).toBe(404);
-        expect(mockCheckAdminAuth).not.toHaveBeenCalled();
-    });
-
-    it('returns 404 when flag enabled but no admin token', async () => {
-        process.env.DEBUG_SEED_ROUTES_ENABLED = 'true';
-        mockCheckAdminAuth.mockReturnValue({ authorized: false });
+    it('returns 404 with no token', async () => {
         const res = await POST(makeReq());
         expect(res.status).toBe(404);
-        expect(mockCheckAdminAuth).toHaveBeenCalled();
-    });
-
-    it('returns 200 when flag enabled AND admin token valid (local dev)', async () => {
-        process.env.DEBUG_SEED_ROUTES_ENABLED = 'true';
-        mockCheckAdminAuth.mockReturnValue({ authorized: true });
-        const res = await POST(makeReq('valid-token'));
-        expect(res.status).toBe(200);
-        const body = await res.json();
-        expect(body.success).toBe(true);
-        expect(body.added).toBe(2);
     });
 });
 
-// ─── Seed-Drift Route Tests ─────────────────────────────────────────────────
-
-describe('debug/seed-drift route', () => {
+describe('debug/seed-drift route (disabled)', () => {
     let POST: (req: NextRequest) => Promise<Response>;
 
     beforeAll(async () => {
@@ -100,49 +47,15 @@ describe('debug/seed-drift route', () => {
         POST = mod.POST;
     });
 
-    afterEach(() => {
-        jest.clearAllMocks();
+    it('always returns 404 regardless of flags or tokens', async () => {
+        process.env.DEBUG_SEED_ROUTES_ENABLED = 'true';
+        const res = await POST(makeReq('valid-token'));
+        expect(res.status).toBe(404);
         delete process.env.DEBUG_SEED_ROUTES_ENABLED;
-        delete process.env.VERCEL;
     });
 
-    it('returns 404 on Vercel even with all flags and tokens', async () => {
-        process.env.VERCEL = '1';
-        process.env.DEBUG_SEED_ROUTES_ENABLED = 'true';
-        mockCheckAdminAuth.mockReturnValue({ authorized: true });
-        const res = await POST(makeReq('valid-token'));
-        expect(res.status).toBe(404);
-        expect(mockCheckAdminAuth).not.toHaveBeenCalled();
-    });
-
-    it('returns 404 when DEBUG_SEED_ROUTES_ENABLED is not set', async () => {
-        const res = await POST(makeReq('valid-token'));
-        expect(res.status).toBe(404);
-        expect(mockCheckAdminAuth).not.toHaveBeenCalled();
-    });
-
-    it('returns 404 when kill switch is OFF even with valid token', async () => {
-        process.env.DEBUG_SEED_ROUTES_ENABLED = 'false';
-        const res = await POST(makeReq('valid-token'));
-        expect(res.status).toBe(404);
-        expect(mockCheckAdminAuth).not.toHaveBeenCalled();
-    });
-
-    it('returns 404 when flag enabled but no admin token', async () => {
-        process.env.DEBUG_SEED_ROUTES_ENABLED = 'true';
-        mockCheckAdminAuth.mockReturnValue({ authorized: false });
+    it('returns 404 with no token', async () => {
         const res = await POST(makeReq());
         expect(res.status).toBe(404);
-        expect(mockCheckAdminAuth).toHaveBeenCalled();
-    });
-
-    it('returns 200 when flag enabled AND admin token valid (local dev)', async () => {
-        process.env.DEBUG_SEED_ROUTES_ENABLED = 'true';
-        mockCheckAdminAuth.mockReturnValue({ authorized: true });
-        const res = await POST(makeReq('valid-token'));
-        expect(res.status).toBe(200);
-        const body = await res.json();
-        expect(body.success).toBe(true);
-        expect(body.signalsAdded).toBeDefined();
     });
 });
