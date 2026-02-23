@@ -19,8 +19,8 @@ import { checkAdminAuth } from '@/lib/auth/admin-gate';
 import type { SignalRecord } from '@/lib/journal/signal-types';
 
 export async function POST(request: NextRequest) {
-    // ── HARD KILL: never execute in production ───────────────────────────
-    if (process.env.NODE_ENV === 'production') {
+    // ── HARD KILL: never execute on Vercel (any env) or production ────────
+    if (process.env.VERCEL || process.env.NODE_ENV === 'production') {
         return new NextResponse(null, { status: 404 });
     }
 

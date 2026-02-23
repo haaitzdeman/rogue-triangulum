@@ -2,10 +2,10 @@
  * Tests for debug seed routes
  *
  * Validates THREE guard layers:
- *   1. NODE_ENV === 'production' → 404 (hard kill, no downstream logic)
+ *   1. VERCEL env var or NODE_ENV=production → 404 (platform hard kill)
  *   2. DEBUG_SEED_ROUTES_ENABLED must be 'true' → 404 otherwise
  *   3. checkAdminAuth blocks without token → 404
- *   4. All gates pass → 200 (no fs writes, mocked signal-store)
+ *   4. All gates pass (local dev) → 200 (no fs writes, mocked signal-store)
  */
 
 import { NextRequest } from 'next/server';
@@ -33,14 +33,10 @@ function makeReq(token?: string): NextRequest {
     });
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const env = process.env as any;
-
 // ─── Seed Route Tests ────────────────────────────────────────────────────────
 
 describe('debug/seed route', () => {
     let POST: (req: NextRequest) => Promise<Response>;
-    const savedNodeEnv = env.NODE_ENV;
 
     beforeAll(async () => {
         const mod = await import('@/app/api/journal/debug/seed/route');
@@ -50,11 +46,11 @@ describe('debug/seed route', () => {
     afterEach(() => {
         jest.clearAllMocks();
         delete process.env.DEBUG_SEED_ROUTES_ENABLED;
-        env.NODE_ENV = savedNodeEnv;
+        delete process.env.VERCEL;
     });
 
-    it('returns 404 in production even with all flags and tokens', async () => {
-        env.NODE_ENV = 'production';
+    it('returns 404 on Vercel even with all flags and tokens', async () => {
+        process.env.VERCEL = '1';
         process.env.DEBUG_SEED_ROUTES_ENABLED = 'true';
         mockCheckAdminAuth.mockReturnValue({ authorized: true });
         const res = await POST(makeReq('valid-token'));
@@ -83,7 +79,7 @@ describe('debug/seed route', () => {
         expect(mockCheckAdminAuth).toHaveBeenCalled();
     });
 
-    it('returns 200 when flag enabled AND admin token valid (non-prod)', async () => {
+    it('returns 200 when flag enabled AND admin token valid (local dev)', async () => {
         process.env.DEBUG_SEED_ROUTES_ENABLED = 'true';
         mockCheckAdminAuth.mockReturnValue({ authorized: true });
         const res = await POST(makeReq('valid-token'));
@@ -98,7 +94,6 @@ describe('debug/seed route', () => {
 
 describe('debug/seed-drift route', () => {
     let POST: (req: NextRequest) => Promise<Response>;
-    const savedNodeEnv = env.NODE_ENV;
 
     beforeAll(async () => {
         const mod = await import('@/app/api/journal/debug/seed-drift/route');
@@ -108,11 +103,11 @@ describe('debug/seed-drift route', () => {
     afterEach(() => {
         jest.clearAllMocks();
         delete process.env.DEBUG_SEED_ROUTES_ENABLED;
-        env.NODE_ENV = savedNodeEnv;
+        delete process.env.VERCEL;
     });
 
-    it('returns 404 in production even with all flags and tokens', async () => {
-        env.NODE_ENV = 'production';
+    it('returns 404 on Vercel even with all flags and tokens', async () => {
+        process.env.VERCEL = '1';
         process.env.DEBUG_SEED_ROUTES_ENABLED = 'true';
         mockCheckAdminAuth.mockReturnValue({ authorized: true });
         const res = await POST(makeReq('valid-token'));
@@ -141,7 +136,7 @@ describe('debug/seed-drift route', () => {
         expect(mockCheckAdminAuth).toHaveBeenCalled();
     });
 
-    it('returns 200 when flag enabled AND admin token valid (non-prod)', async () => {
+    it('returns 200 when flag enabled AND admin token valid (local dev)', async () => {
         process.env.DEBUG_SEED_ROUTES_ENABLED = 'true';
         mockCheckAdminAuth.mockReturnValue({ authorized: true });
         const res = await POST(makeReq('valid-token'));
