@@ -2,38 +2,50 @@ export const dynamic = 'force-dynamic';
 
 /**
  * POST /api/journal/debug/seed
- * 
+ *
  * Seeds fake signals with realistic fields for verification.
  * Marked with version: "V1-SEED" to distinguish from real signals.
- * 
- * DEV ONLY - for testing journal UI without waiting for real scans.
+ *
+ * SECURITY:
+ *   1. Kill switch: DEBUG_SEED_ROUTES_ENABLED must be "true" (default OFF)
+ *   2. Admin gate: requires x-admin-token header
+ *   3. No filesystem writes — uses in-memory signal store only
+ *
+ * DEV ONLY — disabled by default in all environments.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { addSignals } from '@/lib/journal/signal-store';
-import type { SignalRecord } from '@/lib/journal/signal-types';
 import { checkAdminAuth } from '@/lib/auth/admin-gate';
+import type { SignalRecord } from '@/lib/journal/signal-types';
 
 export async function POST(request: NextRequest) {
+    // ── Kill switch (FIRST check — before any logic) ─────────────────────
+    if (process.env.DEBUG_SEED_ROUTES_ENABLED !== 'true') {
+        return new NextResponse(null, { status: 404 });
+    }
+
+    // ── Admin gate ───────────────────────────────────────────────────────
     const auth = checkAdminAuth(request);
     if (!auth.authorized) return new NextResponse(null, { status: 404 });
 
+    // ── Lazy import to avoid fs side effects at module load ──────────────
     try {
+        const { addSignals } = await import('@/lib/journal/signal-store');
         const now = Date.now();
         const today = new Date().toISOString().slice(0, 10);
 
         const seedSignals: SignalRecord[] = [
             {
                 id: `AAPL-${now}-momentum-seed`,
-                version: 'V1-SEED',  // SEED marker - excluded from stats by default
+                version: 'V1-SEED',
                 symbol: 'AAPL',
                 strategyName: 'Momentum',
                 setupType: 'Momentum RSI Breakout',
-                direction: 'long',
+                direction: 'long' as const,
                 score: 78,
                 confidence: 0.78,
                 reasons: ['RSI crossing 50 from below', 'MACD bullish crossover', 'Above SMA20'],
-                signalBarTimestamp: now - (10 * 24 * 60 * 60 * 1000), // 10 days ago
+                signalBarTimestamp: now - (10 * 24 * 60 * 60 * 1000),
                 entryBarTimestamp: null,
                 referenceEntryDate: today,
                 referenceEntryPrice: null,
@@ -42,23 +54,23 @@ export async function POST(request: NextRequest) {
                 targetR: 2,
                 atrDollars: 4.50,
                 atrPercent: 2.4,
-                regimeTrending: false,  // No fake regime tags
+                regimeTrending: false,
                 regimeHighVol: false,
                 horizonDays: 7,
-                status: 'pending',
+                status: 'pending' as const,
                 createdAt: new Date().toISOString(),
             },
             {
                 id: `TSLA-${now}-meanrev-seed`,
-                version: 'V1-SEED',  // SEED marker - excluded from stats by default
+                version: 'V1-SEED',
                 symbol: 'TSLA',
                 strategyName: 'MeanReversion',
                 setupType: 'Mean Reversion Oversold',
-                direction: 'long',
+                direction: 'long' as const,
                 score: 65,
                 confidence: 0.65,
                 reasons: ['RSI below 30', 'Price at lower Bollinger Band', 'Volume spike'],
-                signalBarTimestamp: now - (15 * 24 * 60 * 60 * 1000), // 15 days ago
+                signalBarTimestamp: now - (15 * 24 * 60 * 60 * 1000),
                 entryBarTimestamp: null,
                 referenceEntryDate: today,
                 referenceEntryPrice: null,
@@ -67,10 +79,10 @@ export async function POST(request: NextRequest) {
                 targetR: 2,
                 atrDollars: 12.00,
                 atrPercent: 4.8,
-                regimeTrending: false,  // No fake regime tags
+                regimeTrending: false,
                 regimeHighVol: false,
                 horizonDays: 7,
-                status: 'pending',
+                status: 'pending' as const,
                 createdAt: new Date().toISOString(),
             },
         ];
