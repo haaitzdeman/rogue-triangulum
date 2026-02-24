@@ -1,16 +1,17 @@
 export const dynamic = 'force-dynamic';
 
 /**
- * GET /api/dev/deploy-hash
+ * GET /api/deploy-hash
  *
- * Read-only diagnostic endpoint. Returns current build info.
+ * Read-only deploy-proof endpoint (fallback location).
+ * Identical to /api/dev/deploy-hash — exists at top-level
+ * in case /api/dev routes are treated specially.
+ *
  * Safe to expose publicly — contains no secrets.
- * Used to verify which commit is live in production.
  */
 
 import { NextResponse } from 'next/server';
 
-/** Bump this tag any time you need to force-verify a new deploy landed. */
 const OPS_BUILD_TAG = '2026-02-24-deploy-proof-v3';
 
 export async function GET() {
