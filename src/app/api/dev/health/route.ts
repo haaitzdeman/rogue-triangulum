@@ -14,6 +14,7 @@ export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from 'next/server';
 import { checkAdminAuth } from '@/lib/auth/admin-gate';
+import { OPS_BUILD_TAG } from '@/lib/ops/build-tag';
 import { GET as envHealthGET } from '@/app/api/dev/env-health/route';
 import { GET as schemaHealthGET } from '@/app/api/dev/schema-health/route';
 import { GET as riskHealthGET } from '@/app/api/dev/risk-health/route';
@@ -104,10 +105,24 @@ async function fetchSubsystem(
 // GET Handler
 // =============================================================================
 
+/** Canary headers appended to EVERY response (including 404) */
+function withCanaryHeaders(res: NextResponse): NextResponse {
+    res.headers.set('x-ops-build-tag', OPS_BUILD_TAG);
+    res.headers.set(
+        'x-ops-commit',
+        process.env.VERCEL_GIT_COMMIT_SHA ??
+        process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA ??
+        'unknown',
+    );
+    return res;
+}
+
 export async function GET(request: NextRequest) {
     // Admin gate — return 404 to hide endpoint from public
     const auth = checkAdminAuth(request);
-    if (!auth.authorized) return new NextResponse(null, { status: 404 });
+    if (!auth.authorized) {
+        return withCanaryHeaders(new NextResponse(null, { status: 404 }));
+    }
 
     const [env, schema, risk] = await Promise.all([
         fetchSubsystem('env', SUBSYSTEMS.env, request),
@@ -124,5 +139,5 @@ export async function GET(request: NextRequest) {
         checkedAt: new Date().toISOString(),
     };
 
-    return NextResponse.json(result);
+    return withCanaryHeaders(NextResponse.json(result));
 }

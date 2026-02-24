@@ -11,8 +11,7 @@ export const dynamic = 'force-dynamic';
  */
 
 import { NextResponse } from 'next/server';
-
-const OPS_BUILD_TAG = '2026-02-24-deploy-proof-v3';
+import { OPS_BUILD_TAG } from '@/lib/ops/build-tag';
 
 export async function GET() {
     return NextResponse.json({
