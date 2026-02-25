@@ -2,15 +2,15 @@
     "crons": [
         {
             "path": "/api/cron/broker-sync",
-            "schedule": "30 21 * * 1-5"
+            "schedule": "30 21 * * *"
         },
         {
             "path": "/api/cron/intraday-sync",
-            "schedule": "*/5 14-21 * * 1-5"
+            "schedule": "30 16 * * *"
         },
         {
             "path": "/api/cron/post-close",
-            "schedule": "15 21 * * 1-5"
+            "schedule": "15 21 * * *"
         },
         {
             "path": "/api/cron/daily-self-check",
