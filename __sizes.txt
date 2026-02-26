@@ -1,0 +1,179 @@
+﻿=== TOP-LEVEL DIRECTORIES ===
+  .git : 5.16 MB
+  .next : 180.54 MB
+  .vercel : 0 MB
+  data : 17.35 MB
+  docs : 0 MB
+  node_modules : 351.03 MB
+  rules : 0 MB
+  scripts : 0.02 MB
+  skills : 0.02 MB
+  src : 2 MB
+  supabase : 0.03 MB
+
+=== .next SUBDIRECTORIES ===
+  cache : 175.72 MB
+  server : 2.6 MB
+  static : 1.5 MB
+  types : 0.52 MB
+  app-build-manifest.json : 0.01 MB (file)
+  app-path-routes-manifest.json : 0 MB (file)
+  build-manifest.json : 0 MB (file)
+  BUILD_ID : 0 MB (file)
+  export-marker.json : 0 MB (file)
+  images-manifest.json : 0 MB (file)
+  next-minimal-server.js.nft.json : 0 MB (file)
+  next-server.js.nft.json : 0.03 MB (file)
+  package.json : 0 MB (file)
+  prerender-manifest.json : 0 MB (file)
+  react-loadable-manifest.json : 0 MB (file)
+  required-server-files.json : 0 MB (file)
+  routes-manifest.json : 0 MB (file)
+  trace : 0.14 MB (file)
+
+=== .next/cache SUBDIRECTORIES ===
+  eslint : 0.13 MB
+  fetch-cache : 0.04 MB
+  swc : 0 MB
+  webpack : 175.28 MB
+  .tsbuildinfo : 0.28 MB (file)
+
+=== TOP 25 LARGEST node_modules PACKAGES ===
+  @next : 129.66 MB
+  next : 82.83 MB
+  typescript : 22.53 MB
+  @esbuild : 10.84 MB
+  @babel : 8.31 MB
+  tailwindcss : 5.33 MB
+  @supabase : 4.43 MB
+  react-dom : 4.3 MB
+  @rollup : 4.29 MB
+  @typescript-eslint : 3.62 MB
+  @heroicons : 3.52 MB
+  @types : 3.11 MB
+  eslint : 2.9 MB
+  axe-core : 2.84 MB
+  lightweight-charts : 2.82 MB
+  es-abstract : 2.66 MB
+  handlebars : 2.65 MB
+  rollup : 2.65 MB
+  vite : 2.26 MB
+  caniuse-lite : 2.22 MB
+  jiti : 1.91 MB
+  @sinclair : 1.82 MB
+  @unrs : 1.81 MB
+  eslint-plugin-import : 1.57 MB
+  vitest : 1.53 MB
+
+=== data CONTENTS ===
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\paper-executions.json : 0.09 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\signal-journal-test.json : 0 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\signal-journal.json : 0 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\AAPL_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\ABBV_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\ADBE_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\AMD_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\AMZN_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\BAC_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\BA_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\CAT_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\COP_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\COST_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\CRM_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\CSCO_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\CVX_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\C_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\DIA_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\GE_1d_2021-01-28_2026-01-28.json : 0.18 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\GOOGL_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\GS_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\HD_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\HON_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\IBM_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\INTC_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\IWM_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\JNJ_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\JPM_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\LLY_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\MCD_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\META_1d_2021-01-28_2026-01-28.json : 0.14 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\MRK_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\MSFT_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\MS_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\NFLX_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\NKE_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\NVDA_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\ORCL_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\OXY_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\PFE_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\QCOM_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\QQQ_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\SBUX_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\SLB_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\SPY_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\TSLA_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\UNH_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\UPS_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\WFC_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\WMT_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\cache\bars\XOM_1d_2021-01-28_2026-01-28.json : 0.17 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\calibration\profile.json : 0 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\config\training.json : 0 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\AAPL.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\ABBV.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\ADBE.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\AMD.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\AMZN.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\BA.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\BAC.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\C.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\CAT.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\COP.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\COST.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\CRM.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\CSCO.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\CVX.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\DIA.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\GE.json : 0.2 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\GOOGL.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\GS.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\HD.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\HON.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\IBM.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\INTC.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\IWM.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\JNJ.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\JPM.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\LLY.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\manifest.json : 0.01 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\MCD.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\META.json : 0.16 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\MRK.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\MS.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\MSFT.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\NFLX.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\NKE.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\NVDA.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\ORCL.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\OXY.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\PFE.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\QCOM.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\QQQ.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\SBUX.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\SLB.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\SPY.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\TSLA.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\UNH.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\UPS.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\WFC.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\WMT.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\datasets\XOM.json : 0.19 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\premarket\2026-01-27.json : 0 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\premarket\2026-01-28.json : 0 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\premarket\2026-01-29.json : 0 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\premarket\2026-02-10.json : 0 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\premarket\2026-02-17.json : 0 MB
+  C:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\data\universe\tickers.txt : 0 MB
+
+=== TOTAL PROJECT SIZE ===
+  TOTAL: 557.16 MB

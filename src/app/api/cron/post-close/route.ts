@@ -50,7 +50,13 @@ export async function GET(request: NextRequest) {
     const startedAt = new Date().toISOString();
     const clock = getMarketClock();
 
-    // ── Post-close window gate ───────────────────────────────────────────
+    // ── Admin Bypass & Post-close window gate ────────────────────────────
+    const searchParams = request.nextUrl.searchParams;
+    const force = searchParams.get('force') === 'true';
+    const adminToken = request.headers.get('x-admin-token');
+    const isAdmin = adminToken === process.env.ADMIN_SECRET_KEY;
+    const isManualBypass = force && isAdmin;
+
     // Parse clock.nowET to get minutes since midnight
     const etMatch = clock.nowET.match(/T(\d{2}):(\d{2})/);
     const etMinutes = etMatch ? parseInt(etMatch[1]) * 60 + parseInt(etMatch[2]) : 0;
@@ -58,18 +64,18 @@ export async function GET(request: NextRequest) {
     const inWindow = isWeekday && !clock.isHoliday &&
         etMinutes >= POST_CLOSE_START_MINUTES && etMinutes < POST_CLOSE_END_MINUTES;
 
-    if (!inWindow) {
+    if (!inWindow && !isManualBypass) {
         const runId = `${JOB_NAME}-skip-${Date.now()}`;
         await writeJobRun({
             runId,
             jobName: JOB_NAME,
             startedAt,
-            outcome: 'skipped_closed',
+            outcome: 'skipped_outside_window',
         }).catch(() => { });
 
         return NextResponse.json({
             run_id: runId,
-            outcome: 'skipped_closed',
+            outcome: 'skipped_outside_window',
             reason: 'Outside post-close window (16:10–20:00 ET weekdays)',
             clock_snapshot: { nowET: clock.nowET, dayOfWeek: clock.dayOfWeek },
         });

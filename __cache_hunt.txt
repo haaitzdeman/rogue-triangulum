@@ -1,0 +1,30 @@
+﻿=== npm cache (C:\Users\haait\AppData\Local\npm-cache) ===
+  Size: 2.98 GB
+
+=== Vercel local (C:\Users\haait\AppData\Local\Vercel) ===
+  NOT FOUND
+
+=== Next.js local (C:\Users\haait\AppData\Local\next) ===
+  NOT FOUND
+
+=== .vercel in project (c:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\.vercel) ===
+  Size: 0 MB
+    project.json: 0 MB
+    README.txt: 0 MB
+
+=== .turbo cache (c:\Users\haait\OneDrive\Desktop\PROJECTS\trading-app\.turbo) ===
+  NOT FOUND
+
+=== npm global (C:\Users\haait\AppData\Roaming\npm) ===
+  Size: 0.4 GB
+
+=== npx cache (C:\Users\haait\AppData\Local\npm-cache\_npx) ===
+  Size: 0.42 GB
+
+=== Total PROJECTS folder ===
+  Size: 1.69 GB
+
+=== All projects in PROJECTS folder ===
+  coming-soon-levedrip: 1.14 GB
+  LEVEDRIP-OFFICIAL-WEBSITE-main: 0 GB
+  trading-app: 0.54 GB

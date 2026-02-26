@@ -59,8 +59,17 @@ export async function GET(request: NextRequest) {
         nextAction = 'WAITING_FOR_FIRST_CRON_RUN';
     }
 
+    // Calculate cron capability and warnings
+    const cronCapability = 'DAILY_ONLY (HOBBY)';
+    const systemWarnings: string[] = [];
+    if (process.env.CRON_INTRADAY_SYNC_ENABLED === 'true') {
+        systemWarnings.push('CRON_INTRADAY_SYNC_ENABLED is true, but Hobby tier only supports daily cron. Intraday sync will not execute automatically.');
+    }
+
     return NextResponse.json({
         nextAction,
+        cronCapability,
+        systemWarnings,
         clock: {
             nowET: clock.nowET,
             isMarketOpen: clock.isMarketOpen,

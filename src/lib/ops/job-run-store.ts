@@ -11,7 +11,7 @@ import { untypedFrom } from '@/lib/supabase/untyped';
 // Types
 // =============================================================================
 
-export type JobOutcome = 'ran' | 'skipped_locked' | 'skipped_closed' | 'error';
+export type JobOutcome = 'ran' | 'skipped_locked' | 'skipped_closed' | 'skipped_outside_window' | 'error';
 
 export interface WriteJobRunParams {
     runId: string;

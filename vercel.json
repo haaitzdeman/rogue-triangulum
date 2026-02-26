@@ -1,14 +1,6 @@
 {
     "crons": [
         {
-            "path": "/api/cron/broker-sync",
-            "schedule": "30 21 * * *"
-        },
-        {
-            "path": "/api/cron/intraday-sync",
-            "schedule": "30 16 * * *"
-        },
-        {
             "path": "/api/cron/post-close",
             "schedule": "15 21 * * *"
         },
