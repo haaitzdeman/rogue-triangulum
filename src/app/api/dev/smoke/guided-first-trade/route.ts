@@ -130,8 +130,9 @@ export async function POST(request: NextRequest) {
             notes: [
                 'Use a small position size for your first paper trade (e.g. 1-5 shares)',
                 'Pick a liquid stock: AAPL, MSFT, SPY, QQQ',
+                'INSTRUCTIONS: Buy 1 share -> sync -> sell -> sync',
                 'Place order in Alpaca Paper Dashboard → Trading',
-                'After fill, run: POST /api/broker/alpaca/sync',
+                'After each fill, run: POST /api/broker/alpaca/sync or use the waitlist tool',
             ],
         };
     } else if (clock.isExtendedHours) {
@@ -149,8 +150,9 @@ export async function POST(request: NextRequest) {
                 `Current session: ${session}`,
                 'Extended-hours orders MUST be LIMIT orders (not market)',
                 'Set limit_price close to current bid/ask for quick fill',
+                'INSTRUCTIONS: Buy 1 share -> sync -> sell -> sync',
                 'Alpaca API: { "type": "limit", "time_in_force": "day", "extended_hours": true, "limit_price": "..." }',
-                'After fill, run: POST /api/broker/alpaca/sync',
+                'After each fill, run: POST /api/broker/alpaca/sync',
             ],
         };
     } else {

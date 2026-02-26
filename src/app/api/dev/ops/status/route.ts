@@ -50,13 +50,20 @@ export async function GET(request: NextRequest) {
         degradedFlags.push('daily_check_failed');
     }
 
-    // Determine nextAction
+    // Determine nextAction via next-action route (to ensure consistency)
     let nextAction = 'SYSTEM_OPERATIONAL';
-    if (degradedFlags.length > 0) {
-        nextAction = 'INVESTIGATE_DEGRADED';
-    }
-    if (!latestRuns['post-close'] && !latestRuns['intraday-sync']) {
-        nextAction = 'WAITING_FOR_FIRST_CRON_RUN';
+    try {
+        const { GET: getNextAction } = await import('@/app/api/dev/ops/next-action/route');
+        const nextReq = new NextRequest('http://localhost/api/dev/ops/next-action', {
+            headers: { 'x-admin-token': request.headers.get('x-admin-token') || '' }
+        });
+        const nextRes = await getNextAction(nextReq);
+        const nextData = await nextRes.json();
+        nextAction = nextData.nextAction || 'SYSTEM_OPERATIONAL';
+    } catch (err) {
+        if (degradedFlags.length > 0) {
+            nextAction = 'INVESTIGATE_DEGRADED';
+        }
     }
 
     // Calculate cron capability and warnings
