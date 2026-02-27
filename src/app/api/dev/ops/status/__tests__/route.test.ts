@@ -2,6 +2,8 @@ import { GET } from '../route';
 import { NextRequest } from 'next/server';
 import { checkAdminAuth } from '@/lib/auth/admin-gate';
 import { getLatestJobRuns, getLatestDailyCheck } from '@/lib/ops/job-run-store';
+import { checkFirstTradeUnlock } from '@/lib/ops/first-trade-unlock';
+import { computeNextAction } from '@/lib/ops/next-action';
 
 jest.mock('@/lib/auth/admin-gate');
 jest.mock('@/lib/ops/job-run-store');
@@ -13,6 +15,16 @@ jest.mock('@/lib/market/market-hours', () => ({
         nextOpenET: '2026-02-27T09:30:00-05:00'
     })
 }));
+jest.mock('@/lib/ops/first-trade-unlock', () => ({
+    checkFirstTradeUnlock: jest.fn()
+}));
+jest.mock('@/lib/ops/next-action', () => ({
+    computeNextAction: jest.fn()
+}));
+jest.mock('@/lib/supabase/server', () => ({
+    isServerSupabaseConfigured: jest.fn(() => true),
+    createServerSupabase: jest.fn(() => ({})),
+}));
 
 describe('GET /api/dev/ops/status', () => {
     beforeEach(() => {
@@ -22,6 +34,16 @@ describe('GET /api/dev/ops/status', () => {
         (checkAdminAuth as jest.Mock).mockReturnValue({ authorized: true });
         (getLatestJobRuns as jest.Mock).mockResolvedValue({});
         (getLatestDailyCheck as jest.Mock).mockResolvedValue(null);
+        (checkFirstTradeUnlock as jest.Mock).mockResolvedValue({
+            ok: false,
+            reasons: ['mocked']
+        });
+        (computeNextAction as jest.Mock).mockReturnValue({
+            nextAction: 'MOCKED_NEXT_ACTION',
+            why: 'Mocked',
+            requiredHumanAction: null,
+            suggestedEndpointToRun: null
+        });
     });
 
     it('returns 404 if not admin authenticated', async () => {
@@ -55,5 +77,16 @@ describe('GET /api/dev/ops/status', () => {
         expect(json.systemWarnings).toContain(
             'CRON_INTRADAY_SYNC_ENABLED is true, but Hobby tier only supports daily cron. Intraday sync will not execute automatically.'
         );
+    });
+
+    it('returns the exact same nextAction from computeNextAction as ops/next-action does', async () => {
+        const req = new NextRequest('http://localhost:3000/api/dev/ops/status', {
+            headers: { 'x-admin-token': 'valid' }
+        });
+        const res = await GET(req);
+        const json = await res.json();
+
+        expect(json.nextAction).toBe('MOCKED_NEXT_ACTION');
+        expect(computeNextAction).toHaveBeenCalled();
     });
 });

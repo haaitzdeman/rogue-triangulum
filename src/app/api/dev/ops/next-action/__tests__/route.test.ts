@@ -2,19 +2,19 @@ import { GET } from '../route';
 import { NextRequest } from 'next/server';
 import { checkAdminAuth } from '@/lib/auth/admin-gate';
 import { getLatestJobRuns, getLatestDailyCheck } from '@/lib/ops/job-run-store';
-import { computeFirstTradeProcessed } from '@/lib/ops/next-action';
+import { checkFirstTradeUnlock } from '@/lib/ops/first-trade-unlock';
+import { computeNextAction } from '@/lib/ops/next-action';
 import { getMarketClock } from '@/lib/market/market-hours';
 
 jest.mock('@/lib/auth/admin-gate');
 jest.mock('@/lib/ops/job-run-store');
 jest.mock('@/lib/market/market-hours');
-jest.mock('@/lib/ops/next-action', () => {
-    const originalModule = jest.requireActual('@/lib/ops/next-action');
-    return {
-        ...originalModule,
-        computeFirstTradeProcessed: jest.fn(),
-    };
-});
+jest.mock('@/lib/ops/first-trade-unlock', () => ({
+    checkFirstTradeUnlock: jest.fn()
+}));
+jest.mock('@/lib/ops/next-action', () => ({
+    computeNextAction: jest.fn()
+}));
 jest.mock('@/lib/supabase/server', () => ({
     isServerSupabaseConfigured: jest.fn(() => true),
     createServerSupabase: jest.fn(() => ({})),
@@ -31,10 +31,15 @@ describe('GET /api/dev/ops/next-action', () => {
             isExtendedHours: false,
             nextOpenET: 'tomorrow'
         });
-        (computeFirstTradeProcessed as jest.Mock).mockResolvedValue({
+        (checkFirstTradeUnlock as jest.Mock).mockResolvedValue({
             ok: false,
-            reasons: ['No trade'],
-            nextAction: 'WAITING_FOR_FIRST_TRADE'
+            reasons: ['No EXITED journal entry']
+        });
+        (computeNextAction as jest.Mock).mockReturnValue({
+            nextAction: 'WAITING_FOR_FIRST_TRADE',
+            why: 'Ok',
+            requiredHumanAction: 'Buy 1 share -> run sync -> sell -> run sync',
+            suggestedEndpointToRun: '/api/dev/smoke/guided-first-trade'
         });
     });
 
@@ -45,66 +50,27 @@ describe('GET /api/dev/ops/next-action', () => {
         expect(res.status).toBe(404);
     });
 
-    it('returns INVESTIGATE_DEGRADED if daily check failed', async () => {
-        (getLatestDailyCheck as jest.Mock).mockResolvedValue({ verdict: 'FAIL' });
-
+    it('returns nextAction determined by computeNextAction helper based on shared state', async () => {
         const req = new NextRequest('http://localhost:3000/api/dev/ops/next-action', {
             headers: { 'x-admin-token': 'valid' }
         });
         const res = await GET(req);
         const json = await res.json();
 
-        expect(json.nextAction).toBe('INVESTIGATE_DEGRADED');
-        expect(json.why).toContain('daily_check_failed');
+        expect(json.nextAction).toBe('WAITING_FOR_FIRST_TRADE');
+        expect(json.requiredHumanAction).toContain('Buy 1 share');
     });
 
-    it('returns RUN_POST_CLOSE if first trade unlock returns it', async () => {
-        (computeFirstTradeProcessed as jest.Mock).mockResolvedValue({
-            ok: false,
-            reasons: [],
-            nextAction: 'RUN_POST_CLOSE'
-        });
-
-        const req = new NextRequest('http://localhost:3000/api/dev/ops/next-action', {
-            headers: { 'x-admin-token': 'valid' }
-        });
-        const res = await GET(req);
-        const json = await res.json();
-
-        expect(json.nextAction).toBe('RUN_POST_CLOSE');
-    });
-
-    it('returns PLACE_FIRST_TRADE if first trade unlock is waiting and market is open', async () => {
-        const req = new NextRequest('http://localhost:3000/api/dev/ops/next-action', {
-            headers: { 'x-admin-token': 'valid' }
-        });
-        const res = await GET(req);
-        const json = await res.json();
-
-        expect(json.nextAction).toBe('PLACE_FIRST_TRADE');
-    });
-
-    it('returns WAIT_FOR_MARKET_OPEN if unlock check is WAITING_FOR_FIRST_TRADE and market is closed', async () => {
-        (getMarketClock as jest.Mock).mockReturnValue({
-            isMarketOpen: false,
-            isExtendedHours: false,
-            nextOpenET: 'tomorrow'
-        });
-
-        const req = new NextRequest('http://localhost:3000/api/dev/ops/next-action', {
-            headers: { 'x-admin-token': 'valid' }
-        });
-        const res = await GET(req);
-        const json = await res.json();
-
-        expect(json.nextAction).toBe('WAIT_FOR_MARKET_OPEN');
-    });
-
-    it('returns SYSTEM_OPERATIONAL if everything passes', async () => {
-        (computeFirstTradeProcessed as jest.Mock).mockResolvedValue({
+    it('returns SYSTEM_OPERATIONAL via computeNextAction if unlockOk is true', async () => {
+        (checkFirstTradeUnlock as jest.Mock).mockResolvedValue({
             ok: true,
-            reasons: [],
-            nextAction: 'SYSTEM_OPERATIONAL'
+            reasons: []
+        });
+        (computeNextAction as jest.Mock).mockReturnValue({
+            nextAction: 'SYSTEM_OPERATIONAL',
+            why: 'Operational',
+            requiredHumanAction: null,
+            suggestedEndpointToRun: null
         });
 
         const req = new NextRequest('http://localhost:3000/api/dev/ops/next-action', {

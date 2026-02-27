@@ -3,7 +3,8 @@ import { checkAdminAuth } from '@/lib/auth/admin-gate';
 import { getMarketClock } from '@/lib/market/market-hours';
 import { getLatestJobRuns, getLatestDailyCheck } from '@/lib/ops/job-run-store';
 import { isServerSupabaseConfigured, createServerSupabase } from '@/lib/supabase/server';
-import { computeNextAction, computeFirstTradeProcessed } from '@/lib/ops/next-action';
+import { computeNextAction } from '@/lib/ops/next-action';
+import { checkFirstTradeUnlock } from '@/lib/ops/first-trade-unlock';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,23 +20,34 @@ export async function GET(request: NextRequest) {
         getLatestDailyCheck().catch(() => null),
     ]);
 
-    // 2. Compute first trade
+    const degradedFlags: string[] = [];
+    for (const jobName of ['intraday-sync', 'post-close', 'daily-self-check', 'broker-sync']) {
+        const run = latestRuns[jobName] as { outcome?: string } | undefined;
+        if (run?.outcome === 'error') degradedFlags.push(`${jobName}_error`);
+    }
+    const check = latestCheck as { verdict?: string } | null;
+    if (check?.verdict === 'FAIL') degradedFlags.push('daily_check_failed');
+
+    // 2. Compute first trade status
     const isSupabase = isServerSupabaseConfigured();
     const supabase = isSupabase ? createServerSupabase() : null;
-    const firstTrade = await computeFirstTradeProcessed(supabase);
+    const unlockResult = await checkFirstTradeUnlock(supabase);
 
-    // 3. Compute next action
+    // 3. Exact deterministic next action output
     const instruction = computeNextAction({
-        now: new Date(),
         marketClock: clock,
-        hasFirstTradeProcessed: firstTrade.ok,
-        firstTradeReasons: firstTrade.reasons,
-        firstTradeAction: firstTrade.nextAction,
-        cronCapability: 'DAILY_ONLY (HOBBY)',
-        lastJobRuns: latestRuns,
-        lastDailyCheck: latestCheck,
-        isSupabaseConfigured: isSupabase,
+        unlockOk: unlockResult.ok,
+        degradedFlags
     });
+
+    if (!isSupabase) {
+        return NextResponse.json({
+            nextAction: 'CONFIGURE_SUPABASE',
+            why: 'Supabase environment variables are missing.',
+            requiredHumanAction: 'Add Supabase URLs and Keys to Vercel/Local env.',
+            suggestedEndpointToRun: '/api/dev/env-health'
+        });
+    }
 
     return NextResponse.json(instruction);
 }
