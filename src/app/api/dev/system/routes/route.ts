@@ -21,7 +21,11 @@ const ROUTE_MANIFEST: Record<string, string[]> = {
     premarket: ['/premarket/journal', '/premarket/history'],
     options: ['/options', '/options/history'],
     accounting: [],
-    dev: [],
+    dev: [
+        '/api/dev/ops/next-action',
+        '/api/dev/smoke/first-trade-unlock-check',
+        '/api/dev/smoke/guided-first-trade'
+    ],
 };
 
 export async function GET(request: NextRequest) {
