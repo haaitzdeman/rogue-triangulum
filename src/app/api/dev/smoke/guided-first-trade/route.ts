@@ -28,6 +28,7 @@ import {
     createServerSupabase,
 } from '@/lib/supabase/server';
 import { loadDailySummary } from '@/lib/accounting/trade-ledger-store';
+import { computeFirstTradeProcessed } from '@/lib/ops/next-action';
 
 interface CheckResult {
     name: string;
@@ -116,13 +117,23 @@ export async function POST(request: NextRequest) {
     let message: string;
     let nextAction: string;
 
+    const isSupabase = isServerSupabaseConfigured();
+    const supabaseClient = isSupabase ? createServerSupabase() : null;
+    const firstTrade = await computeFirstTradeProcessed(supabaseClient);
+    const hasFirstTradeProcessed = firstTrade.ok;
+
     if (!allChecksPass) {
         message = 'Pre-flight checks failed. Fix issues before trading.';
         nextAction = 'FIX_CHECKS';
+    } else if (!clock.isMarketOpen && !clock.isExtendedHours) {
+        // Market closed
+        message = `Market is CLOSED. Next open: ${clock.nextOpenET}. Wait until then or use extended hours (4:00 AM – 8:00 PM ET weekdays).`;
+        nextAction = 'WAIT_FOR_MARKET_OPEN';
+        guidance = null;
     } else if (clock.isMarketOpen) {
         // Regular hours — simple market order
         message = 'Market is OPEN. You can place a standard market order.';
-        nextAction = tradeCount === 0 ? 'PLACE_FIRST_TRADE' : 'TRADE_ACTIVE';
+        nextAction = hasFirstTradeProcessed ? 'TRADE_ACTIVE' : 'PLACE_FIRST_TRADE';
         guidance = {
             orderType: 'market',
             timeInForce: 'day',
@@ -132,16 +143,16 @@ export async function POST(request: NextRequest) {
                 'Pick a liquid stock: AAPL, MSFT, SPY, QQQ',
                 'INSTRUCTIONS: Buy 1 share -> sync -> sell -> sync',
                 'Place order in Alpaca Paper Dashboard → Trading',
-                'After each fill, run: POST /api/broker/alpaca/sync or use the waitlist tool',
+                'After each fill, run: POST /api/broker/alpaca/sync (Requires Admin Token)',
             ],
         };
-    } else if (clock.isExtendedHours) {
+    } else {
         // Extended hours — limit order required
         const session = clock.extendedSession === 'PRE_MARKET'
             ? 'Pre-Market (4:00 AM – 9:30 AM ET)'
             : 'Post-Market (4:00 PM – 8:00 PM ET)';
         message = `Extended hours active: ${session}. Use a LIMIT order with extended_hours=true.`;
-        nextAction = tradeCount === 0 ? 'PLACE_FIRST_TRADE_EXTENDED' : 'TRADE_ACTIVE';
+        nextAction = hasFirstTradeProcessed ? 'TRADE_ACTIVE' : 'PLACE_FIRST_TRADE_EXTENDED';
         guidance = {
             orderType: 'limit',
             timeInForce: 'day',
@@ -152,14 +163,9 @@ export async function POST(request: NextRequest) {
                 'Set limit_price close to current bid/ask for quick fill',
                 'INSTRUCTIONS: Buy 1 share -> sync -> sell -> sync',
                 'Alpaca API: { "type": "limit", "time_in_force": "day", "extended_hours": true, "limit_price": "..." }',
-                'After each fill, run: POST /api/broker/alpaca/sync',
+                'After each fill, run: POST /api/broker/alpaca/sync (Requires Admin Token)',
             ],
         };
-    } else {
-        // Market closed
-        message = `Market is CLOSED. Next open: ${clock.nextOpenET}. Wait until then or use extended hours (4:00 AM – 8:00 PM ET weekdays).`;
-        nextAction = 'WAIT_FOR_MARKET_OPEN';
-        guidance = null;
     }
 
     return NextResponse.json({

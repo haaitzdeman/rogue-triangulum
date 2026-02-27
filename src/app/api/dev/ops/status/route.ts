@@ -18,6 +18,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { checkAdminAuth } from '@/lib/auth/admin-gate';
 import { getLatestJobRuns, getLatestDailyCheck } from '@/lib/ops/job-run-store';
 import { getMarketClock } from '@/lib/market/market-hours';
+import { isServerSupabaseConfigured, createServerSupabase } from '@/lib/supabase/server';
+import { computeNextAction, computeFirstTradeProcessed } from '@/lib/ops/next-action';
 
 export async function GET(request: NextRequest) {
     const auth = checkAdminAuth(request);
@@ -50,21 +52,24 @@ export async function GET(request: NextRequest) {
         degradedFlags.push('daily_check_failed');
     }
 
-    // Determine nextAction via next-action route (to ensure consistency)
-    let nextAction = 'SYSTEM_OPERATIONAL';
-    try {
-        const { GET: getNextAction } = await import('@/app/api/dev/ops/next-action/route');
-        const nextReq = new NextRequest('http://localhost/api/dev/ops/next-action', {
-            headers: { 'x-admin-token': request.headers.get('x-admin-token') || '' }
-        });
-        const nextRes = await getNextAction(nextReq);
-        const nextData = await nextRes.json();
-        nextAction = nextData.nextAction || 'SYSTEM_OPERATIONAL';
-    } catch (err) {
-        if (degradedFlags.length > 0) {
-            nextAction = 'INVESTIGATE_DEGRADED';
-        }
-    }
+    // Compute first trade
+    const isSupabase = isServerSupabaseConfigured();
+    const supabase = isSupabase ? createServerSupabase() : null;
+    const firstTrade = await computeFirstTradeProcessed(supabase);
+
+    // Determine nextAction via shared logic
+    const instruction = computeNextAction({
+        now: new Date(),
+        marketClock: clock,
+        hasFirstTradeProcessed: firstTrade.ok,
+        firstTradeReasons: firstTrade.reasons,
+        firstTradeAction: firstTrade.nextAction,
+        cronCapability: 'DAILY_ONLY (HOBBY)',
+        lastJobRuns: latestRuns,
+        lastDailyCheck: latestCheck,
+        isSupabaseConfigured: isSupabase,
+    });
+    const nextAction = instruction.nextAction;
 
     // Calculate cron capability and warnings
     const cronCapability = 'DAILY_ONLY (HOBBY)';
