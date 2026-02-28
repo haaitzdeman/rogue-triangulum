@@ -16,17 +16,7 @@ export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { checkAdminAuth } from '@/lib/auth/admin-gate';
 
-const ROUTE_MANIFEST: Record<string, string[]> = {
-    today: ['/today'],
-    premarket: ['/premarket/journal', '/premarket/history'],
-    options: ['/options', '/options/history'],
-    accounting: [],
-    dev: [
-        '/api/dev/ops/next-action',
-        '/api/dev/smoke/first-trade-unlock-check',
-        '/api/dev/smoke/guided-first-trade'
-    ],
-};
+import { ROUTE_MANIFEST } from '@/lib/auth/route-manifest';
 
 export async function GET(request: NextRequest) {
     const auth = checkAdminAuth(request);

@@ -113,8 +113,8 @@ describe('debug route middleware guard', () => {
         expect(middleware(req).status).toBe(404);
     });
 
-    it('exports matcher config for debug paths only', async () => {
+    it('exports matcher config', async () => {
         const mod = await import('@/middleware');
-        expect(mod.config.matcher).toBe('/api/journal/debug/:path*');
+        expect(mod.config.matcher).toEqual(['/api/journal/debug/:path*', '/api/dev/:path*']);
     });
 });

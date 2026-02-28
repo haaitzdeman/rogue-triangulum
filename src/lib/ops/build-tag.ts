@@ -7,5 +7,5 @@
  * Bump OPS_BUILD_TAG on every deploy-critical commit.
  */
 
-export const OPS_BUILD_TAG = '2026-02-27-phase3-v2';
-export const OPS_BUILD_TIMESTAMP = '2026-02-27T05:11:51Z';
+export const OPS_BUILD_TAG = '2026-02-27-phase3-v3';
+export const OPS_BUILD_TIMESTAMP = new Date().toISOString();
