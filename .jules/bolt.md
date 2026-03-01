@@ -1,0 +1,3 @@
+## 2024-05-23 - TradingChart Re-render Performance
+**Learning:** React components using third-party libraries (like lightweight-charts) can be severe performance bottlenecks if initialized in `useEffect` with data dependencies. This is compounded if the parent component conditionally unmounts the child during data loading (e.g., `loading ? <Loader/> : <Chart/>`).
+**Action:** Always separate chart initialization (layout/config) from data updates using `useRef` to store chart instances. Ensure parent components do not unmount heavy visualization components during transient loading states; use overlays instead.
