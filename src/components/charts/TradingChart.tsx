@@ -7,7 +7,7 @@
  * based on the trading desk context.
  */
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import {
     createChart,
     ColorType,
@@ -93,6 +93,17 @@ export function TradingChart({
     const chartContainerRef = useRef<HTMLDivElement>(null);
     const chartRef = useRef<IChartApi | null>(null);
 
+    // Refs for series instances
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const candleSeriesRef = useRef<any>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const volumeSeriesRef = useRef<any>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const vwapSeriesRef = useRef<any>(null);
+
+    // Track symbol change for fitting content
+    const prevSymbolRef = useRef<string | null>(null);
+
     const [currentRecipe, setCurrentRecipe] = useState<ChartRecipe>(recipe);
     const config = CHART_RECIPES[currentRecipe];
 
@@ -107,6 +118,12 @@ export function TradingChart({
     // Initialize chart
     useEffect(() => {
         if (!chartContainerRef.current) return;
+
+        // Cleanup existing chart if it exists (safety check)
+        if (chartRef.current) {
+            chartRef.current.remove();
+            chartRef.current = null;
+        }
 
         const chart = createChart(chartContainerRef.current, {
             width: chartContainerRef.current.clientWidth,
@@ -137,7 +154,7 @@ export function TradingChart({
         chartRef.current = chart;
 
         // Add candlestick series (v5 API)
-        const candleSeries = chart.addSeries(CandlestickSeries, {
+        candleSeriesRef.current = chart.addSeries(CandlestickSeries, {
             upColor: config.candleUpColor,
             downColor: config.candleDownColor,
             borderUpColor: config.candleUpColor,
@@ -146,11 +163,9 @@ export function TradingChart({
             wickDownColor: config.candleDownColor,
         });
 
-        // Add volume series if enabled (v5 API) - use any to avoid complex generics
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let volumeSeries: any = null;
+        // Add volume series if enabled (v5 API)
         if (config.showVolume) {
-            volumeSeries = chart.addSeries(HistogramSeries, {
+            volumeSeriesRef.current = chart.addSeries(HistogramSeries, {
                 color: config.volumeUpColor,
                 priceFormat: { type: 'volume' },
                 priceScaleId: 'volume',
@@ -159,53 +174,20 @@ export function TradingChart({
             chart.priceScale('volume').applyOptions({
                 scaleMargins: { top: 0.8, bottom: 0 },
             });
+        } else {
+            volumeSeriesRef.current = null;
         }
 
         // Add VWAP line if enabled (v5 API)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let vwapSeries: any = null;
         if (config.showVWAP) {
-            vwapSeries = chart.addSeries(LineSeries, {
+            vwapSeriesRef.current = chart.addSeries(LineSeries, {
                 color: '#f59e0b',
                 lineWidth: 2,
                 priceScaleId: 'right',
                 title: 'VWAP',
             });
-        }
-
-        // Set data if available
-        if (candles.length > 0) {
-            const chartData = candles.map(c => ({
-                time: (c.timestamp / 1000) as Time,
-                open: c.open,
-                high: c.high,
-                low: c.low,
-                close: c.close,
-            }));
-            candleSeries.setData(chartData);
-
-            if (volumeSeries && config.showVolume) {
-                const volumeData = candles.map(c => ({
-                    time: (c.timestamp / 1000) as Time,
-                    value: c.volume,
-                    color: c.close >= c.open ? config.volumeUpColor : config.volumeDownColor,
-                }));
-                volumeSeries.setData(volumeData);
-            }
-
-            if (vwapSeries && config.showVWAP) {
-                const vwapData = candles
-                    .filter(c => c.vwap !== undefined)
-                    .map(c => ({
-                        time: (c.timestamp / 1000) as Time,
-                        value: c.vwap!,
-                    }));
-                if (vwapData.length > 0) {
-                    vwapSeries.setData(vwapData);
-                }
-            }
-
-            chart.timeScale().fitContent();
+        } else {
+            vwapSeriesRef.current = null;
         }
 
         // Handle resize
@@ -221,9 +203,69 @@ export function TradingChart({
 
         return () => {
             window.removeEventListener('resize', handleResize);
-            chart.remove();
+            if (chartRef.current) {
+                chartRef.current.remove();
+                chartRef.current = null;
+            }
+            candleSeriesRef.current = null;
+            volumeSeriesRef.current = null;
+            vwapSeriesRef.current = null;
         };
-    }, [height, config, currentRecipe, candles]);
+    }, [height, config, currentRecipe]);
+
+    // Optimize data transformation
+    const chartData = useMemo(() => {
+        return candles.map(c => ({
+            time: (c.timestamp / 1000) as Time,
+            open: c.open,
+            high: c.high,
+            low: c.low,
+            close: c.close,
+        }));
+    }, [candles]);
+
+    const volumeData = useMemo(() => {
+        if (!config.showVolume) return [];
+        return candles.map(c => ({
+            time: (c.timestamp / 1000) as Time,
+            value: c.volume,
+            color: c.close >= c.open ? config.volumeUpColor : config.volumeDownColor,
+        }));
+    }, [candles, config.showVolume, config.volumeUpColor, config.volumeDownColor]);
+
+    const vwapData = useMemo(() => {
+        if (!config.showVWAP) return [];
+        return candles
+            .filter(c => c.vwap !== undefined)
+            .map(c => ({
+                time: (c.timestamp / 1000) as Time,
+                value: c.vwap!,
+            }));
+    }, [candles, config.showVWAP]);
+
+    // Handle Data Updates
+    useEffect(() => {
+        if (!chartRef.current) return;
+
+        // Update Series Data
+        if (candleSeriesRef.current) {
+            candleSeriesRef.current.setData(chartData);
+        }
+
+        if (volumeSeriesRef.current && volumeData.length > 0) {
+            volumeSeriesRef.current.setData(volumeData);
+        }
+
+        if (vwapSeriesRef.current && vwapData.length > 0) {
+            vwapSeriesRef.current.setData(vwapData);
+        }
+
+        // Fit content only if symbol changed
+        if (candles.length > 0 && prevSymbolRef.current !== symbol) {
+            chartRef.current.timeScale().fitContent();
+            prevSymbolRef.current = symbol;
+        }
+    }, [chartData, volumeData, vwapData, symbol, candles.length, config]);
 
     return (
         <div className="card p-4">
