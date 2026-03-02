@@ -145,32 +145,57 @@ export function rsi(bars: Bar[], period: number = 14): number | null {
 export function macd(bars: Bar[]): { macd: number; signal: number; histogram: number } | null {
     if (bars.length < 26) return null;
 
-    const ema12 = ema(bars, 12);
-    const ema26 = ema(bars, 26);
+    // Helper to calculate EMA series efficiently
+    const calculateEmaSeries = (period: number): number[] => {
+        const series = new Array(bars.length).fill(NaN);
+        if (bars.length < period) return series;
 
-    if (!ema12 || !ema26) return null;
+        const multiplier = 2 / (period + 1);
 
-    const macdLine = ema12 - ema26;
+        // Calculate initial SMA
+        let sum = 0;
+        for (let i = 0; i < period; i++) {
+            sum += bars[i].close;
+        }
+        let emaValue = sum / period;
+        series[period - 1] = emaValue;
 
-    // Calculate signal line (9-period EMA of MACD values)
-    // For simplicity, approximate with recent MACD
+        // Calculate EMA for remaining bars
+        for (let i = period; i < bars.length; i++) {
+            emaValue = (bars[i].close - emaValue) * multiplier + emaValue;
+            series[i] = emaValue;
+        }
+        return series;
+    };
+
+    const ema12Series = calculateEmaSeries(12);
+    const ema26Series = calculateEmaSeries(26);
+
     const macdValues: number[] = [];
+
+    // We start from i=26 (index 25 is 26th bar)
+    // emaSeries[i-1] corresponds to EMA of bars.slice(0, i)
     for (let i = 26; i <= bars.length; i++) {
-        const slice = bars.slice(0, i);
-        const e12 = ema(slice, 12);
-        const e26 = ema(slice, 26);
-        if (e12 && e26) {
+        const idx = i - 1;
+        const e12 = ema12Series[idx];
+        const e26 = ema26Series[idx];
+
+        if (!isNaN(e12) && !isNaN(e26)) {
             macdValues.push(e12 - e26);
         }
     }
 
     if (macdValues.length < 9) {
-        return { macd: macdLine, signal: macdLine, histogram: 0 };
+        const lastMacd = macdValues[macdValues.length - 1] || 0;
+        return { macd: lastMacd, signal: lastMacd, histogram: 0 };
     }
 
-    // EMA of MACD values
+    const macdLine = macdValues[macdValues.length - 1];
+
+    // Calculate signal line (9-period EMA of MACD values)
     const multiplier = 2 / 10; // 9-period
     let signalLine = macdValues.slice(0, 9).reduce((a, b) => a + b, 0) / 9;
+
     for (let i = 9; i < macdValues.length; i++) {
         signalLine = (macdValues[i] - signalLine) * multiplier + signalLine;
     }
