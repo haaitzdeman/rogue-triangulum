@@ -1,0 +1,39 @@
+
+> rogue-triangulum@0.1.0 dev
+> next dev
+
+ ⚠ Port 3000 is in use, trying 3001 instead.
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3001
+
+ ✓ Starting...
+ ✓ Ready in 1957ms
+ ○ Compiling /swing ...
+request to https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2 failed, reason:
+
+Retrying 1/3...
+request to https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2 failed, reaso[?25h
+trying 1/3...
+request to https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2 failed, reason:
+
+Retrying 1/3...
+request to https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7W0Q5n-wU.woff2 failed, reason:
+
+Retrying 1/3...
+request to https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7W0Q5n-wU.woff2 failed, reason:
+
+Retrying 1/3...
+request to https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7W0Q5n-wU.woff2 failed, reason:
+
+Retrying 1/3...
+request to https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2 failed, reason:
+
+Retrying 1/3...
+ ✓ Compiled /swing in 9.1s (653 modules)
+ GET /swing 200 in 10034ms
+ ✓ Compiled in 935ms (311 modules)
+ GET /swing 200 in 57ms
+ ✓ Compiled in 482ms (311 modules)
+ ✓ Compiled /swing in 266ms (324 modules)
+ GET /swing 200 in 491ms
+[?25h
