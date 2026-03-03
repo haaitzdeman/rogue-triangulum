@@ -1,0 +1,14 @@
+
+> rogue-triangulum@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ✓ Ready in 1763ms
+ ○ Compiling /swing ...
+ ✓ Compiled /swing in 7.2s (653 modules)
+ GET /swing 200 in 8217ms
+ ✓ Compiled in 988ms (311 modules)
+ ✓ Compiled in 619ms (635 modules)
