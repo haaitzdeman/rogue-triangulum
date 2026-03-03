@@ -1,0 +1,3 @@
+## 2024-05-22 - [TradingChart Re-initialization Bottleneck]
+**Learning:** React functional components integrating imperative libraries like `lightweight-charts` must carefully separate initialization (chart creation) from data updates. Storing the chart/series instances in `useRef` and using separate `useEffect` hooks prevents expensive DOM operations and state loss (zoom reset) on every prop change.
+**Action:** Always check `useEffect` dependency arrays in visualization components. If `data` is in the dependency array for *creation*, it's a bottleneck. Use `useRef` for the instance and a separate effect for data updates.
