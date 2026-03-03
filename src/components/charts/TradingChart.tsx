@@ -7,7 +7,7 @@
  * based on the trading desk context.
  */
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import {
     createChart,
     ColorType,
@@ -15,7 +15,7 @@ import {
     HistogramSeries,
     LineSeries,
 } from 'lightweight-charts';
-import type { IChartApi, Time } from 'lightweight-charts';
+import type { IChartApi, ISeriesApi, Time } from 'lightweight-charts';
 import type { Candle, Timeframe } from '@/lib/data/types';
 
 // Chart recipe types for different desks
@@ -93,20 +93,40 @@ export function TradingChart({
     const chartContainerRef = useRef<HTMLDivElement>(null);
     const chartRef = useRef<IChartApi | null>(null);
 
+    // Series refs
+    const candleSeriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const volumeSeriesRef = useRef<ISeriesApi<"Histogram"> | any | null>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const vwapSeriesRef = useRef<ISeriesApi<"Line"> | any | null>(null);
+
+    // Track previous props to intelligently fit content
+    const prevSymbolRef = useRef<string | null>(null);
+    const prevTimeframeRef = useRef<Timeframe | null>(null);
+
     const [currentRecipe, setCurrentRecipe] = useState<ChartRecipe>(recipe);
     const config = CHART_RECIPES[currentRecipe];
 
     // Available timeframes by desk type
-    const timeframes: Record<ChartRecipe, Timeframe[]> = {
+    const timeframes: Record<ChartRecipe, Timeframe[]> = useMemo(() => ({
         daytrading: ['1m', '5m', '15m', '1h'],
         options: ['1h', '1d', '1w'],
         swing: ['1h', '4h', '1d', '1w'],
         investing: ['1d', '1w', '1M'],
-    };
+    }), []);
 
-    // Initialize chart
+    // 1. Initialization Effect: Creates chart structure (runs only on mount or recipe change)
     useEffect(() => {
         if (!chartContainerRef.current) return;
+
+        // Cleanup existing chart
+        if (chartRef.current) {
+            chartRef.current.remove();
+            chartRef.current = null;
+            candleSeriesRef.current = null;
+            volumeSeriesRef.current = null;
+            vwapSeriesRef.current = null;
+        }
 
         const chart = createChart(chartContainerRef.current, {
             width: chartContainerRef.current.clientWidth,
@@ -136,7 +156,7 @@ export function TradingChart({
 
         chartRef.current = chart;
 
-        // Add candlestick series (v5 API)
+        // Add candlestick series
         const candleSeries = chart.addSeries(CandlestickSeries, {
             upColor: config.candleUpColor,
             downColor: config.candleDownColor,
@@ -145,70 +165,34 @@ export function TradingChart({
             wickUpColor: config.candleUpColor,
             wickDownColor: config.candleDownColor,
         });
+        candleSeriesRef.current = candleSeries;
 
-        // Add volume series if enabled (v5 API) - use any to avoid complex generics
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let volumeSeries: any = null;
+        // Add volume series if enabled
         if (config.showVolume) {
-            volumeSeries = chart.addSeries(HistogramSeries, {
+            const volumeSeries = chart.addSeries(HistogramSeries, {
                 color: config.volumeUpColor,
                 priceFormat: { type: 'volume' },
                 priceScaleId: 'volume',
             });
+            volumeSeriesRef.current = volumeSeries;
 
             chart.priceScale('volume').applyOptions({
                 scaleMargins: { top: 0.8, bottom: 0 },
             });
         }
 
-        // Add VWAP line if enabled (v5 API)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let vwapSeries: any = null;
+        // Add VWAP line if enabled
         if (config.showVWAP) {
-            vwapSeries = chart.addSeries(LineSeries, {
+            const vwapSeries = chart.addSeries(LineSeries, {
                 color: '#f59e0b',
                 lineWidth: 2,
                 priceScaleId: 'right',
                 title: 'VWAP',
             });
+            vwapSeriesRef.current = vwapSeries;
         }
 
-        // Set data if available
-        if (candles.length > 0) {
-            const chartData = candles.map(c => ({
-                time: (c.timestamp / 1000) as Time,
-                open: c.open,
-                high: c.high,
-                low: c.low,
-                close: c.close,
-            }));
-            candleSeries.setData(chartData);
-
-            if (volumeSeries && config.showVolume) {
-                const volumeData = candles.map(c => ({
-                    time: (c.timestamp / 1000) as Time,
-                    value: c.volume,
-                    color: c.close >= c.open ? config.volumeUpColor : config.volumeDownColor,
-                }));
-                volumeSeries.setData(volumeData);
-            }
-
-            if (vwapSeries && config.showVWAP) {
-                const vwapData = candles
-                    .filter(c => c.vwap !== undefined)
-                    .map(c => ({
-                        time: (c.timestamp / 1000) as Time,
-                        value: c.vwap!,
-                    }));
-                if (vwapData.length > 0) {
-                    vwapSeries.setData(vwapData);
-                }
-            }
-
-            chart.timeScale().fitContent();
-        }
-
-        // Handle resize
+        // Resize handler
         const handleResize = () => {
             if (chartContainerRef.current && chartRef.current) {
                 chartRef.current.applyOptions({
@@ -222,8 +206,63 @@ export function TradingChart({
         return () => {
             window.removeEventListener('resize', handleResize);
             chart.remove();
+            chartRef.current = null;
+            candleSeriesRef.current = null;
+            volumeSeriesRef.current = null;
+            vwapSeriesRef.current = null;
         };
-    }, [height, config, currentRecipe, candles]);
+    }, [height, config]); // Re-create if config (recipe) or height base changes
+
+    // 2. Data Effect: Updates data on existing series without destroying chart
+    useEffect(() => {
+        if (!candleSeriesRef.current) return;
+
+        if (candles.length > 0) {
+            const chartData = candles.map(c => ({
+                time: (c.timestamp / 1000) as Time,
+                open: c.open,
+                high: c.high,
+                low: c.low,
+                close: c.close,
+            }));
+            candleSeriesRef.current.setData(chartData);
+
+            if (volumeSeriesRef.current && config.showVolume) {
+                const volumeData = candles.map(c => ({
+                    time: (c.timestamp / 1000) as Time,
+                    value: c.volume,
+                    color: c.close >= c.open ? config.volumeUpColor : config.volumeDownColor,
+                }));
+                volumeSeriesRef.current.setData(volumeData);
+            }
+
+            if (vwapSeriesRef.current && config.showVWAP) {
+                const vwapData = candles
+                    .filter(c => c.vwap !== undefined)
+                    .map(c => ({
+                        time: (c.timestamp / 1000) as Time,
+                        value: c.vwap!,
+                    }));
+                if (vwapData.length > 0) {
+                    vwapSeriesRef.current.setData(vwapData);
+                }
+            }
+
+            // Fit content only on symbol/timeframe change or initial load
+            if (symbol !== prevSymbolRef.current || timeframe !== prevTimeframeRef.current) {
+                chartRef.current?.timeScale().fitContent();
+                prevSymbolRef.current = symbol;
+                prevTimeframeRef.current = timeframe;
+            }
+        }
+    }, [candles, config, symbol, timeframe]);
+
+    // 3. Resize Effect: Handles dynamic height changes
+    useEffect(() => {
+        if (chartRef.current && chartContainerRef.current) {
+            chartRef.current.applyOptions({ height });
+        }
+    }, [height]);
 
     return (
         <div className="card p-4">
