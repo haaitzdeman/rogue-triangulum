@@ -93,6 +93,14 @@ export function TradingChart({
     const chartContainerRef = useRef<HTMLDivElement>(null);
     const chartRef = useRef<IChartApi | null>(null);
 
+    // Refs for series to allow updates without recreation
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const candleSeriesRef = useRef<any>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const volumeSeriesRef = useRef<any>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const vwapSeriesRef = useRef<any>(null);
+
     const [currentRecipe, setCurrentRecipe] = useState<ChartRecipe>(recipe);
     const config = CHART_RECIPES[currentRecipe];
 
@@ -137,7 +145,7 @@ export function TradingChart({
         chartRef.current = chart;
 
         // Add candlestick series (v5 API)
-        const candleSeries = chart.addSeries(CandlestickSeries, {
+        candleSeriesRef.current = chart.addSeries(CandlestickSeries, {
             upColor: config.candleUpColor,
             downColor: config.candleDownColor,
             borderUpColor: config.candleUpColor,
@@ -146,11 +154,9 @@ export function TradingChart({
             wickDownColor: config.candleDownColor,
         });
 
-        // Add volume series if enabled (v5 API) - use any to avoid complex generics
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let volumeSeries: any = null;
+        // Add volume series if enabled (v5 API)
         if (config.showVolume) {
-            volumeSeries = chart.addSeries(HistogramSeries, {
+            volumeSeriesRef.current = chart.addSeries(HistogramSeries, {
                 color: config.volumeUpColor,
                 priceFormat: { type: 'volume' },
                 priceScaleId: 'volume',
@@ -159,53 +165,20 @@ export function TradingChart({
             chart.priceScale('volume').applyOptions({
                 scaleMargins: { top: 0.8, bottom: 0 },
             });
+        } else {
+            volumeSeriesRef.current = null;
         }
 
         // Add VWAP line if enabled (v5 API)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let vwapSeries: any = null;
         if (config.showVWAP) {
-            vwapSeries = chart.addSeries(LineSeries, {
+            vwapSeriesRef.current = chart.addSeries(LineSeries, {
                 color: '#f59e0b',
                 lineWidth: 2,
                 priceScaleId: 'right',
                 title: 'VWAP',
             });
-        }
-
-        // Set data if available
-        if (candles.length > 0) {
-            const chartData = candles.map(c => ({
-                time: (c.timestamp / 1000) as Time,
-                open: c.open,
-                high: c.high,
-                low: c.low,
-                close: c.close,
-            }));
-            candleSeries.setData(chartData);
-
-            if (volumeSeries && config.showVolume) {
-                const volumeData = candles.map(c => ({
-                    time: (c.timestamp / 1000) as Time,
-                    value: c.volume,
-                    color: c.close >= c.open ? config.volumeUpColor : config.volumeDownColor,
-                }));
-                volumeSeries.setData(volumeData);
-            }
-
-            if (vwapSeries && config.showVWAP) {
-                const vwapData = candles
-                    .filter(c => c.vwap !== undefined)
-                    .map(c => ({
-                        time: (c.timestamp / 1000) as Time,
-                        value: c.vwap!,
-                    }));
-                if (vwapData.length > 0) {
-                    vwapSeries.setData(vwapData);
-                }
-            }
-
-            chart.timeScale().fitContent();
+        } else {
+            vwapSeriesRef.current = null;
         }
 
         // Handle resize
@@ -222,8 +195,56 @@ export function TradingChart({
         return () => {
             window.removeEventListener('resize', handleResize);
             chart.remove();
+            chartRef.current = null;
+            candleSeriesRef.current = null;
+            volumeSeriesRef.current = null;
+            vwapSeriesRef.current = null;
         };
-    }, [height, config, currentRecipe, candles]);
+    }, [height, config, currentRecipe]); // Removed candles from dependency
+
+    // Update data independently
+    useEffect(() => {
+        if (!chartRef.current || candles.length === 0) return;
+
+        // Update Candle Series
+        if (candleSeriesRef.current) {
+            const chartData = candles.map(c => ({
+                time: (c.timestamp / 1000) as Time,
+                open: c.open,
+                high: c.high,
+                low: c.low,
+                close: c.close,
+            }));
+            candleSeriesRef.current.setData(chartData);
+        }
+
+        // Update Volume Series
+        if (volumeSeriesRef.current && config.showVolume) {
+            const volumeData = candles.map(c => ({
+                time: (c.timestamp / 1000) as Time,
+                value: c.volume,
+                color: c.close >= c.open ? config.volumeUpColor : config.volumeDownColor,
+            }));
+            volumeSeriesRef.current.setData(volumeData);
+        }
+
+        // Update VWAP Series
+        if (vwapSeriesRef.current && config.showVWAP) {
+            const vwapData = candles
+                .filter(c => c.vwap !== undefined)
+                .map(c => ({
+                    time: (c.timestamp / 1000) as Time,
+                    value: c.vwap!,
+                }));
+            if (vwapData.length > 0) {
+                vwapSeriesRef.current.setData(vwapData);
+            }
+        }
+
+        // Maintain fit content behavior
+        chartRef.current.timeScale().fitContent();
+
+    }, [candles, config]);
 
     return (
         <div className="card p-4">
